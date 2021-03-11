@@ -26,16 +26,16 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read("setup.cfg")
     fftwpp_include_dir = config["fftwpp"].get("include_dir", "")
-    fftwpp_library_dir = config["fftwpp"].get("library_dir", "")
 
     pyfftwpp = setuptools.Extension(
-        "pyfftwpp.pyfftwpp",
+        "pyfftwpp",
         include_dirs=[pybind11.get_include(),
                       fftwpp_include_dir],
-        sources=[os.path.join("pyfftwpp",
-                              "pyfftwpp.cpp")],
-        libraries=["fftwpp"],
-        library_dirs=[fftwpp_library_dir],
+        sources=["pyfftwpp.cpp"],
+        define_macros=[
+            ("__FFTWPP_VERSION__", r"\"" + metadata["version"] + r"\""),
+            ("__FFTWPP_AUTHOR__", r"\"" + metadata["author"] + r"\""),
+        ],
     )
 
     setuptools.setup(

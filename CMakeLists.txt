@@ -17,5 +17,4 @@ set(CMAKE_CXX_STANDARD 17)
 include(CTest)
 
 add_subdirectory(include)
-add_subdirectory(src)
 add_subdirectory(tests)
