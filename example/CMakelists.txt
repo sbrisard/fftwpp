@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.13)
+
+project("example_fftwpp")
+
+find_package(fftwpp CONFIG REQUIRED)
+
+add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
+target_link_libraries(${PROJECT_NAME} fftwpp)

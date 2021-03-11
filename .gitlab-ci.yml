@@ -1,0 +1,11 @@
+# See https://gitlab.com/pages/plain-html/-/blob/master/.gitlab-ci.yml
+
+pages:
+  stage: deploy
+  script:
+  - echo 'Nothing to do...'
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
