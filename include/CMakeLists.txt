@@ -11,7 +11,7 @@ if (MATH_LIBRARY)
 endif()
 
 find_path(FFTW3_INCLUDE_DIR fftw3.h)
-find_library(FFTW3_LIBRARY NAMES libfftw3 libfftw3-3)
+find_library(FFTW3_LIBRARY NAMES fftw3 libfftw3 libfftw3-3)
 target_include_directories(${PROJECT_NAME} INTERFACE ${FFTW3_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} INTERFACE ${FFTW3_LIBRARY})
 
