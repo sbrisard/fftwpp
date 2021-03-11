@@ -8,4 +8,4 @@ add_compile_definitions(
 pybind11_add_module(pyfftwpp pyfftwpp.cpp)
 target_link_libraries(pyfftwpp PRIVATE fftwpp)
 
-#configure_file(demo.py demo.py COPYONLY)
+configure_file(demo.py demo.py COPYONLY)
