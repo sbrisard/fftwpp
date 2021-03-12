@@ -9,9 +9,9 @@
 namespace fftw {
 class Plan {
  public:
-  Plan(int size, std::complex<double> *in, std::complex<double> *out)
+  Plan(int size, std::complex<double> *in, std::complex<double> *out, int sign)
       : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
-                           reinterpret_cast<fftw_complex *>(out), FFTW_FORWARD,
+                           reinterpret_cast<fftw_complex *>(out), sign,
                            FFTW_ESTIMATE)} {}
 
   Plan(const Plan &) = delete;

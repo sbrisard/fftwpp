@@ -12,7 +12,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
   using array = pybind11::array_t<std::complex<double>>;
 
   pybind11::class_<Plan>(m, "Plan")
-      .def(pybind11::init([](array in, array out) {
+      .def(pybind11::init([](array in, array out, int sign) {
         pybind11::buffer_info info_in = in.request();
         pybind11::buffer_info info_out = out.request();
         if ((info_in.ndim != 1) || (info_out.ndim != 1)) {
@@ -22,8 +22,11 @@ PYBIND11_MODULE(pyfftwpp, m) {
           throw std::invalid_argument(
               "output array must be larger than input array");
         }
+        if ((sign != -1) && (sign != 1)) {
+          throw std::invalid_argument("sign must be -1 or +1");
+        }
         int size = info_in.size;
-        return new Plan{size, in.mutable_data(), out.mutable_data()};
+        return new Plan{size, in.mutable_data(), out.mutable_data(), sign};
       }))
       .def("execute", &Plan::execute)
       .def("cost", &Plan::cost)
