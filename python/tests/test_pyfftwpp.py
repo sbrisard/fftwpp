@@ -31,7 +31,7 @@ class TestPlan1d:
         else:
             exp = size * np.fft.ifft(data)
         act = np.zeros_like(data)
-        plan = fftw.Plan(data, act, sign)
+        plan = fftw.Plan(data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
         np.testing.assert_allclose(act, exp, rtol, atol)
 
@@ -40,10 +40,10 @@ class TestPlan1d:
         input = np.empty(ishape, dtype=self.dtype)
         output = np.empty(oshape, dtype=self.dtype)
         with pytest.raises(ValueError):
-            fftw.Plan(input, output, -1)
+            fftw.Plan(input, output, -1, fftw.PlannerFlag.estimate)
 
     def test_fft1d_invalid_size(self):
         input = np.empty((4,), dtype=self.dtype)
         output = np.empty((3,), dtype=self.dtype)
         with pytest.raises(ValueError):
-            fftw.Plan(input, output, -1)
+            fftw.Plan(input, output, -1, fftw.PlannerFlag.estimate)

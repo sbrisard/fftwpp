@@ -23,7 +23,7 @@ struct PlannerFlag {
 class Plan {
  public:
   Plan(int size, std::complex<double> *in, std::complex<double> *out, int sign,
-       unsigned flags = PlannerFlag::estimate)
+       unsigned flags)
       : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
                            reinterpret_cast<fftw_complex *>(out), sign,
                            flags)} {}
