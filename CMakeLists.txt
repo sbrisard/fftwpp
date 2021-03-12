@@ -18,4 +18,4 @@ include(CTest)
 
 add_subdirectory(include)
 add_subdirectory(python)
-add_subdirectory(tests)
+#add_subdirectory(tests)
