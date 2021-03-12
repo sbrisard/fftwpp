@@ -3,6 +3,7 @@
 #include <fftw/fftw3.h>
 #include <complex>
 #include <cstdlib>
+#include <iostream>
 #include <string>
 
 namespace fftw {
@@ -12,6 +13,11 @@ class Plan {
       : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
                            reinterpret_cast<fftw_complex *>(out), FFTW_FORWARD,
                            FFTW_ESTIMATE)} {}
+
+  Plan(const Plan &) = delete;
+  Plan &operator=(const Plan &) = delete;
+  Plan(Plan &&) = delete;
+  Plan &operator=(Plan &&) = delete;
 
   ~Plan() { fftw_destroy_plan(p); }
 
@@ -34,6 +40,6 @@ class Plan {
   }
 
  private:
-  fftw_plan const p;
+  fftw_plan p;
 };
 }  // namespace fftw
