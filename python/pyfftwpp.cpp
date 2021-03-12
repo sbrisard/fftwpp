@@ -8,6 +8,16 @@ PYBIND11_MODULE(pyfftwpp, m) {
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
   m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
+  pybind11::enum_<fftw::PlannerFlag::PlannerFlag_>(m, "PlannerFlag")
+      .value("estimate", fftw::PlannerFlag::estimate)
+      .value("measure", fftw::PlannerFlag::measure)
+      .value("patient", fftw::PlannerFlag::patient)
+      .value("exhaustive", fftw::PlannerFlag::exhaustive)
+      .value("wisdom_only", fftw::PlannerFlag::wisdom_only)
+      .value("destroy_input", fftw::PlannerFlag::destroy_input)
+      .value("preserve_input", fftw::PlannerFlag::preserve_input)
+      .value("unaligned", fftw::PlannerFlag::unaligned);
+
   using Plan = fftw::Plan;
   using array = pybind11::array_t<std::complex<double>>;
 

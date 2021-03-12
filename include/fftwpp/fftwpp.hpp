@@ -7,12 +7,26 @@
 #include <string>
 
 namespace fftw {
+struct PlannerFlag {
+  enum PlannerFlag_ : unsigned {
+    estimate = FFTW_ESTIMATE,
+    measure = FFTW_MEASURE,
+    patient = FFTW_PATIENT,
+    exhaustive = FFTW_EXHAUSTIVE,
+    wisdom_only = FFTW_WISDOM_ONLY,
+    destroy_input = FFTW_DESTROY_INPUT,
+    preserve_input = FFTW_PRESERVE_INPUT,
+    unaligned = FFTW_UNALIGNED
+  };
+};
+
 class Plan {
  public:
-  Plan(int size, std::complex<double> *in, std::complex<double> *out, int sign)
+  Plan(int size, std::complex<double> *in, std::complex<double> *out, int sign,
+       unsigned flags = PlannerFlag::estimate)
       : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
                            reinterpret_cast<fftw_complex *>(out), sign,
-                           FFTW_ESTIMATE)} {}
+                           flags)} {}
 
   Plan(const Plan &) = delete;
   Plan &operator=(const Plan &) = delete;
