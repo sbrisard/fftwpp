@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace fftw {
 struct PlannerFlag {
@@ -27,6 +28,12 @@ class Plan {
       : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
                            reinterpret_cast<fftw_complex *>(out), sign,
                            flags)} {}
+
+  Plan(std::vector<int> shape, std::complex<double> *in,
+       std::complex<double> *out, int sign, unsigned flags)
+      : p{fftw_plan_dft(shape.size(), shape.data(),
+                        reinterpret_cast<fftw_complex *>(in),
+                        reinterpret_cast<fftw_complex *>(out), sign, flags)} {}
 
   Plan(const Plan &) = delete;
   Plan &operator=(const Plan &) = delete;

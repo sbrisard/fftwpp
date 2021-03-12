@@ -25,18 +25,25 @@ PYBIND11_MODULE(pyfftwpp, m) {
       .def(pybind11::init([](array in, array out, int sign, unsigned flags) {
         pybind11::buffer_info info_in = in.request();
         pybind11::buffer_info info_out = out.request();
-        if ((info_in.ndim != 1) || (info_out.ndim != 1)) {
-          throw std::invalid_argument("expected one dimensional arrays");
-        }
-        if (info_out.size < info_in.size) {
+        if (info_in.ndim != info_out.ndim) {
           throw std::invalid_argument(
-              "output array must be larger than input array");
+              "input and output arrays must have same rank");
         }
+        for (pybind11::ssize_t i = 0; i < info_in.ndim; i++) {
+          if (info_out.shape[i] != info_in.shape[i]) {
+            throw std::invalid_argument(
+                "input and output arrays must have same shape");
+          }
+        }
+        // TODO Check that C-contiguous
         if ((sign != -1) && (sign != 1)) {
           throw std::invalid_argument("sign must be -1 or +1");
         }
-        int size = info_in.size;
-        return new Plan{size, in.mutable_data(), out.mutable_data(), sign,
+        std::vector<int> shape(info_in.shape.size());
+        for (auto i = 0; i < info_in.ndim; i++) {
+          shape[i] = info_in.shape[i];
+        }
+        return new Plan{shape, in.mutable_data(), out.mutable_data(), sign,
                         flags};
       }))
       .def("execute", &Plan::execute)
