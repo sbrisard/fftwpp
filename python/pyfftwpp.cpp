@@ -3,6 +3,18 @@
 
 #include "fftwpp/fftwpp.hpp"
 
+template <typename T>
+void assert_c_contiguous(pybind11::array_t<T> array) {
+  pybind11::buffer_info info = array.request();
+  size_t stride = info.itemsize;
+  for (int i = info.ndim - 1; i >= 0; i--) {
+    if (info.strides[i] != stride) {
+      throw std::invalid_argument("expected C contiguous array");
+    }
+    stride *= info.shape[i];
+  }
+}
+
 PYBIND11_MODULE(pyfftwpp, m) {
   m.doc() = "Python bindings to the fftwpp library";
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
@@ -35,7 +47,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
                 "input and output arrays must have same shape");
           }
         }
-        // TODO Check that C-contiguous
+        assert_c_contiguous(in);
+        assert_c_contiguous(out);
         if ((sign != -1) && (sign != 1)) {
           throw std::invalid_argument("sign must be -1 or +1");
         }
