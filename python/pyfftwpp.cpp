@@ -1,7 +1,32 @@
+#include <ostream>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include "fftwpp/fftwpp.hpp"
+
+template <typename T1, typename T2>
+void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
+  pybind11::buffer_info info1 = arr1.request();
+  pybind11::buffer_info info2 = arr2.request();
+  if (info1.ndim != info2.ndim) {
+    std::ostringstream stream;
+    stream << "arrays must have same rank: " << info1.ndim
+           << " != " << info2.ndim;
+    throw std::invalid_argument(stream.str());
+  }
+  for (int i = 0; i < info1.ndim; i++) {
+    if (info2.shape[i] != info1.shape[i]) {
+      std::ostringstream stream;
+      stream << "arrays must have same shape: (";
+      for (int j = 0; j < info1.ndim; j++) stream << info1.shape[j] << ",";
+      stream << ") != (";
+      for (int j = 0; j < info2.ndim; j++) stream << info2.shape[j] << ",";
+      stream << ")";
+      throw std::invalid_argument(stream.str());
+    }
+  }
+}
 
 template <typename T>
 void assert_c_contiguous(pybind11::array_t<T> array) {
@@ -35,26 +60,16 @@ PYBIND11_MODULE(pyfftwpp, m) {
 
   pybind11::class_<Plan>(m, "Plan")
       .def(pybind11::init([](array in, array out, int sign, unsigned flags) {
-        pybind11::buffer_info info_in = in.request();
-        pybind11::buffer_info info_out = out.request();
-        if (info_in.ndim != info_out.ndim) {
-          throw std::invalid_argument(
-              "input and output arrays must have same rank");
-        }
-        for (pybind11::ssize_t i = 0; i < info_in.ndim; i++) {
-          if (info_out.shape[i] != info_in.shape[i]) {
-            throw std::invalid_argument(
-                "input and output arrays must have same shape");
-          }
-        }
         assert_c_contiguous(in);
         assert_c_contiguous(out);
+        assert_same_shape(in, out);
         if ((sign != -1) && (sign != 1)) {
           throw std::invalid_argument("sign must be -1 or +1");
         }
-        std::vector<int> shape(info_in.shape.size());
-        for (auto i = 0; i < info_in.ndim; i++) {
-          shape[i] = info_in.shape[i];
+        pybind11::buffer_info info = in.request();
+        std::vector<int> shape(info.shape.size());
+        for (auto i = 0; i < info.ndim; i++) {
+          shape[i] = info.shape[i];
         }
         return new Plan{shape, in.mutable_data(), out.mutable_data(), sign,
                         flags};
