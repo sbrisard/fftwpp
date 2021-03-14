@@ -24,16 +24,19 @@ def test_planner_flags():
 class TestPlan1d:
     dtype = np.complex128
 
+    def random(self, shape):
+        rng = np.random.default_rng(202103120214)
+        real = rng.random(size=shape, dtype=np.float64)
+        imag = rng.random(size=shape, dtype=np.float64)
+        return real + 1j * imag
+
     @pytest.mark.parametrize("size, sign", itertools.product(range(2, 17), (-1, 1)))
     def test_fft(self, size, sign):
         """
         Compare 1D FFTs with direct numpy calculation. Data series are
         small enough that tolerance can be set extremely low.
         """
-        rng = np.random.default_rng(202103120214)
-        real = rng.random(size=size, dtype=np.float64)
-        imag = rng.random(size=size, dtype=np.float64)
-        data = real + 1j * imag
+        data = self.random((size,))
         if sign == -1:
             exp = np.fft.fft(data)
         else:
@@ -46,10 +49,7 @@ class TestPlan1d:
 
     @pytest.mark.parametrize("shape, sign", [((4, 5), -1)])
     def test_fft2(self, shape, sign, rtol=1e-15, atol=1e-15):
-        rng = np.random.default_rng(202103120214)
-        real = rng.random(size=shape, dtype=np.float64)
-        imag = rng.random(size=shape, dtype=np.float64)
-        data = real + 1j * imag
+        data = self.random(shape)
         if sign == -1:
             exp = np.fft.fft2(data)
         else:
@@ -90,10 +90,7 @@ class TestPlan1d:
     )
     def test_fft_advanced(self, rank, shape, sign, rtol=1e-15, atol=1e-15):
         ndim = len(shape)
-        rng = np.random.default_rng(202103120214)
-        real = rng.random(size=shape, dtype=np.float64)
-        imag = rng.random(size=shape, dtype=np.float64)
-        data = real + 1j * imag
+        data = self.random(shape)
         act = np.zeros_like(data)
         plan = fftw.Plan(rank, data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
