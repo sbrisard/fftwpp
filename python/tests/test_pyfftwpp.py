@@ -120,7 +120,7 @@ class TestPlan1d:
             ((8, 7, 9), 1),
             ((8, 9, 7), 1),
             ((9, 7, 8), 1),
-            ((9, 8, 7), 1)
+            ((9, 8, 7), 1),
         ],
     )
     def test_fft3(self, shape, sign):
@@ -186,18 +186,17 @@ class TestPlan1d:
         plan1 = fftw.Plan(rank, in1, out1, sign, fftw.PlannerFlag.estimate)
         exp = np.zeros_like(data)
 
-        if rank == ndim - 1:
-            for k in range(shape[-1]):
-                in1[...] = data[..., k]
-                plan1.execute()
-                exp[..., k] = out1
-        elif rank == ndim - 2:
-            for h in range(shape[-2]):
-                for k in range(shape[-1]):
-                    in1[...] = data[..., h, k]
-                    plan1.execute()
-                    exp[..., h, k] = out1
-        else:
-            raise ValueError("unexpected rank")
+        slices = tuple(slice(0, shape[i]) for i in range(rank))
+        ranges = (range(shape[i]) for i in range(rank, ndim))
+        multi_indices = itertools.product(*ranges)
+        for multi_index in multi_indices:
+            in1[...] = data[slices + multi_index]
+            plan1.execute()
+            exp[slices+multi_index] = out1
 
         np.testing.assert_equal(act, exp)
+
+
+if __name__ == "__main__":
+    test_plan = TestPlan1d()
+    test_plan.test_fft_advanced(2, (4, 5, 6, 7), 1)
