@@ -163,42 +163,41 @@ class TestPlan1d:
         info = np.finfo(self.dtype)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
 
-    #
-    # @pytest.mark.parametrize(
-    #     "rank, shape, sign",
-    #     [
-    #         (1, (4, 5), -1),
-    #         (1, (4, 5, 6), -1),
-    #         (2, (4, 5, 6), -1),
-    #         (2, (4, 5, 6, 7), -1),
-    #         (3, (4, 5, 6, 7), -1),
-    #         (3, (4, 5, 6, 7, 8), -1),
-    #     ],
-    # )
-    # def test_fft_advanced(self, rank, shape, sign, rtol=1e-15, atol=1e-15):
-    #     ndim = len(shape)
-    #     data = self.random(shape)
-    #     act = np.zeros_like(data)
-    #     plan = fftw.Plan(rank, data, act, sign, fftw.PlannerFlag.estimate)
-    #     plan.execute()
-    #
-    #     in1 = np.zeros(shape[:rank], dtype=np.complex128)
-    #     out1 = np.zeros_like(in1)
-    #     plan1 = fftw.Plan(rank, in1, out1, sign, fftw.PlannerFlag.estimate)
-    #     exp = np.zeros_like(data)
-    #
-    #     if rank == ndim - 1:
-    #         for k in range(shape[-1]):
-    #             in1[...] = data[..., k]
-    #             plan1.execute()
-    #             exp[..., k] = out1
-    #     elif rank == ndim - 2:
-    #         for h in range(shape[-2]):
-    #             for k in range(shape[-1]):
-    #                 in1[...] = data[..., h, k]
-    #                 plan1.execute()
-    #                 exp[..., h, k] = out1
-    #     else:
-    #         raise ValueError("unexpected rank")
-    #
-    #     np.testing.assert_allclose(act, exp, rtol, atol)
+    @pytest.mark.parametrize(
+        "rank, shape, sign",
+        [
+            (1, (4, 5), -1),
+            (1, (4, 5, 6), -1),
+            (2, (4, 5, 6), -1),
+            (2, (4, 5, 6, 7), -1),
+            (3, (4, 5, 6, 7), -1),
+            (3, (4, 5, 6, 7, 8), -1),
+        ],
+    )
+    def test_fft_advanced(self, rank, shape, sign, rtol=1e-15, atol=1e-15):
+        ndim = len(shape)
+        data = self.random(shape)
+        act = np.zeros_like(data)
+        plan = fftw.Plan(rank, data, act, sign, fftw.PlannerFlag.estimate)
+        plan.execute()
+
+        in1 = np.zeros(shape[:rank], dtype=np.complex128)
+        out1 = np.zeros_like(in1)
+        plan1 = fftw.Plan(rank, in1, out1, sign, fftw.PlannerFlag.estimate)
+        exp = np.zeros_like(data)
+
+        if rank == ndim - 1:
+            for k in range(shape[-1]):
+                in1[...] = data[..., k]
+                plan1.execute()
+                exp[..., k] = out1
+        elif rank == ndim - 2:
+            for h in range(shape[-2]):
+                for k in range(shape[-1]):
+                    in1[...] = data[..., h, k]
+                    plan1.execute()
+                    exp[..., h, k] = out1
+        else:
+            raise ValueError("unexpected rank")
+
+        np.testing.assert_equal(act, exp)
