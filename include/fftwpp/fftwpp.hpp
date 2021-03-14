@@ -21,12 +21,13 @@ struct PlannerFlag {
   };
 };
 
+template <typename T>
 class Plan {
  public:
   Plan(fftw_plan const p) : p{p} {}
 
-  Plan(int rank, std::vector<int> const &shape, std::complex<double> *in,
-       std::complex<double> *out, int sign, unsigned flags)
+  Plan(int rank, std::vector<int> const &shape, T *in, T *out, int sign,
+       unsigned flags)
       : p(create(rank, shape, in, out, sign, flags)) {}
 
   Plan(const Plan &) = delete;
@@ -57,16 +58,22 @@ class Plan {
  private:
   fftw_plan p;
 
-  static fftw_plan create(int rank, std::vector<int> const &shape,
-                          std::complex<double> *in, std::complex<double> *out,
-                          int sign, unsigned flags) {
-    auto ndim = shape.size();
-    int stride = 1;
-    for (int i = rank; i < ndim; i++) stride *= shape[i];
-    return fftw_plan_many_dft(rank, shape.data(), stride,
-                              reinterpret_cast<fftw_complex *>(in), nullptr,
-                              stride, 1, reinterpret_cast<fftw_complex *>(out),
-                              nullptr, stride, 1, sign, flags);
-  }
+  static fftw_plan create(int rank, std::vector<int> const &shape, T *in,
+                          T *out, int sign, unsigned flags);
 };
+
+template <>
+fftw_plan Plan<std::complex<double>>::create(int rank,
+                                             std::vector<int> const &shape,
+                                             std::complex<double> *in,
+                                             std::complex<double> *out,
+                                             int sign, unsigned flags) {
+  auto ndim = shape.size();
+  int stride = 1;
+  for (int i = rank; i < ndim; i++) stride *= shape[i];
+  return fftw_plan_many_dft(rank, shape.data(), stride,
+                            reinterpret_cast<fftw_complex *>(in), nullptr,
+                            stride, 1, reinterpret_cast<fftw_complex *>(out),
+                            nullptr, stride, 1, sign, flags);
+}
 }  // namespace fftw

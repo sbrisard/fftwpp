@@ -23,6 +23,7 @@ def test_planner_flags():
 
 class TestPlan1d:
     dtype = np.complex128
+    Plan = fftw.PlanComplex128
 
     def random(self, shape):
         rng = np.random.default_rng(202103120214)
@@ -46,7 +47,7 @@ class TestPlan1d:
         input = np.empty(ishape, dtype=self.dtype)
         output = np.empty(oshape, dtype=self.dtype)
         with pytest.raises(ValueError):
-            fftw.Plan(input.ndim, input, output, -1, fftw.PlannerFlag.estimate)
+            self.Plan(input.ndim, input, output, -1, fftw.PlannerFlag.estimate)
 
     @pytest.mark.parametrize("size, sign", itertools.product(range(2, 17), (-1, 1)))
     def test_fft(self, size, sign):
@@ -60,7 +61,7 @@ class TestPlan1d:
         else:
             exp = size * np.fft.ifft(data)
         act = np.zeros_like(data)
-        plan = fftw.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
+        plan = self.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
         info = np.finfo(self.dtype)
         np.testing.assert_allclose(act, exp, rtol=2 * info.eps, atol=2 * info.eps)
@@ -82,14 +83,14 @@ class TestPlan1d:
         data = self.random(shape)
 
         act = np.zeros_like(data)
-        plan = fftw.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
+        plan = self.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
 
         exp = np.zeros_like(data)
         aux = np.zeros_like(data)
         in1 = np.zeros(shape[0], dtype=self.dtype)
         out1 = np.zeros_like(in1)
-        plan1 = fftw.Plan(1, in1, out1, sign, fftw.PlannerFlag.estimate)
+        plan1 = self.Plan(1, in1, out1, sign, fftw.PlannerFlag.estimate)
         for j in range(shape[1]):
             in1[:] = data[:, j]
             plan1.execute()
@@ -97,7 +98,7 @@ class TestPlan1d:
 
         in2 = np.zeros(shape[1], dtype=self.dtype)
         out2 = np.zeros_like(in2)
-        plan2 = fftw.Plan(1, in2, out2, sign, fftw.PlannerFlag.estimate)
+        plan2 = self.Plan(1, in2, out2, sign, fftw.PlannerFlag.estimate)
         for i in range(shape[0]):
             in2[:] = aux[i, :]
             plan2.execute()
@@ -127,13 +128,13 @@ class TestPlan1d:
         data = self.random(shape)
 
         act = np.zeros_like(data)
-        plan = fftw.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
+        plan = self.Plan(data.ndim, data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
 
         aux1 = np.zeros_like(data)
         in1 = np.zeros(shape[2], dtype=self.dtype)
         out1 = np.zeros_like(in1)
-        plan1 = fftw.Plan(1, in1, out1, sign, fftw.PlannerFlag.estimate)
+        plan1 = self.Plan(1, in1, out1, sign, fftw.PlannerFlag.estimate)
         for i in range(shape[0]):
             for j in range(shape[1]):
                 in1[:] = data[i, j, :]
@@ -143,7 +144,7 @@ class TestPlan1d:
         aux2 = np.zeros_like(data)
         in2 = np.zeros(shape[1], dtype=self.dtype)
         out2 = np.zeros_like(in2)
-        plan2 = fftw.Plan(1, in2, out2, sign, fftw.PlannerFlag.estimate)
+        plan2 = self.Plan(1, in2, out2, sign, fftw.PlannerFlag.estimate)
         for i in range(shape[0]):
             for k in range(shape[2]):
                 in2[:] = aux1[i, :, k]
@@ -153,7 +154,7 @@ class TestPlan1d:
         exp = np.zeros_like(data)
         in3 = np.zeros(shape[0], dtype=self.dtype)
         out3 = np.zeros_like(in3)
-        plan3 = fftw.Plan(1, in3, out3, sign, fftw.PlannerFlag.estimate)
+        plan3 = self.Plan(1, in3, out3, sign, fftw.PlannerFlag.estimate)
         for j in range(shape[1]):
             for k in range(shape[2]):
                 in3[:] = aux2[:, j, k]
@@ -178,12 +179,12 @@ class TestPlan1d:
         ndim = len(shape)
         data = self.random(shape)
         act = np.zeros_like(data)
-        plan = fftw.Plan(rank, data, act, sign, fftw.PlannerFlag.estimate)
+        plan = self.Plan(rank, data, act, sign, fftw.PlannerFlag.estimate)
         plan.execute()
 
         in1 = np.zeros(shape[:rank], dtype=np.complex128)
         out1 = np.zeros_like(in1)
-        plan1 = fftw.Plan(rank, in1, out1, sign, fftw.PlannerFlag.estimate)
+        plan1 = self.Plan(rank, in1, out1, sign, fftw.PlannerFlag.estimate)
         exp = np.zeros_like(data)
 
         slices = tuple(slice(0, shape[i]) for i in range(rank))
@@ -195,8 +196,3 @@ class TestPlan1d:
             exp[slices+multi_index] = out1
 
         np.testing.assert_equal(act, exp)
-
-
-if __name__ == "__main__":
-    test_plan = TestPlan1d()
-    test_plan.test_fft_advanced(2, (4, 5, 6, 7), 1)
