@@ -25,18 +25,6 @@ class Plan {
  public:
   Plan(fftw_plan const p) : p{p} {}
 
-  Plan(int size, std::complex<double> *in, std::complex<double> *out, int sign,
-       unsigned flags)
-      : p{fftw_plan_dft_1d(size, reinterpret_cast<fftw_complex *>(in),
-                           reinterpret_cast<fftw_complex *>(out), sign,
-                           flags)} {}
-
-  Plan(std::vector<int> shape, std::complex<double> *in,
-       std::complex<double> *out, int sign, unsigned flags)
-      : p{fftw_plan_dft(shape.size(), shape.data(),
-                        reinterpret_cast<fftw_complex *>(in),
-                        reinterpret_cast<fftw_complex *>(out), sign, flags)} {}
-
   Plan(int rank, std::vector<int> const &shape, std::complex<double> *in,
        std::complex<double> *out, int sign, unsigned flags)
       : p(create(rank, shape, in, out, sign, flags)) {}
