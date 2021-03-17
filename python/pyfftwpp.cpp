@@ -41,7 +41,7 @@ void assert_c_contiguous(pybind11::array_t<T> array) {
 }
 
 template <typename T>
-void create_bindings_for_plan(pybind11::module m, char* class_name) {
+void create_bindings_for_plan(pybind11::module m, char* const class_name) {
   using Plan = fftw::Plan<T>;
   using array = pybind11::array_t<T>;
 
