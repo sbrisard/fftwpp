@@ -75,4 +75,20 @@ fftw_plan create_plan<std::complex<double>, std::complex<double>>(
                             stride, 1, reinterpret_cast<fftw_complex *>(out),
                             nullptr, stride, 1, sign, flags);
 }
+
+template <>
+fftw_plan create_plan<double, std::complex<double>>(
+    int rank, std::vector<int> const &shape, double *in,
+    std::complex<double> *out, int sign, unsigned flags) {
+  if (sign == -1) {
+    throw std::invalid_argument("sign must be -1");
+  }
+  auto ndim = shape.size();
+  int stride = 1;
+  for (int i = rank; i < ndim; i++) stride *= shape[i];
+  return fftw_plan_many_dft_r2c(rank, shape.data(), stride, in, nullptr, stride,
+                                1, reinterpret_cast<fftw_complex *>(out),
+                                nullptr, stride, 1, flags);
+}
+
 }  // namespace fftw
