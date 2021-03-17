@@ -28,7 +28,7 @@ class Plan {
 
   Plan(int rank, std::vector<int> const &shape, T *in, T *out, int sign,
        unsigned flags)
-      : p(create(rank, shape, in, out, sign, flags)) {}
+      : p(create_plan(rank, shape, in, out, sign, flags)) {}
 
   Plan(const Plan &) = delete;
   Plan &operator=(const Plan &) = delete;
@@ -57,17 +57,18 @@ class Plan {
 
  private:
   fftw_plan p;
-
-  static fftw_plan create(int rank, std::vector<int> const &shape, T *in,
-                          T *out, int sign, unsigned flags);
 };
 
+template <typename T>
+fftw_plan create_plan(int rank, std::vector<int> const &shape, T *in, T *out,
+                      int sign, unsigned flags);
+
 template <>
-fftw_plan Plan<std::complex<double>>::create(int rank,
-                                             std::vector<int> const &shape,
-                                             std::complex<double> *in,
-                                             std::complex<double> *out,
-                                             int sign, unsigned flags) {
+fftw_plan create_plan<std::complex<double>>(int rank,
+                                            std::vector<int> const &shape,
+                                            std::complex<double> *in,
+                                            std::complex<double> *out, int sign,
+                                            unsigned flags) {
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
