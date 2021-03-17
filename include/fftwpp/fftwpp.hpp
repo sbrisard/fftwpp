@@ -21,13 +21,13 @@ struct PlannerFlag {
   };
 };
 
-template <typename T>
+template <typename InputType, typename OutputType>
 class Plan {
  public:
   Plan(fftw_plan const p) : p{p} {}
 
-  Plan(int rank, std::vector<int> const &shape, T *in, T *out, int sign,
-       unsigned flags)
+  Plan(int rank, std::vector<int> const &shape, InputType *in, OutputType *out,
+       int sign, unsigned flags)
       : p(create_plan(rank, shape, in, out, sign, flags)) {}
 
   Plan(const Plan &) = delete;
@@ -59,16 +59,14 @@ class Plan {
   fftw_plan p;
 };
 
-template <typename T>
-fftw_plan create_plan(int rank, std::vector<int> const &shape, T *in, T *out,
-                      int sign, unsigned flags);
+template <typename InputType, typename OutputType>
+fftw_plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
+                      OutputType *out, int sign, unsigned flags);
 
 template <>
-fftw_plan create_plan<std::complex<double>>(int rank,
-                                            std::vector<int> const &shape,
-                                            std::complex<double> *in,
-                                            std::complex<double> *out, int sign,
-                                            unsigned flags) {
+fftw_plan create_plan<std::complex<double>, std::complex<double>>(
+    int rank, std::vector<int> const &shape, std::complex<double> *in,
+    std::complex<double> *out, int sign, unsigned flags) {
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
