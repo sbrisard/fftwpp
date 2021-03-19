@@ -1,4 +1,4 @@
-#pragma once
+  #pragma once
 
 #include <fftw/fftw3.h>
 #include <complex>
@@ -19,6 +19,102 @@ struct PlannerFlag {
     preserve_input = FFTW_PRESERVE_INPUT,
     unaligned = FFTW_UNALIGNED
   };
+};
+
+template <typename InputType, typename OutputType>
+class PlanFactory {
+ public:
+  unsigned get_flags() {
+    return flags;
+  }
+
+  PlanFactory<InputType, OutputType> &set_forward() {
+    sign = 1;
+    return *this;
+  }
+
+  PlanFactory<InputType, OutputType> &set_backward() {
+    sign = -1;
+    return *this;
+  }
+
+  PlanFactory<InputType, OutputType> &set_estimate() {
+    return set_flag(FFTW_ESTIMATE);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_estimate() {
+    return unset_flag(FFTW_ESTIMATE);
+  }
+
+  PlanFactory<InputType, OutputType> &set_measure() {
+    return set_flag(FFTW_MEASURE);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_measure() {
+    return unset_flag(FFTW_MEASURE);
+  }
+
+  PlanFactory<InputType, OutputType> &set_patient() {
+    return set_flag(FFTW_PATIENT);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_patient() {
+    return unset_flag(FFTW_PATIENT);
+  }
+
+  PlanFactory<InputType, OutputType> &set_exhaustive() {
+    return set_flag(FFTW_EXHAUSTIVE);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_exhaustive() {
+    return unset_flag(FFTW_EXHAUSTIVE);
+  }
+
+  PlanFactory<InputType, OutputType> &set_wisdom_only() {
+    return set_flag(FFTW_WISDOM_ONLY);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_wisdom_only() {
+    return unset_flag(FFTW_WISDOM_ONLY);
+  }
+
+  PlanFactory<InputType, OutputType> &set_destroy_input() {
+    return set_flag(FFTW_DESTROY_INPUT);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_destroy_input() {
+    return unset_flag(FFTW_DESTROY_INPUT);
+  }
+
+  PlanFactory<InputType, OutputType> &set_preserve_input() {
+    return set_flag(FFTW_PRESERVE_INPUT);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_preserve_intput() {
+    return unset_flag(FFTW_PRESERVE_INPUT);
+  }
+
+  PlanFactory<InputType, OutputType> &set_unaligned() {
+    return set_flag(FFTW_UNALIGNED);
+  }
+
+  PlanFactory<InputType, OutputType> &unset_unaligned() {
+    return unset_flag(FFTW_UNALIGNED);
+  }
+
+ private:
+  int sign = -1;
+  unsigned flags = 0;
+
+  PlanFactory<InputType, OutputType> &set_flag(unsigned flag) {
+    flags |= flag;
+    return *this;
+  }
+
+  PlanFactory<InputType, OutputType> &unset_flag(unsigned flag) {
+    flags ^= flag;
+    return *this;
+  }
 };
 
 template <typename InputType, typename OutputType>
