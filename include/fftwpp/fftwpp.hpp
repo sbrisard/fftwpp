@@ -8,18 +8,6 @@
 #include <vector>
 
 namespace fftw {
-struct PlannerFlag {
-  enum PlannerFlag_ : unsigned {
-    estimate = FFTW_ESTIMATE,
-    measure = FFTW_MEASURE,
-    patient = FFTW_PATIENT,
-    exhaustive = FFTW_EXHAUSTIVE,
-    wisdom_only = FFTW_WISDOM_ONLY,
-    destroy_input = FFTW_DESTROY_INPUT,
-    preserve_input = FFTW_PRESERVE_INPUT,
-    unaligned = FFTW_UNALIGNED
-  };
-};
 
 class Plan {
  public:
