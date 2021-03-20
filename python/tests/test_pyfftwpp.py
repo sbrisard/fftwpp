@@ -27,13 +27,11 @@ class TestPlan1d:
         factory = self.PlanFactory().set_estimate()
         data = self.random((size,))
         if sign == -1:
-            factory.set_forward()
             exp = np.fft.fft(data)
         else:
-            factory.set_backward()
             exp = size * np.fft.ifft(data)
         act = np.zeros_like(data)
-        plan = factory.create_plan(data.ndim, data, act)
+        plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
         info = np.finfo(factory.output_dtype)
         np.testing.assert_allclose(act, exp, rtol=2 * info.eps, atol=2 * info.eps)
@@ -56,18 +54,14 @@ class TestPlan1d:
 
         act = np.zeros_like(data)
         factory = self.PlanFactory().set_estimate()
-        if sign == -1:
-            factory.set_forward()
-        else:
-            factory.set_backward()
-        plan = factory.create_plan(data.ndim, data, act)
+        plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
 
         exp = np.zeros_like(data)
         aux = np.zeros_like(data)
         in1 = np.zeros(shape[0], dtype=factory.input_dtype)
         out1 = np.zeros_like(in1)
-        plan1 = factory.create_plan(1, in1, out1)
+        plan1 = factory.create_plan(1, in1, out1, sign)
         for j in range(shape[1]):
             in1[:] = data[:, j]
             plan1.execute()
@@ -75,7 +69,7 @@ class TestPlan1d:
 
         in2 = np.zeros(shape[1], dtype=factory.input_dtype)
         out2 = np.zeros_like(in2)
-        plan2 = factory.create_plan(1, in2, out2)
+        plan2 = factory.create_plan(1, in2, out2, sign)
         for i in range(shape[0]):
             in2[:] = aux[i, :]
             plan2.execute()
@@ -106,17 +100,13 @@ class TestPlan1d:
 
         act = np.zeros_like(data)
         factory = self.PlanFactory().set_estimate()
-        if sign == -1:
-            factory.set_forward()
-        else:
-            factory.set_backward()
-        plan = factory.create_plan(data.ndim, data, act)
+        plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
 
         aux1 = np.zeros_like(data)
         in1 = np.zeros(shape[2], dtype=factory.input_dtype)
         out1 = np.zeros_like(in1)
-        plan1 = factory.create_plan(1, in1, out1)
+        plan1 = factory.create_plan(1, in1, out1, sign)
         for i in range(shape[0]):
             for j in range(shape[1]):
                 in1[:] = data[i, j, :]
@@ -126,7 +116,7 @@ class TestPlan1d:
         aux2 = np.zeros_like(data)
         in2 = np.zeros(shape[1], dtype=factory.input_dtype)
         out2 = np.zeros_like(in2)
-        plan2 = factory.create_plan(1, in2, out2)
+        plan2 = factory.create_plan(1, in2, out2, sign)
         for i in range(shape[0]):
             for k in range(shape[2]):
                 in2[:] = aux1[i, :, k]
@@ -136,7 +126,7 @@ class TestPlan1d:
         exp = np.zeros_like(data)
         in3 = np.zeros(shape[0], dtype=factory.input_dtype)
         out3 = np.zeros_like(in3)
-        plan3 = factory.create_plan(1, in3, out3)
+        plan3 = factory.create_plan(1, in3, out3, sign)
         for j in range(shape[1]):
             for k in range(shape[2]):
                 in3[:] = aux2[:, j, k]
@@ -162,16 +152,12 @@ class TestPlan1d:
         data = self.random(shape)
         act = np.zeros_like(data)
         factory = self.PlanFactory().set_estimate()
-        if sign == -1:
-            factory.set_forward()
-        else:
-            factory.set_backward()
-        plan = factory.create_plan(rank, data, act)
+        plan = factory.create_plan(rank, data, act, sign)
         plan.execute()
 
         in1 = np.zeros(shape[:rank], dtype=np.complex128)
         out1 = np.zeros_like(in1)
-        plan1 = factory.create_plan(rank, in1, out1)
+        plan1 = factory.create_plan(rank, in1, out1, sign)
         exp = np.zeros_like(data)
 
         slices = tuple(slice(0, shape[i]) for i in range(rank))

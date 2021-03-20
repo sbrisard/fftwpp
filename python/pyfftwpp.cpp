@@ -48,8 +48,6 @@ void create_bindings_for_plan_factory(pybind11::module m,
   using OutputArray = pybind11::array_t<OutputType>;
   pybind11::class_<Factory>(m, class_name)
       .def(pybind11::init<>())
-      .def("set_forward", &Factory::set_forward)
-      .def("set_backward", &Factory::set_backward)
       .def("set_estimate", &Factory::set_estimate)
       .def("unset_estimate", &Factory::unset_estimate)
       .def("set_measure", &Factory::set_measure)
@@ -66,26 +64,30 @@ void create_bindings_for_plan_factory(pybind11::module m,
       .def("unset_preserve_input", &Factory::unset_preserve_intput)
       .def("set_unaligned", &Factory::set_unaligned)
       .def("unset_unaligned", &Factory::unset_unaligned)
-      .def("create_plan",
-           [](Factory& self, int rank, InputArray in, OutputArray out) {
-             assert_c_contiguous(in);
-             assert_c_contiguous(out);
-             assert_same_shape(in, out);
-             pybind11::buffer_info info = in.request();
-             if (rank > info.ndim) {
-               std::ostringstream stream;
-               stream << "rank must be lower than ndim: " << rank << " > "
-                      << info.ndim;
-               throw std::invalid_argument(stream.str());
-             }
-             std::vector<int> shape(info.shape.size());
-             for (auto i = 0; i < info.ndim; i++) {
-               shape[i] = info.shape[i];
-             }
-             auto p = self.create_plan(rank, shape, in.mutable_data(),
-                                       out.mutable_data());
-             return new fftw::Plan{p};
-           })
+      .def(
+          "create_plan",
+          [](Factory& self, int rank, InputArray in, OutputArray out,
+             int sign) {
+            assert_c_contiguous(in);
+            assert_c_contiguous(out);
+            assert_same_shape(in, out);
+            pybind11::buffer_info info = in.request();
+            if (rank > info.ndim) {
+              std::ostringstream stream;
+              stream << "rank must be lower than ndim: " << rank << " > "
+                     << info.ndim;
+              throw std::invalid_argument(stream.str());
+            }
+            std::vector<int> shape(info.shape.size());
+            for (auto i = 0; i < info.ndim; i++) {
+              shape[i] = info.shape[i];
+            }
+            auto p = self.create_plan(rank, shape, in.mutable_data(),
+                                      out.mutable_data(), sign);
+            return new fftw::Plan{p};
+          },
+          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+          pybind11::arg("sign") = -1)
       .def_property_readonly("flags", &Factory::get_flags)
       .def_property_readonly_static(
           "input_dtype",

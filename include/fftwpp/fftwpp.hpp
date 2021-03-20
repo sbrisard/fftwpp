@@ -60,19 +60,9 @@ class PlanFactory {
   // FIXME: return a fftw_plan rather than a fftw::Plan because I don't know
   // how to call new in the python bindings.
   fftw_plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
-                        OutputType *out);
+                        OutputType *out, int sign = -1);
 
   unsigned get_flags() { return flags; }
-
-  PlanFactory<InputType, OutputType> &set_forward() {
-    sign = -1;
-    return *this;
-  }
-
-  PlanFactory<InputType, OutputType> &set_backward() {
-    sign = 1;
-    return *this;
-  }
 
   PlanFactory<InputType, OutputType> &set_estimate() {
     return set_flag(FFTW_ESTIMATE);
@@ -139,7 +129,6 @@ class PlanFactory {
   }
 
  private:
-  int sign = -1;
   unsigned flags = 0;
 
   PlanFactory<InputType, OutputType> &set_flag(unsigned flag) {
@@ -156,7 +145,10 @@ class PlanFactory {
 template <>
 fftw_plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, std::complex<double> *in,
-    std::complex<double> *out) {
+    std::complex<double> *out, int sign) {
+  if ((sign != -1) && (sign != 1)) {
+    throw std::invalid_argument("sign must be -1 or +1");
+  }
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
@@ -169,8 +161,8 @@ fftw_plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
 template <>
 fftw_plan PlanFactory<double, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, double *in,
-    std::complex<double> *out) {
-  if (sign == -1) {
+    std::complex<double> *out, int sign) {
+  if (sign != -1) {
     throw std::invalid_argument("sign must be -1");
   }
   auto ndim = shape.size();
