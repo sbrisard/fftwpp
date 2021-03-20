@@ -9,18 +9,6 @@ import faulthandler
 
 faulthandler.enable()
 
-
-def test_planner_flags():
-    assert fftw.PlannerFlag.measure == 0
-    assert fftw.PlannerFlag.destroy_input == 1
-    assert fftw.PlannerFlag.unaligned == 1 << 1
-    assert fftw.PlannerFlag.exhaustive == 1 << 3
-    assert fftw.PlannerFlag.preserve_input == 1 << 4
-    assert fftw.PlannerFlag.patient == 1 << 5
-    assert fftw.PlannerFlag.estimate == 1 << 6
-    assert fftw.PlannerFlag.wisdom_only == 1 << 21
-
-
 class TestPlan1d:
     dtype = np.complex128
     Plan = fftw.Plan_c128_c128
