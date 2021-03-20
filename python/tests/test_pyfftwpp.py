@@ -31,24 +31,6 @@ class TestPlan1d:
         imag = rng.random(size=shape, dtype=np.float64)
         return real + 1j * imag
 
-    @pytest.mark.parametrize(
-        "ishape, oshape",
-        [
-            ((2,), (3,)),
-            ((2, 3), (4,)),
-            ((2, 3), (4, 5)),
-            ((2, 3), (4, 3)),
-            ((4,), (2, 3)),
-            ((2, 4), (2, 3)),
-            ((4, 3), (2, 3)),
-        ],
-    )
-    def test_invalid_shape(self, ishape, oshape):
-        input = np.empty(ishape, dtype=self.dtype)
-        output = np.empty(oshape, dtype=self.dtype)
-        with pytest.raises(ValueError):
-            self.Plan(input.ndim, input, output, -1, fftw.PlannerFlag.estimate)
-
     @pytest.mark.parametrize("size, sign", itertools.product(range(2, 17), (-1, 1)))
     def test_fft(self, size, sign):
         """
