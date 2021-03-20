@@ -95,11 +95,8 @@ void create_bindings_for_plan_factory(pybind11::module m,
       });
 }
 
-template <typename InputType, typename OutputType>
 void create_bindings_for_plan(pybind11::module m, char* const class_name) {
   using Plan = fftw::Plan;
-  using InputArray = pybind11::array_t<InputType>;
-  using OutputArray = pybind11::array_t<OutputType>;
 
   pybind11::class_<Plan>(m, class_name)
       //.def(pybind11::init())
@@ -126,12 +123,10 @@ PYBIND11_MODULE(pyfftwpp, m) {
 
   create_bindings_for_plan_factory<std::complex<double>, std::complex<double>>(
       m, "PlanFactory_c128_c128");
-//  create_bindings_for_plan_factory<double, std::complex<double>>(
-//      m, "PlanFactory_f64_c128");
+  //  create_bindings_for_plan_factory<double, std::complex<double>>(
+  //      m, "PlanFactory_f64_c128");
   //  create_bindings_for_plan_factory<std::complex<double>, double>(
   //      m, "PlanFactory_c128_f64");
 
-  create_bindings_for_plan<std::complex<double>, std::complex<double>>(
-      m, "Plan_c128_c128");
-//  create_bindings_for_plan<double, std::complex<double>>(m, "Plan_f64_c128");
+  create_bindings_for_plan(m, "Plan");
 }
