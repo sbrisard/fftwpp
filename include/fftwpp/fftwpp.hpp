@@ -65,12 +65,12 @@ class PlanFactory {
   unsigned get_flags() { return flags; }
 
   PlanFactory<InputType, OutputType> &set_forward() {
-    sign = 1;
+    sign = -1;
     return *this;
   }
 
   PlanFactory<InputType, OutputType> &set_backward() {
-    sign = -1;
+    sign = 1;
     return *this;
   }
 

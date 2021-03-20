@@ -10,8 +10,6 @@ import faulthandler
 faulthandler.enable()
 
 class TestPlan1d:
-    dtype = np.complex128
-    Plan = fftw.Plan_c128_c128
 
     def random(self, shape):
         rng = np.random.default_rng(202103120214)
