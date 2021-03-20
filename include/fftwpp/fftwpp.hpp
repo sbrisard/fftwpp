@@ -57,8 +57,10 @@ class Plan {
 template <typename InputType, typename OutputType>
 class PlanFactory {
  public:
-  Plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
-                   OutputType *out);
+  // FIXME: return a fftw_plan rather than a fftw::Plan because I don't know
+  // how to call new in the python bindings.
+  fftw_plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
+                        OutputType *out);
 
   unsigned get_flags() { return flags; }
 
@@ -152,21 +154,20 @@ class PlanFactory {
 };
 
 template <>
-Plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
+fftw_plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, std::complex<double> *in,
     std::complex<double> *out) {
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
-  fftw_plan p = fftw_plan_many_dft(
-      rank, shape.data(), stride, reinterpret_cast<fftw_complex *>(in), nullptr,
-      stride, 1, reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1,
-      sign, flags);
-  return Plan(p);
+  return fftw_plan_many_dft(rank, shape.data(), stride,
+                            reinterpret_cast<fftw_complex *>(in), nullptr,
+                            stride, 1, reinterpret_cast<fftw_complex *>(out),
+                            nullptr, stride, 1, sign, flags);
 }
 
 template <>
-Plan PlanFactory<double, std::complex<double>>::create_plan(
+fftw_plan PlanFactory<double, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, double *in,
     std::complex<double> *out) {
   if (sign == -1) {
@@ -175,10 +176,9 @@ Plan PlanFactory<double, std::complex<double>>::create_plan(
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
-  fftw_plan p = fftw_plan_many_dft_r2c(
-      rank, shape.data(), stride, in, nullptr, stride, 1,
-      reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1, flags);
-  return Plan(p);
+  return fftw_plan_many_dft_r2c(rank, shape.data(), stride, in, nullptr, stride,
+                                1, reinterpret_cast<fftw_complex *>(out),
+                                nullptr, stride, 1, flags);
 }
 
 }  // namespace fftw
