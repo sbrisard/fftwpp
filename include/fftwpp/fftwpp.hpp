@@ -1,4 +1,4 @@
-  #pragma once
+#pragma once
 
 #include <fftw/fftw3.h>
 #include <complex>
@@ -21,12 +21,46 @@ struct PlannerFlag {
   };
 };
 
+class Plan {
+ public:
+  Plan(fftw_plan const p) : p{p} {}
+
+  Plan(const Plan &) = delete;
+  Plan &operator=(const Plan &) = delete;
+  Plan(Plan &&) = delete;
+  Plan &operator=(Plan &&) = delete;
+
+  ~Plan() { fftw_destroy_plan(p); }
+
+  void execute() const { fftw_execute(p); }
+
+  double cost() const { return fftw_cost(p); }
+
+  std::tuple<double, double, double> flops() const {
+    double add, mul, fma;
+    fftw_flops(p, &add, &mul, &fma);
+    return std::make_tuple(add, mul, fma);
+  }
+
+  std::string repr() const {
+    char *c_str = fftw_sprint_plan(p);
+    std::string cpp_str{c_str};
+    // TODO: this leads to the computer crashing.
+    // std::free(c_str);
+    return cpp_str;
+  }
+
+ private:
+  fftw_plan p;
+};
+
 template <typename InputType, typename OutputType>
 class PlanFactory {
  public:
-  unsigned get_flags() {
-    return flags;
-  }
+  Plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
+                   OutputType *out);
+
+  unsigned get_flags() { return flags; }
 
   PlanFactory<InputType, OutputType> &set_forward() {
     sign = 1;
@@ -117,74 +151,34 @@ class PlanFactory {
   }
 };
 
-template <typename InputType, typename OutputType>
-class Plan {
- public:
-  Plan(fftw_plan const p) : p{p} {}
-
-  Plan(int rank, std::vector<int> const &shape, InputType *in, OutputType *out,
-       int sign, unsigned flags)
-      : p(create_plan(rank, shape, in, out, sign, flags)) {}
-
-  Plan(const Plan &) = delete;
-  Plan &operator=(const Plan &) = delete;
-  Plan(Plan &&) = delete;
-  Plan &operator=(Plan &&) = delete;
-
-  ~Plan() { fftw_destroy_plan(p); }
-
-  void execute() const { fftw_execute(p); }
-
-  double cost() const { return fftw_cost(p); }
-
-  std::tuple<double, double, double> flops() const {
-    double add, mul, fma;
-    fftw_flops(p, &add, &mul, &fma);
-    return std::make_tuple(add, mul, fma);
-  }
-
-  std::string repr() const {
-    char *c_str = fftw_sprint_plan(p);
-    std::string cpp_str{c_str};
-    // TODO: this leads to the computer crashing.
-    // std::free(c_str);
-    return cpp_str;
-  }
-
- private:
-  fftw_plan p;
-};
-
-template <typename InputType, typename OutputType>
-fftw_plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
-                      OutputType *out, int sign, unsigned flags);
-
 template <>
-fftw_plan create_plan<std::complex<double>, std::complex<double>>(
+Plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, std::complex<double> *in,
-    std::complex<double> *out, int sign, unsigned flags) {
+    std::complex<double> *out) {
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
-  return fftw_plan_many_dft(rank, shape.data(), stride,
-                            reinterpret_cast<fftw_complex *>(in), nullptr,
-                            stride, 1, reinterpret_cast<fftw_complex *>(out),
-                            nullptr, stride, 1, sign, flags);
+  fftw_plan p = fftw_plan_many_dft(
+      rank, shape.data(), stride, reinterpret_cast<fftw_complex *>(in), nullptr,
+      stride, 1, reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1,
+      sign, flags);
+  return Plan(p);
 }
 
 template <>
-fftw_plan create_plan<double, std::complex<double>>(
+Plan PlanFactory<double, std::complex<double>>::create_plan(
     int rank, std::vector<int> const &shape, double *in,
-    std::complex<double> *out, int sign, unsigned flags) {
+    std::complex<double> *out) {
   if (sign == -1) {
     throw std::invalid_argument("sign must be -1");
   }
   auto ndim = shape.size();
   int stride = 1;
   for (int i = rank; i < ndim; i++) stride *= shape[i];
-  return fftw_plan_many_dft_r2c(rank, shape.data(), stride, in, nullptr, stride,
-                                1, reinterpret_cast<fftw_complex *>(out),
-                                nullptr, stride, 1, flags);
+  fftw_plan p = fftw_plan_many_dft_r2c(
+      rank, shape.data(), stride, in, nullptr, stride, 1,
+      reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1, flags);
+  return Plan(p);
 }
 
 }  // namespace fftw
