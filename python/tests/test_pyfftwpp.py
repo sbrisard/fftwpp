@@ -35,7 +35,7 @@ class TestPlan1d:
         act = np.zeros_like(data)
         plan = factory.create_plan(data.ndim, data, act)
         plan.execute()
-        info = np.finfo(factory.odtype)
+        info = np.finfo(factory.output_dtype)
         np.testing.assert_allclose(act, exp, rtol=2 * info.eps, atol=2 * info.eps)
 
     @pytest.mark.parametrize(
@@ -65,7 +65,7 @@ class TestPlan1d:
 
         exp = np.zeros_like(data)
         aux = np.zeros_like(data)
-        in1 = np.zeros(shape[0], dtype=factory.idtype)
+        in1 = np.zeros(shape[0], dtype=factory.input_dtype)
         out1 = np.zeros_like(in1)
         plan1 = factory.create_plan(1, in1, out1)
         for j in range(shape[1]):
@@ -73,7 +73,7 @@ class TestPlan1d:
             plan1.execute()
             aux[:, j] = out1
 
-        in2 = np.zeros(shape[1], dtype=factory.idtype)
+        in2 = np.zeros(shape[1], dtype=factory.input_dtype)
         out2 = np.zeros_like(in2)
         plan2 = factory.create_plan(1, in2, out2)
         for i in range(shape[0]):
@@ -81,7 +81,7 @@ class TestPlan1d:
             plan2.execute()
             exp[i, :] = out2
 
-        info = np.finfo(factory.odtype)
+        info = np.finfo(factory.output_dtype)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
 
     @pytest.mark.parametrize(
@@ -114,7 +114,7 @@ class TestPlan1d:
         plan.execute()
 
         aux1 = np.zeros_like(data)
-        in1 = np.zeros(shape[2], dtype=factory.idtype)
+        in1 = np.zeros(shape[2], dtype=factory.input_dtype)
         out1 = np.zeros_like(in1)
         plan1 = factory.create_plan(1, in1, out1)
         for i in range(shape[0]):
@@ -124,7 +124,7 @@ class TestPlan1d:
                 aux1[i, j, :] = out1
 
         aux2 = np.zeros_like(data)
-        in2 = np.zeros(shape[1], dtype=factory.idtype)
+        in2 = np.zeros(shape[1], dtype=factory.input_dtype)
         out2 = np.zeros_like(in2)
         plan2 = factory.create_plan(1, in2, out2)
         for i in range(shape[0]):
@@ -134,7 +134,7 @@ class TestPlan1d:
                 aux2[i, :, k] = out2
 
         exp = np.zeros_like(data)
-        in3 = np.zeros(shape[0], dtype=factory.idtype)
+        in3 = np.zeros(shape[0], dtype=factory.input_dtype)
         out3 = np.zeros_like(in3)
         plan3 = factory.create_plan(1, in3, out3)
         for j in range(shape[1]):
@@ -143,7 +143,7 @@ class TestPlan1d:
                 plan3.execute()
                 exp[:, j, k] = out3
 
-        info = np.finfo(factory.odtype)
+        info = np.finfo(factory.output_dtype)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
 
     @pytest.mark.parametrize(

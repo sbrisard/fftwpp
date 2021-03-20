@@ -46,8 +46,8 @@ class AbstractTestPlanFactory:
     )
     def test_invalid_shape(self, ishape, oshape):
         factory = self.create_plan_factory()
-        input = np.empty(ishape, dtype=factory.idtype)
-        output = np.empty(oshape, dtype=factory.odtype)
+        input = np.empty(ishape, dtype=factory.input_dtype)
+        output = np.empty(oshape, dtype=factory.output_dtype)
         with pytest.raises(ValueError):
             factory.create_plan(input.ndim, input, output)
 

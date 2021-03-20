@@ -88,9 +88,9 @@ void create_bindings_for_plan_factory(pybind11::module m,
            })
       .def_property_readonly("flags", &Factory::get_flags)
       .def_property_readonly_static(
-          "idtype",
+          "input_dtype",
           [](pybind11::object) { return pybind11::dtype::of<InputType>(); })
-      .def_property_readonly_static("odtype", [](pybind11::object) {
+      .def_property_readonly_static("output_dtype", [](pybind11::object) {
         return pybind11::dtype::of<OutputType>();
       });
 }
