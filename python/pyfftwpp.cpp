@@ -41,8 +41,11 @@ void assert_c_contiguous(pybind11::array_t<T> array) {
 }
 
 template <typename InputType, typename OutputType>
-void create_bindings_for_plan_factory(pybind11::module m, char* const class_name) {
+void create_bindings_for_plan_factory(pybind11::module m,
+                                      char* const class_name) {
   using Factory = fftw::PlanFactory<InputType, OutputType>;
+  using InputArray = pybind11::array_t<InputType>;
+  using OutputArray = pybind11::array_t<OutputType>;
   pybind11::class_<Factory>(m, class_name)
       .def(pybind11::init<>())
       .def("set_forward", &Factory::set_forward)
@@ -63,38 +66,37 @@ void create_bindings_for_plan_factory(pybind11::module m, char* const class_name
       .def("unset_preserve_input", &Factory::unset_preserve_intput)
       .def("set_unaligned", &Factory::set_unaligned)
       .def("unset_unaligned", &Factory::unset_unaligned)
+      .def("create_plan",
+           [](Factory& self, int rank, InputArray in, OutputArray out) {
+             assert_c_contiguous(in);
+             assert_c_contiguous(out);
+             assert_same_shape(in, out);
+             pybind11::buffer_info info = in.request();
+             if (rank > info.ndim) {
+               std::ostringstream stream;
+               stream << "rank must be lower than ndim: " << rank << " > "
+                      << info.ndim;
+               throw std::invalid_argument(stream.str());
+             }
+             std::vector<int> shape(info.shape.size());
+             for (auto i = 0; i < info.ndim; i++) {
+               shape[i] = info.shape[i];
+             }
+             auto p = self.create_plan(rank, shape, in.mutable_data(),
+                                       out.mutable_data());
+             return new fftw::Plan{p};
+           })
       .def_property_readonly("flags", &Factory::get_flags);
 }
 
 template <typename InputType, typename OutputType>
 void create_bindings_for_plan(pybind11::module m, char* const class_name) {
-  using Plan = fftw::Plan<InputType, OutputType>;
+  using Plan = fftw::Plan;
   using InputArray = pybind11::array_t<InputType>;
   using OutputArray = pybind11::array_t<OutputType>;
 
   pybind11::class_<Plan>(m, class_name)
-      .def(pybind11::init([](int rank, InputArray in, OutputArray out, int sign,
-                             unsigned flags) {
-        assert_c_contiguous(in);
-        assert_c_contiguous(out);
-        assert_same_shape(in, out);
-        if ((sign != -1) && (sign != 1)) {
-          throw std::invalid_argument("sign must be -1 or +1");
-        }
-        pybind11::buffer_info info = in.request();
-        if (rank > info.ndim) {
-          std::ostringstream stream;
-          stream << "rank must be lower than ndim: " << rank << " > "
-                 << info.ndim;
-          throw std::invalid_argument(stream.str());
-        }
-        std::vector<int> shape(info.shape.size());
-        for (auto i = 0; i < info.ndim; i++) {
-          shape[i] = info.shape[i];
-        }
-        return new Plan{rank, shape, in.mutable_data(), out.mutable_data(),
-                        sign, flags};
-      }))
+      //.def(pybind11::init())
       .def("execute", &Plan::execute)
       .def("cost", &Plan::cost)
       .def("flops", &Plan::flops)
@@ -120,8 +122,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
       m, "PlanFactory_c128_c128");
   create_bindings_for_plan_factory<double, std::complex<double>>(
       m, "PlanFactory_f64_c128");
-  create_bindings_for_plan_factory<std::complex<double>, double>(
-      m, "PlanFactory_c128_f64");
+//  create_bindings_for_plan_factory<std::complex<double>, double>(
+//      m, "PlanFactory_c128_f64");
 
   create_bindings_for_plan<std::complex<double>, std::complex<double>>(
       m, "Plan_c128_c128");
