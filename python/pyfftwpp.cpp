@@ -86,7 +86,13 @@ void create_bindings_for_plan_factory(pybind11::module m,
                                        out.mutable_data());
              return new fftw::Plan{p};
            })
-      .def_property_readonly("flags", &Factory::get_flags);
+      .def_property_readonly("flags", &Factory::get_flags)
+      .def_property_readonly_static(
+          "idtype",
+          [](pybind11::object) { return pybind11::dtype::of<InputType>(); })
+      .def_property_readonly_static("odtype", [](pybind11::object) {
+        return pybind11::dtype::of<OutputType>();
+      });
 }
 
 template <typename InputType, typename OutputType>
@@ -120,12 +126,12 @@ PYBIND11_MODULE(pyfftwpp, m) {
 
   create_bindings_for_plan_factory<std::complex<double>, std::complex<double>>(
       m, "PlanFactory_c128_c128");
-  create_bindings_for_plan_factory<double, std::complex<double>>(
-      m, "PlanFactory_f64_c128");
-//  create_bindings_for_plan_factory<std::complex<double>, double>(
-//      m, "PlanFactory_c128_f64");
+//  create_bindings_for_plan_factory<double, std::complex<double>>(
+//      m, "PlanFactory_f64_c128");
+  //  create_bindings_for_plan_factory<std::complex<double>, double>(
+  //      m, "PlanFactory_c128_f64");
 
   create_bindings_for_plan<std::complex<double>, std::complex<double>>(
       m, "Plan_c128_c128");
-  create_bindings_for_plan<double, std::complex<double>>(m, "Plan_f64_c128");
+//  create_bindings_for_plan<double, std::complex<double>>(m, "Plan_f64_c128");
 }
