@@ -9,158 +9,40 @@ import faulthandler
 
 faulthandler.enable()
 
-
-class TestPlan1d:
-    input_type = np.complex128
-    output_type = np.complex128
-
+class AbstractPlanTest:
     def random(self, shape):
-        rng = np.random.default_rng(202103120214)
-        real = rng.random(size=shape, dtype=np.float64)
-        imag = rng.random(size=shape, dtype=np.float64)
-        return real + 1j * imag
+        raise NotImplementedError()
 
-    @pytest.mark.parametrize("size, sign", itertools.product(range(2, 17), (-1, 1)))
-    def test_fft(self, size, sign):
-        """
-        Compare 1D FFTs with direct numpy calculation. Data series are
-        small enough that tolerance can be set extremely low.
-        """
-        factory = PlanFactory().set_estimate()
-        data = self.random((size,))
-        if sign == -1:
-            exp = np.fft.fft(data)
-        else:
-            exp = size * np.fft.ifft(data)
-        act = np.zeros_like(data)
-        plan = factory.create_plan(data.ndim, data, act, sign)
-        plan.execute()
-        info = np.finfo(self.output_type)
-        np.testing.assert_allclose(act, exp, rtol=2 * info.eps, atol=2 * info.eps)
+    def output_shape(self, rank, input_shape):
+        raise NotImplementedError()
 
-    @pytest.mark.parametrize(
-        "shape, sign",
-        [
-            ((31, 31), -1),
-            ((31, 32), -1),
-            ((32, 31), -1),
-            ((32, 32), -1),
-            ((31, 31), 1),
-            ((31, 32), 1),
-            ((32, 31), 1),
-            ((32, 32), 1),
-        ],
-    )
-    def test_fft2(self, shape, sign):
+    def fft(self, data, sign=-1):
+        raise NotImplementedError()
+
+    def test_basic(self, shape, sign):
         data = self.random(shape)
-
-        act = np.zeros_like(data)
+        exp = self.fft(data, sign=sign)
+        act = np.zeros_like(exp, order="C")
         factory = PlanFactory().set_estimate()
         plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
 
-        exp = np.zeros_like(data)
-        aux = np.zeros_like(data)
-        in1 = np.zeros(shape[0], dtype=self.input_type)
-        out1 = np.zeros_like(in1)
-        plan1 = factory.create_plan(1, in1, out1, sign)
-        for j in range(shape[1]):
-            in1[:] = data[:, j]
-            plan1.execute()
-            aux[:, j] = out1
-
-        in2 = np.zeros(shape[1], dtype=self.input_type)
-        out2 = np.zeros_like(in2)
-        plan2 = factory.create_plan(1, in2, out2, sign)
-        for i in range(shape[0]):
-            in2[:] = aux[i, :]
-            plan2.execute()
-            exp[i, :] = out2
-
         info = np.finfo(self.output_type)
-        np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
+        np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=1000 * info.eps)
 
-    @pytest.mark.parametrize(
-        "shape, sign",
-        [
-            ((7, 8, 9), -1),
-            ((7, 9, 8), -1),
-            ((8, 7, 9), -1),
-            ((8, 9, 7), -1),
-            ((9, 7, 8), -1),
-            ((9, 8, 7), -1),
-            ((7, 8, 9), 1),
-            ((7, 9, 8), 1),
-            ((8, 7, 9), 1),
-            ((8, 9, 7), 1),
-            ((9, 7, 8), 1),
-            ((9, 8, 7), 1),
-        ],
-    )
-    def test_fft3(self, shape, sign):
-        data = self.random(shape)
-
-        act = np.zeros_like(data)
-        factory = PlanFactory().set_estimate()
-        plan = factory.create_plan(data.ndim, data, act, sign)
-        plan.execute()
-
-        aux1 = np.zeros_like(data)
-        in1 = np.zeros(shape[2], dtype=self.input_type)
-        out1 = np.zeros_like(in1)
-        plan1 = factory.create_plan(1, in1, out1, sign)
-        for i in range(shape[0]):
-            for j in range(shape[1]):
-                in1[:] = data[i, j, :]
-                plan1.execute()
-                aux1[i, j, :] = out1
-
-        aux2 = np.zeros_like(data)
-        in2 = np.zeros(shape[1], dtype=self.input_type)
-        out2 = np.zeros_like(in2)
-        plan2 = factory.create_plan(1, in2, out2, sign)
-        for i in range(shape[0]):
-            for k in range(shape[2]):
-                in2[:] = aux1[i, :, k]
-                plan2.execute()
-                aux2[i, :, k] = out2
-
-        exp = np.zeros_like(data)
-        in3 = np.zeros(shape[0], dtype=self.input_type)
-        out3 = np.zeros_like(in3)
-        plan3 = factory.create_plan(1, in3, out3, sign)
-        for j in range(shape[1]):
-            for k in range(shape[2]):
-                in3[:] = aux2[:, j, k]
-                plan3.execute()
-                exp[:, j, k] = out3
-
-        info = np.finfo(self.output_type)
-        np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
-
-    @pytest.mark.parametrize(
-        "rank, shape, sign",
-        [
-            (1, (4, 5), -1),
-            (1, (4, 5, 6), -1),
-            (2, (4, 5, 6), -1),
-            (2, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7, 8), -1),
-        ],
-    )
-    def test_fft_advanced(self, rank, shape, sign, rtol=1e-15, atol=1e-15):
+    def test_advanced(self, rank, shape, sign):
         ndim = len(shape)
         data = self.random(shape)
-        act = np.zeros_like(data)
+        act = np.zeros(self.output_shape(rank, shape), self.output_type)
         factory = PlanFactory().set_estimate()
         plan = factory.create_plan(rank, data, act, sign)
         plan.execute()
 
-        in1 = np.zeros(shape[:rank], dtype=np.complex128)
-        out1 = np.zeros_like(in1)
+        exp = np.zeros_like(act)
+
+        in1 = np.zeros(shape[:rank], dtype=self.input_type)
+        out1 = np.zeros(self.output_shape(rank, in1.shape), dtype=self.output_type)
         plan1 = factory.create_plan(rank, in1, out1, sign)
-        exp = np.zeros_like(data)
 
         slices = tuple(slice(0, shape[i]) for i in range(rank))
         ranges = (range(shape[i]) for i in range(rank, ndim))
@@ -173,23 +55,26 @@ class TestPlan1d:
         np.testing.assert_equal(act, exp)
 
 
-class TestPlanFloat64ToComplex128:
-    input_type = np.float64
+class TestComplex128ToComplex128(AbstractPlanTest):
+    input_type = np.complex128
     output_type = np.complex128
-
-    def fft(self, *args, **kwargs):
-        return np.fft.rfftn(*args, **kwargs)
 
     def random(self, shape):
         rng = np.random.default_rng(202103120214)
-        return rng.random(size=shape, dtype=self.input_type)
+        real = rng.random(size=shape, dtype=np.float64)
+        imag = rng.random(size=shape, dtype=np.float64)
+        return real + 1j * imag
 
     def output_shape(self, rank, input_shape):
-        shape = list(input_shape)
-        n = shape[rank - 1]
-        shape[rank - 1] = n // 2 + 1
-        return tuple(shape)
+        return input_shape
 
+    def fft(self, data, sign=-1):
+        if sign == -1:
+            return np.fft.fftn(data)
+        if sign == 1:
+            return data.size * np.fft.ifftn(data)
+
+    @pytest.mark.parametrize("sign", [-1, 1])
     @pytest.mark.parametrize(
         "shape",
         [
@@ -220,16 +105,8 @@ class TestPlanFloat64ToComplex128:
             (9, 8, 7),
         ],
     )
-    def test_basic(self, shape):
-        data = self.random(shape)
-        exp = self.fft(data)
-        act = np.zeros_like(exp, order="C")
-        factory = PlanFactory().set_estimate()
-        plan = factory.create_plan(data.ndim, data, act)
-        plan.execute()
-
-        info = np.finfo(self.output_type)
-        np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
+    def test_basic(self, shape, sign):
+        super().test_basic(shape, sign)
 
     @pytest.mark.parametrize(
         "rank, shape, sign",
@@ -243,25 +120,70 @@ class TestPlanFloat64ToComplex128:
         ],
     )
     def test_advanced(self, rank, shape, sign):
-        ndim = len(shape)
-        data = self.random(shape)
-        act = np.zeros(self.output_shape(rank, shape), self.output_type)
-        factory = PlanFactory().set_estimate()
-        plan = factory.create_plan(rank, data, act)
-        plan.execute()
+        super().test_advanced(rank, shape, sign)
 
-        exp = np.zeros_like(act)
 
-        in1 = np.zeros(shape[:rank], dtype=self.input_type)
-        out1 = np.zeros(self.output_shape(rank, in1.shape), dtype=self.output_type)
-        plan1 = factory.create_plan(rank, in1, out1)
+class TestFloat64ToComplex128(AbstractPlanTest):
+    input_type = np.float64
+    output_type = np.complex128
 
-        slices = tuple(slice(0, shape[i]) for i in range(rank))
-        ranges = (range(shape[i]) for i in range(rank, ndim))
-        multi_indices = itertools.product(*ranges)
-        for multi_index in multi_indices:
-            in1[...] = data[slices + multi_index]
-            plan1.execute()
-            exp[slices + multi_index] = out1
+    def fft(self, data, sign=-1):
+        return np.fft.rfftn(data)
 
-        np.testing.assert_equal(act, exp)
+    def random(self, shape):
+        rng = np.random.default_rng(202103120214)
+        return rng.random(size=shape, dtype=self.input_type)
+
+    def output_shape(self, rank, input_shape):
+        shape = list(input_shape)
+        n = shape[rank - 1]
+        shape[rank - 1] = n // 2 + 1
+        return tuple(shape)
+
+    @pytest.mark.parametrize("sign", [-1])
+    @pytest.mark.parametrize(
+        "shape",
+        [
+            (2,),
+            (3,),
+            (4,),
+            (5,),
+            (6,),
+            (7,),
+            (8,),
+            (9,),
+            (10,),
+            (11,),
+            (12,),
+            (13,),
+            (14,),
+            (15,),
+            (16,),
+            (31, 31),
+            (31, 32),
+            (32, 31),
+            (32, 32),
+            (7, 8, 9),
+            (7, 9, 8),
+            (8, 7, 9),
+            (8, 9, 7),
+            (9, 7, 8),
+            (9, 8, 7),
+        ],
+    )
+    def test_basic(self, shape, sign):
+        super().test_basic(shape, sign)
+
+    @pytest.mark.parametrize(
+        "rank, shape, sign",
+        [
+            (1, (4, 5), -1),
+            (1, (4, 5, 6), -1),
+            (2, (4, 5, 6), -1),
+            (2, (4, 5, 6, 7), -1),
+            (3, (4, 5, 6, 7), -1),
+            (3, (4, 5, 6, 7, 8), -1),
+        ],
+    )
+    def test_advanced(self, rank, shape, sign):
+        super().test_advanced(rank, shape, sign)
