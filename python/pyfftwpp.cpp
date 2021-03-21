@@ -81,9 +81,8 @@ void create_bindings_for_plan_factory(pybind11::module m,
             for (auto i = 0; i < info.ndim; i++) {
               shape[i] = info.shape[i];
             }
-            auto p = self.create_plan(rank, shape, in.mutable_data(),
+            return self.create_plan(rank, shape, in.mutable_data(),
                                       out.mutable_data(), sign);
-            return new fftw::Plan{p};
           },
           "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
