@@ -89,6 +89,30 @@ PYBIND11_MODULE(pyfftwpp, m) {
           },
           "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
+      .def(
+          "create_plan",
+          [](fftw::PlanFactory& self, int rank, DoubleArray in,
+             ComplexArray out, int sign) {
+            assert_c_contiguous(in);
+            assert_c_contiguous(out);
+            // TODO Check shape of input and output arrays
+            // assert_same_shape(in, out);
+            pybind11::buffer_info info = in.request();
+            if (rank > info.ndim) {
+              std::ostringstream stream;
+              stream << "rank must be lower than ndim: " << rank << " > "
+                     << info.ndim;
+              throw std::invalid_argument(stream.str());
+            }
+            std::vector<int> shape(info.shape.size());
+            for (auto i = 0; i < info.ndim; i++) {
+              shape[i] = info.shape[i];
+            }
+            return self.create_plan(rank, shape, in.mutable_data(),
+                                    out.mutable_data(), sign);
+          },
+          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+          pybind11::arg("sign") = -1)
       .def_property_readonly("flags", &fftw::PlanFactory::get_flags);
 
   pybind11::class_<fftw::Plan>(m, "Plan")
