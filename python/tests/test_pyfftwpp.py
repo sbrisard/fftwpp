@@ -3,14 +3,15 @@ import numpy as np
 
 import pytest
 
-import pyfftwpp as fftw
+from pyfftwpp import PlanFactory
 
 import faulthandler
 
 faulthandler.enable()
 
 class TestPlan1d:
-    PlanFactory = fftw.PlanFactory_c128_c128
+    input_type = np.complex128
+    output_type = np.complex128
 
     def random(self, shape):
         rng = np.random.default_rng(202103120214)
@@ -24,7 +25,7 @@ class TestPlan1d:
         Compare 1D FFTs with direct numpy calculation. Data series are
         small enough that tolerance can be set extremely low.
         """
-        factory = self.PlanFactory().set_estimate()
+        factory = PlanFactory().set_estimate()
         data = self.random((size,))
         if sign == -1:
             exp = np.fft.fft(data)
@@ -33,7 +34,7 @@ class TestPlan1d:
         act = np.zeros_like(data)
         plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
-        info = np.finfo(factory.output_dtype)
+        info = np.finfo(self.output_type)
         np.testing.assert_allclose(act, exp, rtol=2 * info.eps, atol=2 * info.eps)
 
     @pytest.mark.parametrize(
@@ -53,13 +54,13 @@ class TestPlan1d:
         data = self.random(shape)
 
         act = np.zeros_like(data)
-        factory = self.PlanFactory().set_estimate()
+        factory = PlanFactory().set_estimate()
         plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
 
         exp = np.zeros_like(data)
         aux = np.zeros_like(data)
-        in1 = np.zeros(shape[0], dtype=factory.input_dtype)
+        in1 = np.zeros(shape[0], dtype=self.input_type)
         out1 = np.zeros_like(in1)
         plan1 = factory.create_plan(1, in1, out1, sign)
         for j in range(shape[1]):
@@ -67,7 +68,7 @@ class TestPlan1d:
             plan1.execute()
             aux[:, j] = out1
 
-        in2 = np.zeros(shape[1], dtype=factory.input_dtype)
+        in2 = np.zeros(shape[1], dtype=self.input_type)
         out2 = np.zeros_like(in2)
         plan2 = factory.create_plan(1, in2, out2, sign)
         for i in range(shape[0]):
@@ -75,7 +76,7 @@ class TestPlan1d:
             plan2.execute()
             exp[i, :] = out2
 
-        info = np.finfo(factory.output_dtype)
+        info = np.finfo(self.output_type)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
 
     @pytest.mark.parametrize(
@@ -99,12 +100,12 @@ class TestPlan1d:
         data = self.random(shape)
 
         act = np.zeros_like(data)
-        factory = self.PlanFactory().set_estimate()
+        factory = PlanFactory().set_estimate()
         plan = factory.create_plan(data.ndim, data, act, sign)
         plan.execute()
 
         aux1 = np.zeros_like(data)
-        in1 = np.zeros(shape[2], dtype=factory.input_dtype)
+        in1 = np.zeros(shape[2], dtype=self.input_type)
         out1 = np.zeros_like(in1)
         plan1 = factory.create_plan(1, in1, out1, sign)
         for i in range(shape[0]):
@@ -114,7 +115,7 @@ class TestPlan1d:
                 aux1[i, j, :] = out1
 
         aux2 = np.zeros_like(data)
-        in2 = np.zeros(shape[1], dtype=factory.input_dtype)
+        in2 = np.zeros(shape[1], dtype=self.input_type)
         out2 = np.zeros_like(in2)
         plan2 = factory.create_plan(1, in2, out2, sign)
         for i in range(shape[0]):
@@ -124,7 +125,7 @@ class TestPlan1d:
                 aux2[i, :, k] = out2
 
         exp = np.zeros_like(data)
-        in3 = np.zeros(shape[0], dtype=factory.input_dtype)
+        in3 = np.zeros(shape[0], dtype=self.input_type)
         out3 = np.zeros_like(in3)
         plan3 = factory.create_plan(1, in3, out3, sign)
         for j in range(shape[1]):
@@ -133,7 +134,7 @@ class TestPlan1d:
                 plan3.execute()
                 exp[:, j, k] = out3
 
-        info = np.finfo(factory.output_dtype)
+        info = np.finfo(self.output_type)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=100 * info.eps)
 
     @pytest.mark.parametrize(
@@ -151,7 +152,7 @@ class TestPlan1d:
         ndim = len(shape)
         data = self.random(shape)
         act = np.zeros_like(data)
-        factory = self.PlanFactory().set_estimate()
+        factory = PlanFactory().set_estimate()
         plan = factory.create_plan(rank, data, act, sign)
         plan.execute()
 

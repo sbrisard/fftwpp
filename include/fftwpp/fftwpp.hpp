@@ -42,123 +42,86 @@ class Plan {
   fftw_plan p;
 };
 
-template <typename InputType, typename OutputType>
 class PlanFactory {
- public:
-  // FIXME: return a fftw_plan rather than a fftw::Plan because I don't know
-  // how to call new in the python bindings.
-  fftw_plan create_plan(int rank, std::vector<int> const &shape, InputType *in,
-                        OutputType *out, int sign = -1);
-
-  unsigned get_flags() { return flags; }
-
-  PlanFactory<InputType, OutputType> &set_estimate() {
-    return set_flag(FFTW_ESTIMATE);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_estimate() {
-    return unset_flag(FFTW_ESTIMATE);
-  }
-
-  PlanFactory<InputType, OutputType> &set_measure() {
-    return set_flag(FFTW_MEASURE);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_measure() {
-    return unset_flag(FFTW_MEASURE);
-  }
-
-  PlanFactory<InputType, OutputType> &set_patient() {
-    return set_flag(FFTW_PATIENT);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_patient() {
-    return unset_flag(FFTW_PATIENT);
-  }
-
-  PlanFactory<InputType, OutputType> &set_exhaustive() {
-    return set_flag(FFTW_EXHAUSTIVE);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_exhaustive() {
-    return unset_flag(FFTW_EXHAUSTIVE);
-  }
-
-  PlanFactory<InputType, OutputType> &set_wisdom_only() {
-    return set_flag(FFTW_WISDOM_ONLY);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_wisdom_only() {
-    return unset_flag(FFTW_WISDOM_ONLY);
-  }
-
-  PlanFactory<InputType, OutputType> &set_destroy_input() {
-    return set_flag(FFTW_DESTROY_INPUT);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_destroy_input() {
-    return unset_flag(FFTW_DESTROY_INPUT);
-  }
-
-  PlanFactory<InputType, OutputType> &set_preserve_input() {
-    return set_flag(FFTW_PRESERVE_INPUT);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_preserve_intput() {
-    return unset_flag(FFTW_PRESERVE_INPUT);
-  }
-
-  PlanFactory<InputType, OutputType> &set_unaligned() {
-    return set_flag(FFTW_UNALIGNED);
-  }
-
-  PlanFactory<InputType, OutputType> &unset_unaligned() {
-    return unset_flag(FFTW_UNALIGNED);
-  }
-
  private:
   unsigned flags = 0;
 
-  PlanFactory<InputType, OutputType> &set_flag(unsigned flag) {
+  PlanFactory &set_flag(unsigned flag) {
     flags |= flag;
     return *this;
   }
 
-  PlanFactory<InputType, OutputType> &unset_flag(unsigned flag) {
+  PlanFactory &unset_flag(unsigned flag) {
     flags ^= flag;
     return *this;
   }
+
+ public:
+  // FIXME: return a fftw_plan rather than a fftw::Plan because I don't know
+  // how to call new in the python bindings.
+  fftw_plan create_plan(int rank, std::vector<int> const &shape,
+                        std::complex<double> *in, std::complex<double> *out,
+                        int sign) {
+    if ((sign != -1) && (sign != 1)) {
+      throw std::invalid_argument("sign must be -1 or +1");
+    }
+    auto ndim = shape.size();
+    int stride = 1;
+    for (int i = rank; i < ndim; i++) stride *= shape[i];
+    return fftw_plan_many_dft(rank, shape.data(), stride,
+                              reinterpret_cast<fftw_complex *>(in), nullptr,
+                              stride, 1, reinterpret_cast<fftw_complex *>(out),
+                              nullptr, stride, 1, sign, flags);
+  }
+
+  fftw_plan create_plan(int rank, std::vector<int> const &shape, double *in,
+                        std::complex<double> *out, int sign) {
+    if (sign != -1) {
+      throw std::invalid_argument("sign must be -1");
+    }
+    auto ndim = shape.size();
+    int stride = 1;
+    for (int i = rank; i < ndim; i++) stride *= shape[i];
+    return fftw_plan_many_dft_r2c(
+        rank, shape.data(), stride, in, nullptr, stride, 1,
+        reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1, flags);
+  }
+
+  unsigned get_flags() { return flags; }
+
+  PlanFactory &set_estimate() { return set_flag(FFTW_ESTIMATE); }
+
+  PlanFactory &unset_estimate() { return unset_flag(FFTW_ESTIMATE); }
+
+  PlanFactory &set_measure() { return set_flag(FFTW_MEASURE); }
+
+  PlanFactory &unset_measure() { return unset_flag(FFTW_MEASURE); }
+
+  PlanFactory &set_patient() { return set_flag(FFTW_PATIENT); }
+
+  PlanFactory &unset_patient() { return unset_flag(FFTW_PATIENT); }
+
+  PlanFactory &set_exhaustive() { return set_flag(FFTW_EXHAUSTIVE); }
+
+  PlanFactory &unset_exhaustive() { return unset_flag(FFTW_EXHAUSTIVE); }
+
+  PlanFactory &set_wisdom_only() { return set_flag(FFTW_WISDOM_ONLY); }
+
+  PlanFactory &unset_wisdom_only() { return unset_flag(FFTW_WISDOM_ONLY); }
+
+  PlanFactory &set_destroy_input() { return set_flag(FFTW_DESTROY_INPUT); }
+
+  PlanFactory &unset_destroy_input() { return unset_flag(FFTW_DESTROY_INPUT); }
+
+  PlanFactory &set_preserve_input() { return set_flag(FFTW_PRESERVE_INPUT); }
+
+  PlanFactory &unset_preserve_intput() {
+    return unset_flag(FFTW_PRESERVE_INPUT);
+  }
+
+  PlanFactory &set_unaligned() { return set_flag(FFTW_UNALIGNED); }
+
+  PlanFactory &unset_unaligned() { return unset_flag(FFTW_UNALIGNED); }
 };
-
-template <>
-fftw_plan PlanFactory<std::complex<double>, std::complex<double>>::create_plan(
-    int rank, std::vector<int> const &shape, std::complex<double> *in,
-    std::complex<double> *out, int sign) {
-  if ((sign != -1) && (sign != 1)) {
-    throw std::invalid_argument("sign must be -1 or +1");
-  }
-  auto ndim = shape.size();
-  int stride = 1;
-  for (int i = rank; i < ndim; i++) stride *= shape[i];
-  return fftw_plan_many_dft(rank, shape.data(), stride,
-                            reinterpret_cast<fftw_complex *>(in), nullptr,
-                            stride, 1, reinterpret_cast<fftw_complex *>(out),
-                            nullptr, stride, 1, sign, flags);
-}
-
-template <>
-fftw_plan PlanFactory<double, std::complex<double>>::create_plan(
-    int rank, std::vector<int> const &shape, double *in,
-    std::complex<double> *out, int sign) {
-  if (sign != -1) {
-    throw std::invalid_argument("sign must be -1");
-  }
-  auto ndim = shape.size();
-  int stride = 1;
-  for (int i = rank; i < ndim; i++) stride *= shape[i];
-  return fftw_plan_many_dft_r2c(rank, shape.data(), stride, in, nullptr, stride,
-                                1, reinterpret_cast<fftw_complex *>(out),
-                                nullptr, stride, 1, flags);
-}
 
 }  // namespace fftw

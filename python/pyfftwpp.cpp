@@ -40,12 +40,11 @@ void assert_c_contiguous(pybind11::array_t<T> array) {
   }
 }
 
-template <typename InputType, typename OutputType>
 void create_bindings_for_plan_factory(pybind11::module m,
                                       char* const class_name) {
-  using Factory = fftw::PlanFactory<InputType, OutputType>;
-  using InputArray = pybind11::array_t<InputType>;
-  using OutputArray = pybind11::array_t<OutputType>;
+  using Factory = fftw::PlanFactory;
+  using DoubleArray = pybind11::array_t<double>;
+  using ComplexArray = pybind11::array_t<std::complex<double>>;
   pybind11::class_<Factory>(m, class_name)
       .def(pybind11::init<>())
       .def("set_estimate", &Factory::set_estimate)
@@ -66,7 +65,7 @@ void create_bindings_for_plan_factory(pybind11::module m,
       .def("unset_unaligned", &Factory::unset_unaligned)
       .def(
           "create_plan",
-          [](Factory& self, int rank, InputArray in, OutputArray out,
+          [](Factory& self, int rank, ComplexArray in, ComplexArray out,
              int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
@@ -88,13 +87,7 @@ void create_bindings_for_plan_factory(pybind11::module m,
           },
           "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
-      .def_property_readonly("flags", &Factory::get_flags)
-      .def_property_readonly_static(
-          "input_dtype",
-          [](pybind11::object) { return pybind11::dtype::of<InputType>(); })
-      .def_property_readonly_static("output_dtype", [](pybind11::object) {
-        return pybind11::dtype::of<OutputType>();
-      });
+      .def_property_readonly("flags", &Factory::get_flags);
 }
 
 void create_bindings_for_plan(pybind11::module m, char* const class_name) {
@@ -113,8 +106,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
   m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
-  create_bindings_for_plan_factory<std::complex<double>, std::complex<double>>(
-      m, "PlanFactory_c128_c128");
+  create_bindings_for_plan_factory(m, "PlanFactory");
   //  create_bindings_for_plan_factory<double, std::complex<double>>(
   //      m, "PlanFactory_f64_c128");
   //  create_bindings_for_plan_factory<std::complex<double>, double>(

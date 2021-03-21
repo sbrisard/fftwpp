@@ -1,15 +1,9 @@
-import abc
-import sys
-
 import numpy as np
 import pytest
-import pyfftwpp as fftw
+
+from pyfftwpp import PlanFactory
 
 class AbstractTestPlanFactory:
-    @abc.abstractmethod
-    def create_plan_factory(self):
-        pass
-
     @pytest.mark.parametrize(
         "flag_name, flag",
         [
@@ -24,7 +18,7 @@ class AbstractTestPlanFactory:
         ],
     )
     def test_flag(self, flag_name, flag):
-        factory = self.create_plan_factory()
+        factory = PlanFactory()
         set_method = getattr(factory, f"set_{flag_name}")
         unset_method = getattr(factory, f"unset_{flag_name}")
         set_method()
@@ -45,15 +39,15 @@ class AbstractTestPlanFactory:
         ],
     )
     def test_invalid_shape(self, ishape, oshape):
-        factory = self.create_plan_factory()
-        input = np.empty(ishape, dtype=factory.input_dtype)
-        output = np.empty(oshape, dtype=factory.output_dtype)
+        factory = PlanFactory()
+        input = np.empty(ishape, dtype=self.input_type)
+        output = np.empty(oshape, dtype=self.output_type)
         with pytest.raises(ValueError):
             factory.create_plan(input.ndim, input, output)
 
 class TestPlanFactory_c128_c128(AbstractTestPlanFactory):
-    def create_plan_factory(self):
-        return fftw.PlanFactory_c128_c128()
+    input_type = np.complex128
+    output_type = np.complex128
 
 # class TestPlanFactory_f64_c128(AbstractTestPlanFactory):
 #     def create_plan_factory(self):
