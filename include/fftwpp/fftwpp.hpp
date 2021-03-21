@@ -11,27 +11,26 @@ namespace fftw {
 
 class Plan {
  public:
-  Plan(fftw_plan const p) : p{p} {}
+  Plan(fftw_plan const p) : p{p, [](fftw_plan p) { fftw_destroy_plan(p); }} {}
 
-  Plan(const Plan &) = delete;
-  Plan &operator=(const Plan &) = delete;
-  Plan(Plan &&) = delete;
-  Plan &operator=(Plan &&) = delete;
+  //  Plan(const Plan &) = delete;
+  //  Plan &operator=(const Plan &) = delete;
+  //  Plan(Plan &&) = delete;
+  //  Plan &operator=(Plan &&) = delete;
+  //  ~Plan() { fftw_destroy_plan(p.get()); }
 
-  ~Plan() { fftw_destroy_plan(p); }
+  void execute() const { fftw_execute(p.get()); }
 
-  void execute() const { fftw_execute(p); }
-
-  double cost() const { return fftw_cost(p); }
+  double cost() const { return fftw_cost(p.get()); }
 
   std::tuple<double, double, double> flops() const {
     double add, mul, fma;
-    fftw_flops(p, &add, &mul, &fma);
+    fftw_flops(p.get(), &add, &mul, &fma);
     return std::make_tuple(add, mul, fma);
   }
 
   std::string repr() const {
-    char *c_str = fftw_sprint_plan(p);
+    char *c_str = fftw_sprint_plan(p.get());
     std::string cpp_str{c_str};
     // TODO: this leads to the computer crashing.
     // std::free(c_str);
@@ -39,7 +38,7 @@ class Plan {
   }
 
  private:
-  fftw_plan p;
+  std::shared_ptr<struct fftw_plan_s> p;
 };
 
 class PlanFactory {
