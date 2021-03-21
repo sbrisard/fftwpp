@@ -13,12 +13,6 @@ class Plan {
  public:
   Plan(fftw_plan const p) : p{p, [](fftw_plan p) { fftw_destroy_plan(p); }} {}
 
-  //  Plan(const Plan &) = delete;
-  //  Plan &operator=(const Plan &) = delete;
-  //  Plan(Plan &&) = delete;
-  //  Plan &operator=(Plan &&) = delete;
-  //  ~Plan() { fftw_destroy_plan(p.get()); }
-
   void execute() const { fftw_execute(p.get()); }
 
   double cost() const { return fftw_cost(p.get()); }
