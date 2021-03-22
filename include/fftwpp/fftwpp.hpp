@@ -26,8 +26,7 @@ class Plan {
   std::string repr() const {
     char *c_str = fftw_sprint_plan(p.get());
     std::string cpp_str{c_str};
-    // TODO: this leads to the computer crashing.
-    // std::free(c_str);
+    std::free(c_str);
     return cpp_str;
   }
 
