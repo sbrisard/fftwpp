@@ -19,6 +19,36 @@ class AbstractPlanTest:
     def fft(self, data, sign=-1):
         raise NotImplementedError()
 
+    @pytest.mark.parametrize(
+        "shape",
+        [
+            (2,),
+            (3,),
+            (4,),
+            (5,),
+            (6,),
+            (7,),
+            (8,),
+            (9,),
+            (10,),
+            (11,),
+            (12,),
+            (13,),
+            (14,),
+            (15,),
+            (16,),
+            (31, 31),
+            (31, 32),
+            (32, 31),
+            (32, 32),
+            (7, 8, 9),
+            (7, 9, 8),
+            (8, 7, 9),
+            (8, 9, 7),
+            (9, 7, 8),
+            (9, 8, 7),
+        ],
+    )
     def test_basic(self, shape, sign):
         data = self.random(shape)
         exp = self.fft(data, sign=sign)
@@ -30,6 +60,17 @@ class AbstractPlanTest:
         info = np.finfo(self.output_type)
         np.testing.assert_allclose(act, exp, rtol=100 * info.eps, atol=1000 * info.eps)
 
+    @pytest.mark.parametrize(
+        "rank, shape",
+        [
+            (1, (4, 5)),
+            (1, (4, 5, 6)),
+            (2, (4, 5, 6)),
+            (2, (4, 5, 6, 7)),
+            (3, (4, 5, 6, 7)),
+            (3, (4, 5, 6, 7, 8)),
+        ],
+    )
     def test_advanced(self, rank, shape, sign):
         ndim = len(shape)
         data = self.random(shape)
@@ -75,50 +116,10 @@ class TestComplex128ToComplex128(AbstractPlanTest):
             return data.size * np.fft.ifftn(data)
 
     @pytest.mark.parametrize("sign", [-1, 1])
-    @pytest.mark.parametrize(
-        "shape",
-        [
-            (2,),
-            (3,),
-            (4,),
-            (5,),
-            (6,),
-            (7,),
-            (8,),
-            (9,),
-            (10,),
-            (11,),
-            (12,),
-            (13,),
-            (14,),
-            (15,),
-            (16,),
-            (31, 31),
-            (31, 32),
-            (32, 31),
-            (32, 32),
-            (7, 8, 9),
-            (7, 9, 8),
-            (8, 7, 9),
-            (8, 9, 7),
-            (9, 7, 8),
-            (9, 8, 7),
-        ],
-    )
     def test_basic(self, shape, sign):
         super().test_basic(shape, sign)
 
-    @pytest.mark.parametrize(
-        "rank, shape, sign",
-        [
-            (1, (4, 5), -1),
-            (1, (4, 5, 6), -1),
-            (2, (4, 5, 6), -1),
-            (2, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7, 8), -1),
-        ],
-    )
+    @pytest.mark.parametrize("sign", [-1, 1])
     def test_advanced(self, rank, shape, sign):
         super().test_advanced(rank, shape, sign)
 
@@ -141,49 +142,9 @@ class TestFloat64ToComplex128(AbstractPlanTest):
         return tuple(shape)
 
     @pytest.mark.parametrize("sign", [-1])
-    @pytest.mark.parametrize(
-        "shape",
-        [
-            (2,),
-            (3,),
-            (4,),
-            (5,),
-            (6,),
-            (7,),
-            (8,),
-            (9,),
-            (10,),
-            (11,),
-            (12,),
-            (13,),
-            (14,),
-            (15,),
-            (16,),
-            (31, 31),
-            (31, 32),
-            (32, 31),
-            (32, 32),
-            (7, 8, 9),
-            (7, 9, 8),
-            (8, 7, 9),
-            (8, 9, 7),
-            (9, 7, 8),
-            (9, 8, 7),
-        ],
-    )
     def test_basic(self, shape, sign):
         super().test_basic(shape, sign)
 
-    @pytest.mark.parametrize(
-        "rank, shape, sign",
-        [
-            (1, (4, 5), -1),
-            (1, (4, 5, 6), -1),
-            (2, (4, 5, 6), -1),
-            (2, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7), -1),
-            (3, (4, 5, 6, 7, 8), -1),
-        ],
-    )
+    @pytest.mark.parametrize("sign", [-1])
     def test_advanced(self, rank, shape, sign):
         super().test_advanced(rank, shape, sign)
