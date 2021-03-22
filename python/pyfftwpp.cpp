@@ -8,36 +8,48 @@
 using DoubleArray = pybind11::array_t<double>;
 using ComplexArray = pybind11::array_t<std::complex<double>>;
 
+template <typename T>
+std::vector<int> to_ints(std::vector<T> a) {
+  std::vector<int> out(a.size());
+  for (size_t i = 0; i < a.size(); i++) {
+    out[i] = a[i];
+  }
+  return out;
+}
+
+void assert_rank_lower_than_ndim(size_t rank, size_t ndim) {
+  if (rank > ndim) {
+    std::ostringstream stream;
+    stream << "rank must be lower than ndim: " << rank << " > " << ndim;
+    throw std::invalid_argument(stream.str());
+  }
+}
+
 template <typename T1, typename T2>
 void assert_same_rank(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
-  pybind11::buffer_info info1 = arr1.request();
-  pybind11::buffer_info info2 = arr2.request();
-  if (info1.ndim != info2.ndim) {
+  if (arr1.ndim() != arr2.ndim()) {
     std::ostringstream stream;
-    stream << "arrays must have same rank: " << info1.ndim
-           << " != " << info2.ndim;
+    stream << "arrays must have same rank: " << arr1.ndim()
+           << " != " << arr2.ndim();
     throw std::invalid_argument(stream.str());
   }
 }
 
 template <typename T1, typename T2>
 void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
-  pybind11::buffer_info info1 = arr1.request();
-  pybind11::buffer_info info2 = arr2.request();
-  for (int i = 0; i < info1.ndim; i++) {
-    if (info2.shape[i] != info1.shape[i]) {
+  assert_same_rank(arr1, arr2);
+  for (int i = 0; i < arr1.ndim(); i++) {
+    if (arr2.shape(i) != arr1.shape(i)) {
       std::ostringstream stream;
-      stream << "arrays must have same shape: (";
-      for (int j = 0; j < info1.ndim; j++) stream << info1.shape[j] << ",";
-      stream << ") != (";
-      for (int j = 0; j < info2.ndim; j++) stream << info2.shape[j] << ",";
-      stream << ")";
+      stream << "arrays do not have same dimension along axis " << i << ": "
+             << arr1.shape(i) << " != " << arr2.shape(i);
       throw std::invalid_argument(stream.str());
     }
   }
 }
 
-void assert_compatible_shapes(int rank, DoubleArray real, ComplexArray complex) {
+void assert_compatible_shapes(int rank, DoubleArray real,
+                              ComplexArray complex) {
   assert_same_rank(real, complex);
   for (int i = 0; i < real.ndim(); i++) {
     auto actual = real.shape(i);
@@ -94,19 +106,10 @@ PYBIND11_MODULE(pyfftwpp, m) {
              ComplexArray out, int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
-            assert_same_rank(in, out);
             assert_same_shape(in, out);
-            pybind11::buffer_info info = in.request();
-            if (rank > info.ndim) {
-              std::ostringstream stream;
-              stream << "rank must be lower than ndim: " << rank << " > "
-                     << info.ndim;
-              throw std::invalid_argument(stream.str());
-            }
-            std::vector<int> shape(info.shape.size());
-            for (auto i = 0; i < info.ndim; i++) {
-              shape[i] = info.shape[i];
-            }
+            auto info = in.request();
+            assert_rank_lower_than_ndim(rank, info.ndim);
+            auto shape = to_ints(info.shape);
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
@@ -119,17 +122,9 @@ PYBIND11_MODULE(pyfftwpp, m) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, in, out);
-            pybind11::buffer_info info = in.request();
-            if (rank > info.ndim) {
-              std::ostringstream stream;
-              stream << "rank must be lower than ndim: " << rank << " > "
-                     << info.ndim;
-              throw std::invalid_argument(stream.str());
-            }
-            std::vector<int> shape(info.shape.size());
-            for (auto i = 0; i < info.ndim; i++) {
-              shape[i] = info.shape[i];
-            }
+            auto info = in.request();
+            assert_rank_lower_than_ndim(rank, info.ndim);
+            auto shape = to_ints(info.shape);
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },

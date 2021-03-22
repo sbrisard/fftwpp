@@ -3,7 +3,7 @@ import pytest
 
 from pyfftwpp import PlanFactory
 
-class AbstractTestPlanFactory:
+class TestPlanFactory:
     @pytest.mark.parametrize(
         "flag_name, flag",
         [
@@ -27,32 +27,24 @@ class AbstractTestPlanFactory:
         assert factory.flags == 0
 
     @pytest.mark.parametrize(
-        "ishape, oshape",
+        "input_type, output_type",
+        [(np.complex128, np.complex128), (np.float64, np.complex128)],
+    )
+    @pytest.mark.parametrize(
+        "input_shape, output_shape",
         [
-            ((2,), (3,)),
+            ((2,), (4,)),
             ((2, 3), (4,)),
-            ((2, 3), (4, 5)),
-            ((2, 3), (4, 3)),
+            ((2, 3), (3, 4)),
+            ((2, 3), (2, 6)),
             ((4,), (2, 3)),
             ((2, 4), (2, 3)),
-            ((4, 3), (2, 3)),
+            ((3, 3), (2, 2)),
         ],
     )
-    def test_invalid_shape(self, ishape, oshape):
+    def test_invalid_shape(self, input_type, input_shape, output_type, output_shape):
         factory = PlanFactory()
-        input = np.empty(ishape, dtype=self.input_type)
-        output = np.empty(oshape, dtype=self.output_type)
+        input = np.empty(input_shape, dtype=input_type)
+        output = np.empty(output_shape, dtype=output_type)
         with pytest.raises(ValueError):
             factory.create_plan(input.ndim, input, output)
-
-class TestPlanFactory_c128_c128(AbstractTestPlanFactory):
-    input_type = np.complex128
-    output_type = np.complex128
-
-class TestPlanFactory_f64_c128(AbstractTestPlanFactory):
-    input_type = np.float64
-    output_type = np.complex128
-
-# class TestPlanFactory_c128_f64(AbstractTestPlanFactory):
-#     def create_plan_factory(self):
-#         return fftw.PlanFactory_c128_f64()
