@@ -49,9 +49,9 @@ class TestPlanFactory_c128_c128(AbstractTestPlanFactory):
     input_type = np.complex128
     output_type = np.complex128
 
-# class TestPlanFactory_f64_c128(AbstractTestPlanFactory):
-#     def create_plan_factory(self):
-#         return fftw.PlanFactory_f64_c128()
+class TestPlanFactory_f64_c128(AbstractTestPlanFactory):
+    input_type = np.float64
+    output_type = np.complex128
 
 # class TestPlanFactory_c128_f64(AbstractTestPlanFactory):
 #     def create_plan_factory(self):

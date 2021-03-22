@@ -37,6 +37,22 @@ void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
   }
 }
 
+void assert_compatible_shapes(int rank, DoubleArray real, ComplexArray complex) {
+  assert_same_rank(real, complex);
+  for (int i = 0; i < real.ndim(); i++) {
+    auto actual = real.shape(i);
+    auto expected = complex.shape(i);
+    if (i == rank - 1) expected = expected / 2 + 1;
+    if (actual != expected) {
+      std::ostringstream stream;
+      stream << "real array has invalid dimension along axis " << i
+             << ": expected(" << expected << ") !=  actual(" << real.shape(i)
+             << ")";
+      throw std::invalid_argument(stream.str());
+    }
+  }
+}
+
 template <typename T>
 void assert_c_contiguous(pybind11::array_t<T> array) {
   pybind11::buffer_info info = array.request();
@@ -102,9 +118,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
              ComplexArray out, int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
-            // TODO Check shape of input and output arrays
-            assert_same_rank(in, out);
-            // assert_same_shape(in, out);
+            assert_compatible_shapes(rank, in, out);
             pybind11::buffer_info info = in.request();
             if (rank > info.ndim) {
               std::ostringstream stream;

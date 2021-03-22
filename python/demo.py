@@ -1,10 +1,12 @@
 import numpy as np
-import pyfftwpp as fftw
+
+from pyfftwpp import PlanFactory
 
 import faulthandler
 faulthandler.enable()
 
 if __name__ == "__main__":
-    arr1 = np.zeros((4, 5, 6), dtype=np.float64)
-    arr2 = np.zeros((4, 6, 5), dtype=np.float64)
-    fftw.assert_same_shape(arr1, arr2)
+    input = np.zeros((9,), dtype=np.complex128)
+    output = np.zeros_like(input)
+    plan = PlanFactory().set_estimate().create_plan(1, input, output, -1)
+    plan.execute()
