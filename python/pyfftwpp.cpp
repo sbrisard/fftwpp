@@ -9,7 +9,7 @@ using DoubleArray = pybind11::array_t<double>;
 using ComplexArray = pybind11::array_t<std::complex<double>>;
 
 template <typename T1, typename T2>
-void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
+void assert_same_rank(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
   pybind11::buffer_info info1 = arr1.request();
   pybind11::buffer_info info2 = arr2.request();
   if (info1.ndim != info2.ndim) {
@@ -18,6 +18,12 @@ void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
            << " != " << info2.ndim;
     throw std::invalid_argument(stream.str());
   }
+}
+
+template <typename T1, typename T2>
+void assert_same_shape(pybind11::array_t<T1> arr1, pybind11::array_t<T2> arr2) {
+  pybind11::buffer_info info1 = arr1.request();
+  pybind11::buffer_info info2 = arr2.request();
   for (int i = 0; i < info1.ndim; i++) {
     if (info2.shape[i] != info1.shape[i]) {
       std::ostringstream stream;
@@ -72,6 +78,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
              ComplexArray out, int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
+            assert_same_rank(in, out);
             assert_same_shape(in, out);
             pybind11::buffer_info info = in.request();
             if (rank > info.ndim) {
@@ -96,6 +103,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             // TODO Check shape of input and output arrays
+            assert_same_rank(in, out);
             // assert_same_shape(in, out);
             pybind11::buffer_info info = in.request();
             if (rank > info.ndim) {
