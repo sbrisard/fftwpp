@@ -74,11 +74,18 @@ class AbstractPlanTest:
 
     def test_basic(self, shape, sign):
         rank = len(shape)
-        data = self.random_input(rank, shape)
-        act = np.empty(self.output_shape(rank, shape), dtype=self.otype)
-        exp = self.fft(data, shape, sign)
+        ishape = self.input_shape(rank, shape)
+        oshape = self.output_shape(rank, shape)
+        data = np.empty(ishape, self.itype)
+        act = np.empty(oshape, self.otype)
+
         factory = PlanFactory().set_estimate()
         plan = factory.create_plan(data.ndim, data, act, sign)
+
+        data[...] = self.random_input(rank, shape)
+        # Compute expected array before actual, in case `data`gets destroyed upon
+        # plan execution
+        exp = self.fft(data, shape, sign)
         plan.execute()
 
         info = np.finfo(self.otype)
