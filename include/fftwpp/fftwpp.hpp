@@ -79,6 +79,20 @@ class PlanFactory {
     return Plan{p};
   }
 
+  Plan create_plan(int rank, std::vector<int> const &shape,
+                   std::complex<double> *in, double *out, int sign) {
+    if (sign != -1) {
+      throw std::invalid_argument("sign must be -1");
+    }
+    auto ndim = shape.size();
+    int stride = 1;
+    for (int i = rank; i < ndim; i++) stride *= shape[i];
+    fftw_plan p = fftw_plan_many_dft_c2r(
+        rank, shape.data(), stride, reinterpret_cast<fftw_complex *>(in),
+        nullptr, stride, 1, out, nullptr, stride, 1, flags);
+    return Plan{p};
+  }
+
   unsigned get_flags() { return flags; }
 
   PlanFactory &set_estimate() { return set_flag(FFTW_ESTIMATE); }

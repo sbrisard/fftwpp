@@ -3,6 +3,7 @@ import pytest
 
 from pyfftwpp import PlanFactory
 
+
 class TestPlanFactory:
     @pytest.mark.parametrize(
         "flag_name, flag",
@@ -28,7 +29,11 @@ class TestPlanFactory:
 
     @pytest.mark.parametrize(
         "input_type, output_type",
-        [(np.complex128, np.complex128), (np.float64, np.complex128)],
+        [
+            (np.complex128, np.complex128),
+            (np.float64, np.complex128),
+            (np.complex128, np.float64),
+        ],
     )
     @pytest.mark.parametrize(
         "input_shape, output_shape",
@@ -36,9 +41,10 @@ class TestPlanFactory:
             ((2,), (4,)),
             ((2, 3), (4,)),
             ((2, 3), (3, 4)),
+            ((2, 4), (3, 3)),
             ((2, 3), (2, 6)),
             ((4,), (2, 3)),
-            ((2, 4), (2, 3)),
+            ((2, 6), (2, 3)),
             ((3, 3), (2, 2)),
         ],
     )

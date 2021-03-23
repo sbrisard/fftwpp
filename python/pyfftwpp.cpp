@@ -52,14 +52,13 @@ void assert_compatible_shapes(int rank, DoubleArray real,
                               ComplexArray complex) {
   assert_same_rank(real, complex);
   for (int i = 0; i < real.ndim(); i++) {
-    auto actual = real.shape(i);
-    auto expected = complex.shape(i);
+    auto actual = complex.shape(i);
+    auto expected = real.shape(i);
     if (i == rank - 1) expected = expected / 2 + 1;
     if (actual != expected) {
       std::ostringstream stream;
       stream << "real array has invalid dimension along axis " << i
-             << ": expected(" << expected << ") !=  actual(" << real.shape(i)
-             << ")";
+             << ": expected(" << expected << ") !=  actual(" << actual << ")";
       throw std::invalid_argument(stream.str());
     }
   }
@@ -123,6 +122,21 @@ PYBIND11_MODULE(pyfftwpp, m) {
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, in, out);
             auto info = in.request();
+            assert_rank_lower_than_ndim(rank, info.ndim);
+            auto shape = to_ints(info.shape);
+            return self.create_plan(rank, shape, in.mutable_data(),
+                                    out.mutable_data(), sign);
+          },
+          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+          pybind11::arg("sign") = -1)
+      .def(
+          "create_plan",
+          [](fftw::PlanFactory& self, int rank, ComplexArray in,
+             DoubleArray out, int sign) {
+            assert_c_contiguous(in);
+            assert_c_contiguous(out);
+            assert_compatible_shapes(rank, out, in);
+            auto info = out.request();
             assert_rank_lower_than_ndim(rank, info.ndim);
             auto shape = to_ints(info.shape);
             return self.create_plan(rank, shape, in.mutable_data(),
