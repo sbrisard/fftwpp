@@ -6,11 +6,10 @@ Installation
 Installing the C++ library
 ==========================
 
-This is a CMake_ based project. The installation procedure is standard. First,
-clone the repository. Then, ``cd`` into the root directory of the
-fftwpp project. Let
-``fftwpp_INSTALL_PREFIX`` be the path to the directory
-where fftwpp should be installed::
+This is a CMake_ based project. The installation procedure is
+standard. First, clone the repository. Then, ``cd`` into the root
+directory of the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the
+path to the directory where fftwpp should be installed::
 
   $ git clone https://github.com/sbrisard/fftwpp
   $ cd fftwpp
@@ -20,39 +19,37 @@ where fftwpp should be installed::
   $ cmake --build . --config Release
   $ cmake --install . --config Release
 
-.. note:: The ``--config`` option might not be available, depending on the
-   selected generator.
+.. note:: The ``--config`` option might not be available, depending on
+   the selected generator.
 
-At this point, fftwpp should be installed. You can now
-run the tests::
+At this point, fftwpp should be installed. You can now run the tests::
 
   $ ctest . -C Release
 
 .. note:: Depending on the system, you might need to add
-   ``fftwpp_INSTALL_PREFIX`` to your ``PATH`` environment
-   variable.
+   ``fftwpp_INSTALL_PREFIX`` to your ``PATH`` environment variable.
 
 
 Compiling your first fftwpp program
-==========================================================
+===================================
 
-``cd`` into the ``example`` subdirectory. The provided example program should be
-compiled and linked against fftwpp::
+``cd`` into the ``example`` subdirectory. The provided example program
+should be compiled and linked against fftwpp::
 
   $ mkdir build
   $ cd build
   $ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
   $ cmake --build . --config Release
 
-An executable called ``example_fftwpp`` should be present
-in the ``build/Release`` subdirectory.
+An executable called ``example_fftwpp`` should be present in the
+``build/Release`` subdirectory.
 
 
 Building the documentation
 ==========================
 
-The documentation of fftwpp requires Sphinx_. The C++ API
-docs are built with Doxygen_ and the Breathe_ extension to Sphinx_.
+The documentation of fftwpp requires Sphinx_. The C++ API docs are
+built with Doxygen_ and the Breathe_ extension to Sphinx_.
 
 To build the HTML version of the docs in the ``public`` subdirectory::
 
@@ -68,8 +65,8 @@ To build the LaTeX version of the docs::
 Installing the Python bindings
 ==============================
 
-To install the pyfftwpp module, ``cd`` into the
-``python`` subdirectory and edit the ``setup.cfg`` file. Set the ``include_dir``
+To install the pyfftwpp module, ``cd`` into the ``python``
+subdirectory and edit the ``setup.cfg`` file. Set the ``include_dir``
 and ``library_dir`` to the appropriate paths. These should be::
 
   [pyfftwpp]
