@@ -6,10 +6,16 @@ Installation
 Installing the C++ library
 ==========================
 
+fftwpp depends on FFTW_.
+
 This is a CMake_ based project. The installation procedure is
-standard. First, clone the repository. Then, ``cd`` into the root
-directory of the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the
-path to the directory where fftwpp should be installed::
+standard. However, FFTW_ is not detected automatically by CMake_ and
+you might need to specify its location manually (follow the CMake_
+instructions if needed).
+
+First, clone the repository. Then, ``cd`` into the root directory of
+the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the path to the
+directory where fftwpp should be installed::
 
   $ git clone https://github.com/sbrisard/fftwpp
   $ cd fftwpp
@@ -22,12 +28,8 @@ path to the directory where fftwpp should be installed::
 .. note:: The ``--config`` option might not be available, depending on
    the selected generator.
 
-At this point, fftwpp should be installed. You can now run the tests::
-
-  $ ctest . -C Release
-
-.. note:: Depending on the system, you might need to add
-   ``fftwpp_INSTALL_PREFIX`` to your ``PATH`` environment variable.
+At this point, fftwpp should be installed. To run the tests, you need
+to build the python bindings (see :ref:`below <sec20210410191726>`).
 
 
 Compiling your first fftwpp program
@@ -62,16 +64,26 @@ To build the LaTeX version of the docs::
   $ make latex
 
 
+.. _sec20210410191726:
+
 Installing the Python bindings
 ==============================
 
-To install the pyfftwpp module, ``cd`` into the ``python``
-subdirectory and edit the ``setup.cfg`` file. Set the ``include_dir``
-and ``library_dir`` to the appropriate paths. These should be::
+To install the ``pyfftwpp`` module, ``cd`` into the ``python``
+subdirectory and edit or create the ``setup.cfg``. You need to specify
+the location of
+
+- the ``pyfftwpp`` headers, see ``include_dir`` in section ``[fftwpp]``,
+- the FFTW_ headers, see ``include_dir`` in section ``[fftw]``,
+- the FFTW_ binaries, see ``library_dir`` in section ``[fftw]``.
+
+The resulting file should look like::
 
   [pyfftwpp]
   include_dir = ${CMAKE_INSTALL_PREFIX}/include
-  library_dir = ${CMAKE_INSTLAL_PREFIX}/lib
+  [fftw]
+  include_dir = path/to/FFTW/headers
+  library_dir = path/to/FFTW/binaries
 
 Then, issue the following command::
 
@@ -88,5 +100,6 @@ To run the tests with Pytest_::
 .. _Breathe: https://breathe.readthedocs.io/
 .. _CMake: https://cmake.org/
 .. _Doxygen: https://www.doxygen.nl/
+.. _FFTW: http://fftw.org/
 .. _Pytest: https://docs.pytest.org/
 .. _Sphinx: https://www.sphinx-doc.org/
