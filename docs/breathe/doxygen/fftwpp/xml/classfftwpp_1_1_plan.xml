@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
-  <compounddef id="classfftw_1_1_plan" kind="class" language="C++" prot="public">
-    <compoundname>fftw::Plan</compoundname>
+  <compounddef id="classfftwpp_1_1_plan" kind="class" language="C++" prot="public">
+    <compoundname>fftwpp::Plan</compoundname>
     <includes refid="fftwpp_8hpp" local="no">fftwpp.hpp</includes>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="classfftw_1_1_plan_1aaf62bbc805b53287a1f8e7b76231f5cb" prot="private" static="no" mutable="no">
+      <memberdef kind="variable" id="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d" prot="private" static="no" mutable="no">
         <type>std::shared_ptr&lt; struct fftw_plan_s &gt;</type>
-        <definition>std::shared_ptr&lt;struct fftw_plan_s&gt; fftw::Plan::p</definition>
+        <definition>std::shared_ptr&lt;struct fftw_plan_s&gt; fftwpp::Plan::p</definition>
         <argsstring></argsstring>
         <name>p</name>
         <briefdescription>
@@ -19,9 +19,9 @@
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="classfftw_1_1_plan_1affb0f101e311e1c69f5a2b51e35ab648" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="classfftwpp_1_1_plan_1ad53e1968aace75749f103d86cdbee1e7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
-        <definition>fftw::Plan::Plan</definition>
+        <definition>fftwpp::Plan::Plan</definition>
         <argsstring>(fftw_plan const p)</argsstring>
         <name>Plan</name>
         <param>
@@ -37,9 +37,9 @@
         </inbodydescription>
         <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="34" column="3" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="34" bodyend="34"/>
       </memberdef>
-      <memberdef kind="function" id="classfftw_1_1_plan_1a8c6909d8f4860b98c913267f15c9af05" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="classfftwpp_1_1_plan_1a659d1f910a0516d30f371845c62260d0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>void</type>
-        <definition>void fftw::Plan::execute</definition>
+        <definition>void fftwpp::Plan::execute</definition>
         <argsstring>() const</argsstring>
         <name>execute</name>
         <briefdescription>
@@ -51,9 +51,9 @@
         </inbodydescription>
         <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="37" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="37" bodyend="37"/>
       </memberdef>
-      <memberdef kind="function" id="classfftw_1_1_plan_1ad9ed1e3c3e9ef245cf4be2ee3aede8d4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="classfftwpp_1_1_plan_1a4a8b3956511c2824e3915cc0ea044715" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>double</type>
-        <definition>double fftw::Plan::cost</definition>
+        <definition>double fftwpp::Plan::cost</definition>
         <argsstring>() const</argsstring>
         <name>cost</name>
         <briefdescription>
@@ -65,9 +65,9 @@
         </inbodydescription>
         <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="40" column="10" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="40" bodyend="40"/>
       </memberdef>
-      <memberdef kind="function" id="classfftw_1_1_plan_1a2205ff17d98babbf0d8abb40a6223f63" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="classfftwpp_1_1_plan_1a3b3a21a1194c7c60fafc9bc33e9fdc6c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>std::tuple&lt; double, double, double &gt;</type>
-        <definition>std::tuple&lt;double, double, double&gt; fftw::Plan::flops</definition>
+        <definition>std::tuple&lt;double, double, double&gt; fftwpp::Plan::flops</definition>
         <argsstring>() const</argsstring>
         <name>flops</name>
         <briefdescription>
@@ -80,9 +80,9 @@
         </inbodydescription>
         <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="48" column="14" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="48" bodyend="52"/>
       </memberdef>
-      <memberdef kind="function" id="classfftw_1_1_plan_1ae71aa816eb42207e97317719b152cb79" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="classfftwpp_1_1_plan_1a991c29592c2b510a4b0209370b75470d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
         <type>std::string</type>
-        <definition>std::string fftw::Plan::repr</definition>
+        <definition>std::string fftwpp::Plan::repr</definition>
         <argsstring>() const</argsstring>
         <name>repr</name>
         <briefdescription>
@@ -101,16 +101,16 @@
 <para>A wrapper class around <computeroutput>fftw_plan</computeroutput>.</para>
 <para>The user is referred to section 4.2, <emphasis>Using Plans</emphasis>, in the FFTW documentation (<ulink url="http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans">http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans</ulink>).</para>
 <para>This class implements the RAII paradigm: the underlying <computeroutput>fftw_plan</computeroutput> is released when the wrapper object falls out of scope.</para>
-<para>The constructor of this class should in general not be called directly. Rather, use a <ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref>. </para>
+<para>The constructor of this class should in general not be called directly. Rather, use a <ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref>. </para>
     </detaileddescription>
     <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="31" column="1" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="31" bodyend="64"/>
     <listofallmembers>
-      <member refid="classfftw_1_1_plan_1ad9ed1e3c3e9ef245cf4be2ee3aede8d4" prot="public" virt="non-virtual"><scope>fftw::Plan</scope><name>cost</name></member>
-      <member refid="classfftw_1_1_plan_1a8c6909d8f4860b98c913267f15c9af05" prot="public" virt="non-virtual"><scope>fftw::Plan</scope><name>execute</name></member>
-      <member refid="classfftw_1_1_plan_1a2205ff17d98babbf0d8abb40a6223f63" prot="public" virt="non-virtual"><scope>fftw::Plan</scope><name>flops</name></member>
-      <member refid="classfftw_1_1_plan_1aaf62bbc805b53287a1f8e7b76231f5cb" prot="private" virt="non-virtual"><scope>fftw::Plan</scope><name>p</name></member>
-      <member refid="classfftw_1_1_plan_1affb0f101e311e1c69f5a2b51e35ab648" prot="public" virt="non-virtual"><scope>fftw::Plan</scope><name>Plan</name></member>
-      <member refid="classfftw_1_1_plan_1ae71aa816eb42207e97317719b152cb79" prot="public" virt="non-virtual"><scope>fftw::Plan</scope><name>repr</name></member>
+      <member refid="classfftwpp_1_1_plan_1a4a8b3956511c2824e3915cc0ea044715" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>cost</name></member>
+      <member refid="classfftwpp_1_1_plan_1a659d1f910a0516d30f371845c62260d0" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>execute</name></member>
+      <member refid="classfftwpp_1_1_plan_1a3b3a21a1194c7c60fafc9bc33e9fdc6c" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>flops</name></member>
+      <member refid="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d" prot="private" virt="non-virtual"><scope>fftwpp::Plan</scope><name>p</name></member>
+      <member refid="classfftwpp_1_1_plan_1ad53e1968aace75749f103d86cdbee1e7" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>Plan</name></member>
+      <member refid="classfftwpp_1_1_plan_1a991c29592c2b510a4b0209370b75470d" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>repr</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

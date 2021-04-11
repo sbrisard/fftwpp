@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
-  <compounddef id="namespacefftw" kind="namespace" language="C++">
-    <compoundname>fftw</compoundname>
-    <innerclass refid="classfftw_1_1_plan" prot="public">fftw::Plan</innerclass>
-    <innerclass refid="classfftw_1_1_plan_factory" prot="public">fftw::PlanFactory</innerclass>
+  <compounddef id="namespacefftwpp" kind="namespace" language="C++">
+    <compoundname>fftwpp</compoundname>
+    <innerclass refid="classfftwpp_1_1_plan" prot="public">fftwpp::Plan</innerclass>
+    <innerclass refid="classfftwpp_1_1_plan_factory" prot="public">fftwpp::PlanFactory</innerclass>
       <sectiondef kind="func">
-      <memberdef kind="function" id="namespacefftw_1ab7f83752aec931e9fe528f257abb1ee7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
-        <definition>int fftw::init_threads</definition>
+        <definition>int fftwpp::init_threads</definition>
         <argsstring>()</argsstring>
         <name>init_threads</name>
         <briefdescription>
@@ -20,9 +20,9 @@
         </inbodydescription>
         <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="248" column="5" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="248" bodyend="248"/>
       </memberdef>
-      <memberdef kind="function" id="namespacefftw_1a2222427ea5d942e05f9de98c1f778e8d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
-        <definition>void fftw::plan_with_nthreads</definition>
+        <definition>void fftwpp::plan_with_nthreads</definition>
         <argsstring>(int nthreads)</argsstring>
         <name>plan_with_nthreads</name>
         <param>
