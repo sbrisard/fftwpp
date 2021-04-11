@@ -10,14 +10,12 @@ In this file:
 - `otype` is the type (dtype) of the output
 """
 
-import itertools
-import numpy as np
-
-import pytest
-
-from pyfftwpp import PlanFactory
-
 import faulthandler
+import itertools
+
+import numpy as np
+import pytest
+from pyfftwpp import PlanFactory
 
 faulthandler.enable()
 
