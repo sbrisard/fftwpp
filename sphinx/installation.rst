@@ -6,7 +6,7 @@ Installation
 Installing the C++ library
 ==========================
 
-fftwpp depends on FFTW_.
+``fftwpp`` depends on FFTW_.
 
 This is a CMake_ based project. The installation procedure is
 standard. However, FFTW_ is not detected automatically by CMake_ and
@@ -14,8 +14,8 @@ you might need to specify its location manually (follow the CMake_
 instructions if needed).
 
 First, clone the repository. Then, ``cd`` into the root directory of
-the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the path to the
-directory where fftwpp should be installed::
+the ``fftwpp`` project. Let ``fftwpp_INSTALL_PREFIX`` be the path to
+the directory where ``fftwpp`` should be installed::
 
   $ git clone https://github.com/sbrisard/fftwpp
   $ cd fftwpp
@@ -28,15 +28,16 @@ directory where fftwpp should be installed::
 .. note:: The ``--config`` option might not be available, depending on
    the selected generator.
 
-At this point, fftwpp should be installed. To run the tests, you need
-to build the python bindings (see :ref:`below <sec20210410191726>`).
+At this point, ``fftwpp`` should be installed. To run the tests, you
+need to build the python bindings (see :ref:`below
+<sec20210410191726>`).
 
 
-Compiling your first fftwpp program
-===================================
+Compiling your first ``fftwpp`` program
+=======================================
 
 ``cd`` into the ``example`` subdirectory. The provided example program
-should be compiled and linked against fftwpp::
+should be compiled and linked against ``fftwpp``::
 
   $ mkdir build
   $ cd build
@@ -50,7 +51,7 @@ An executable called ``example_fftwpp`` should be present in the
 Building the documentation
 ==========================
 
-The documentation of fftwpp requires Sphinx_. The C++ API docs are
+The documentation of ``fftwpp`` requires Sphinx_. The C++ API docs are
 built with Doxygen_ and the Breathe_ extension to Sphinx_.
 
 To build the HTML version of the docs in the ``public`` subdirectory::
