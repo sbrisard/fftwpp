@@ -1,3 +1,10 @@
+/**
+ * C++ bindings to the [FFTW](http://fftw.org/) library.
+ *
+ * `fftwpp` strives to remain as close as possible to the orginal C library,
+ * while being more idiomatic. The user should refer to the documentations of
+ * the FFTW library for a more in-depth description.
+ */
 #pragma once
 
 #include <fftw/fftw3.h>
@@ -9,20 +16,42 @@
 
 namespace fftw {
 
+/**
+ * A wrapper class around `fftw_plan`.
+ *
+ * The user is referred to section 4.2, *Using Plans*, in the FFTW
+ * documentation (http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans).
+ *
+ * This class implements the RAII paradigm: the underlying `fftw_plan` is
+ * released when the wrapper object falls out of scope.
+ *
+ * The constructor of this class should in general not be called directly.
+ * Rather, use a PlanFactory.
+ */
 class Plan {
  public:
+  /** Create a new instance around the specified `fftw_plan`. */
   Plan(fftw_plan const p) : p{p, [](fftw_plan p) { fftw_destroy_plan(p); }} {}
 
+  /** Call `fftw_execute()` for the wrapped `fftw_plan`. */
   void execute() const { fftw_execute(p.get()); }
 
+  /** Call `fftw_cost()` for the wrapped `fftw_plan`. */
   double cost() const { return fftw_cost(p.get()); }
 
+  /**
+   * Call `fftw_flops()` for the wrapped `fftw_plan`.
+   *
+   * The returned tuple is the number of floating-point additions,
+   * multiplications and fused multiply-add operations, in this order.
+   */
   std::tuple<double, double, double> flops() const {
     double add, mul, fma;
     fftw_flops(p.get(), &add, &mul, &fma);
     return std::make_tuple(add, mul, fma);
   }
 
+  /** Call `fftw_sprint_plan()` for the wrapped `fftw_plan`. */
   std::string repr() const {
     char *c_str = fftw_sprint_plan(p.get());
     std::string cpp_str{c_str};
@@ -34,6 +63,20 @@ class Plan {
   std::shared_ptr<struct fftw_plan_s> p;
 };
 
+/**
+ * This factory class is used to create new instances of Plan.
+ *
+ * Planner flags (see section 4.3.2, *Planner Flags*, in the FFTW documentation,
+ * http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags) are set through
+ * `set_XXX()/unset_XXX()` methods.
+ *
+ * This class exposes a fluent interface, which allows to chain
+ * `set_XXX()/unset_XXX()` methods like so
+ *
+ * @code{.cpp}
+ * auto plan = factory.set_estimate().set_preserve_input().create_plan();
+ * @endcode
+ */
 class PlanFactory {
  private:
   unsigned flags = 0;

@@ -2,7 +2,7 @@
 API documentation of the Python bindings
 ****************************************
 
-.. automodule:: pyfftwpp.pyfftwpp
+.. automodule:: pyfftwpp
    :members:
    :private-members:
    :undoc-members:
