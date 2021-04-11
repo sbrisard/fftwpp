@@ -151,4 +151,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
       .def("cost", &fftw::Plan::cost)
       .def("flops", &fftw::Plan::flops)
       .def("__repr__", &fftw::Plan::repr);
+
+  m.def("init_threads", &fftw::init_threads);
+  m.def("plan_with_nthreads", &fftw::plan_with_nthreads);
 }
