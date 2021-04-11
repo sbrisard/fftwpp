@@ -130,4 +130,16 @@ class PlanFactory {
   PlanFactory &unset_unaligned() { return unset_flag(FFTW_UNALIGNED); }
 };
 
+int init_threads() { return fftw_init_threads(); }
+
+void plan_with_nthreads(int nthreads) { fftw_plan_with_nthreads(nthreads); }
+
+bool is_aligned(size_t size, void const *ptr) {
+  std::size_t alignment = 16;
+  size_t space = size;
+  auto unaligned = const_cast<void *>(ptr);
+  auto aligned = std::align(alignment, size, unaligned, space);
+  return aligned == unaligned;
+}
+
 }  // namespace fftw
