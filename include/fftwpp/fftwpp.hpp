@@ -30,7 +30,7 @@ namespace fftw {
  */
 class Plan {
  public:
-  /** Create a new instance around the specified `fftw_plan`. */
+  /** Create a new wrapper around the specified `fftw_plan`. */
   Plan(fftw_plan const p) : p{p, [](fftw_plan p) { fftw_destroy_plan(p); }} {}
 
   /** Call `fftw_execute()` for the wrapped `fftw_plan`. */
@@ -66,32 +66,57 @@ class Plan {
 /**
  * This factory class is used to create new instances of Plan.
  *
- * Planner flags (see section 4.3.2, *Planner Flags*, in the FFTW documentation,
- * http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags) are set through
- * `set_XXX()/unset_XXX()` methods.
+ * Planner flags are set through `set_XXX()/unset_XXX()` methods. The user is
+ * referred to section 4.3.2, *Planner Flags*, in the FFTW documentation
+ * (http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags), for a full
+ * description of the various flags.
  *
- * This class exposes a fluent interface, which allows to chain
+ * This class exposes a fluent interface: all methods (but the plan creations
+ * methods) return the current object. This allows to chain
  * `set_XXX()/unset_XXX()` methods like so
  *
  * @code{.cpp}
  * auto plan = factory.set_estimate().set_preserve_input().create_plan();
  * @endcode
+ *
+ * Note that if no planner flags are set/unset, Plan instances will be created
+ * with `flags` set to `0`.
  */
 class PlanFactory {
  private:
   unsigned flags = 0;
 
+  /** Set the specified flag through a bitwise or (`|`). */
   PlanFactory &set_flag(unsigned flag) {
     flags |= flag;
     return *this;
   }
 
+  /** Unset the specified flag though a bitwise xor (`^`). */
   PlanFactory &unset_flag(unsigned flag) {
     flags ^= flag;
     return *this;
   }
 
  public:
+  /**
+   * Create a Plan for a complex-to-complex transform.
+   *
+   * This constructor uses the so-called “advanced interface” that allows to
+   * compute multiple transforms at a time. Refer to section 4.4, *Advanced
+   * Interface*, in the FFTW documentation
+   * (http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface), for
+   * more details.
+   *
+   * The input (`in`) and output (`out`) data arrays are stored in row-major
+   * order. Both arrays are assumed to have the same `shape`. Transforms are
+   * performed along the `rank` *last* axes of the arrays (the first axes are
+   * merely iterated over).
+   *
+   * The `sign` parameter is used to ask for a forward (`sign == -1`, default
+   * value) or backward (`sign == +1`) transform. Note that backward tranforms
+   * are *not normalized*.
+   */
   Plan create_plan(int rank, std::vector<int> const &shape,
                    std::complex<double> *in, std::complex<double> *out,
                    int sign) {
@@ -108,6 +133,16 @@ class PlanFactory {
     return Plan{p};
   }
 
+  // clang-format off
+  /**
+   * Create a Plan for a real-to-complex transform.
+   *
+   * Note that the `sign` parameter is meaningless in the present case, and
+   * should not be specified.
+   *
+   * See @link #create_plan(int, std::vector<int> const &, std::complex<double> *, std::complex<double> *, int) complex-to-complex plan creation@endlink.
+   */
+  // clang-format on
   Plan create_plan(int rank, std::vector<int> const &shape, double *in,
                    std::complex<double> *out, int sign) {
     if (sign != -1) {
@@ -122,6 +157,16 @@ class PlanFactory {
     return Plan{p};
   }
 
+  // clang-format off
+  /**
+   * Create a Plan for a complex-to-real transform.
+   *
+   * Note that the `sign` parameter is meaningless in the present case, and
+   * should not be specified.
+   *
+   * See @link #create_plan(int, std::vector<int> const &, std::complex<double> *, std::complex<double> *, int) complex-to-complex plan creation@endlink.
+   */
+  // clang-format on
   Plan create_plan(int rank, std::vector<int> const &shape,
                    std::complex<double> *in, double *out, int sign) {
     if (sign != -1) {
@@ -136,45 +181,73 @@ class PlanFactory {
     return Plan{p};
   }
 
+  /**
+   * Return the current bitwise or combination of planner flags.
+   *
+   * These planner flags apply to all subsequently created instances of Plan.
+   */
   unsigned get_flags() { return flags; }
 
+  /** Set the `FFTW_ESTIMATE` flag. */
   PlanFactory &set_estimate() { return set_flag(FFTW_ESTIMATE); }
 
+  /** Unset the `FFTW_ESTIMATE` flag. */
   PlanFactory &unset_estimate() { return unset_flag(FFTW_ESTIMATE); }
 
+  /** Set the `FFTW_MEASURE` flag. */
   PlanFactory &set_measure() { return set_flag(FFTW_MEASURE); }
 
+  /** Unset the `FFTW_MEASURE` flag. */
   PlanFactory &unset_measure() { return unset_flag(FFTW_MEASURE); }
 
+  /** Set the `FFTW_PATIENT` flag. */
   PlanFactory &set_patient() { return set_flag(FFTW_PATIENT); }
 
+  /** Unset the `FFTW_PATIENT` flag. */
   PlanFactory &unset_patient() { return unset_flag(FFTW_PATIENT); }
 
+  /** Set the `FFTW_EXHAUSTIVE` flag. */
   PlanFactory &set_exhaustive() { return set_flag(FFTW_EXHAUSTIVE); }
 
+  /** Unset the `FFTW_EXHAUSTIVE` flag. */
   PlanFactory &unset_exhaustive() { return unset_flag(FFTW_EXHAUSTIVE); }
 
+  /** Set the `FFTW_WISDOM_ONLY` flag. */
   PlanFactory &set_wisdom_only() { return set_flag(FFTW_WISDOM_ONLY); }
 
+  /** Unset the `FFTW_WISDOM_ONLY` flag. */
   PlanFactory &unset_wisdom_only() { return unset_flag(FFTW_WISDOM_ONLY); }
 
+  /** Set the `FFTW_DESTROY_INPUT` flag. */
   PlanFactory &set_destroy_input() { return set_flag(FFTW_DESTROY_INPUT); }
 
+  /** Unset the `FFTW_DESTROY_INPUT` flag. */
   PlanFactory &unset_destroy_input() { return unset_flag(FFTW_DESTROY_INPUT); }
 
+  /** Set the `FFTW_PRESERVE_INPUT` flag. */
   PlanFactory &set_preserve_input() { return set_flag(FFTW_PRESERVE_INPUT); }
 
+  /** Unset the `FFTW_PRESERVE_INPUT` flag. */
   PlanFactory &unset_preserve_intput() {
     return unset_flag(FFTW_PRESERVE_INPUT);
   }
 
+  /** Set the `FFTW_UNALIGNED` flag. */
   PlanFactory &set_unaligned() { return set_flag(FFTW_UNALIGNED); }
 
+  /** Unset the `FFTW_UNALIGNED` flag. */
   PlanFactory &unset_unaligned() { return unset_flag(FFTW_UNALIGNED); }
 };
 
+/**
+ * Call `fftw_init_threads()`.
+ *
+ * This function should be called before calling *any* `FFTW` or `fftwpp`
+ * functions.
+ */
 int init_threads() { return fftw_init_threads(); }
 
+/** Set the number of threads to be used by all subsequently created plans. */
 void plan_with_nthreads(int nthreads) { fftw_plan_with_nthreads(nthreads); }
 
 }  // namespace fftw
