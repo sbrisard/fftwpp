@@ -81,28 +81,30 @@ PYBIND11_MODULE(pyfftwpp, m) {
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
   m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
-  pybind11::class_<fftw::PlanFactory>(m, "PlanFactory")
+  using PlanFactory = fftwpp::PlanFactory;
+
+  pybind11::class_<PlanFactory>(m, "PlanFactory")
       .def(pybind11::init<>())
-      .def("set_estimate", &fftw::PlanFactory::set_estimate)
-      .def("unset_estimate", &fftw::PlanFactory::unset_estimate)
-      .def("set_measure", &fftw::PlanFactory::set_measure)
-      .def("unset_measure", &fftw::PlanFactory::unset_measure)
-      .def("set_patient", &fftw::PlanFactory::set_patient)
-      .def("unset_patient", &fftw::PlanFactory::unset_patient)
-      .def("set_exhaustive", &fftw::PlanFactory::set_exhaustive)
-      .def("unset_exhaustive", &fftw::PlanFactory::unset_exhaustive)
-      .def("set_wisdom_only", &fftw::PlanFactory::set_wisdom_only)
-      .def("unset_wisdom_only", &fftw::PlanFactory::unset_wisdom_only)
-      .def("set_destroy_input", &fftw::PlanFactory::set_destroy_input)
-      .def("unset_destroy_input", &fftw::PlanFactory::unset_destroy_input)
-      .def("set_preserve_input", &fftw::PlanFactory::set_preserve_input)
-      .def("unset_preserve_input", &fftw::PlanFactory::unset_preserve_intput)
-      .def("set_unaligned", &fftw::PlanFactory::set_unaligned)
-      .def("unset_unaligned", &fftw::PlanFactory::unset_unaligned)
+      .def("set_estimate", &PlanFactory::set_estimate)
+      .def("unset_estimate", &PlanFactory::unset_estimate)
+      .def("set_measure", &PlanFactory::set_measure)
+      .def("unset_measure", &PlanFactory::unset_measure)
+      .def("set_patient", &PlanFactory::set_patient)
+      .def("unset_patient", &PlanFactory::unset_patient)
+      .def("set_exhaustive", &PlanFactory::set_exhaustive)
+      .def("unset_exhaustive", &PlanFactory::unset_exhaustive)
+      .def("set_wisdom_only", &PlanFactory::set_wisdom_only)
+      .def("unset_wisdom_only", &PlanFactory::unset_wisdom_only)
+      .def("set_destroy_input", &PlanFactory::set_destroy_input)
+      .def("unset_destroy_input", &PlanFactory::unset_destroy_input)
+      .def("set_preserve_input", &PlanFactory::set_preserve_input)
+      .def("unset_preserve_input", &PlanFactory::unset_preserve_intput)
+      .def("set_unaligned", &PlanFactory::set_unaligned)
+      .def("unset_unaligned", &PlanFactory::unset_unaligned)
       .def(
           "create_plan",
-          [](fftw::PlanFactory& self, int rank, ComplexArray in,
-             ComplexArray out, int sign) {
+          [](PlanFactory& self, int rank, ComplexArray in, ComplexArray out,
+             int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_same_shape(in, out);
@@ -116,8 +118,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
-          [](fftw::PlanFactory& self, int rank, DoubleArray in,
-             ComplexArray out, int sign) {
+          [](PlanFactory& self, int rank, DoubleArray in, ComplexArray out,
+             int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, in, out);
@@ -131,8 +133,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
-          [](fftw::PlanFactory& self, int rank, ComplexArray in,
-             DoubleArray out, int sign) {
+          [](PlanFactory& self, int rank, ComplexArray in, DoubleArray out,
+             int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, out, in);
@@ -144,14 +146,15 @@ PYBIND11_MODULE(pyfftwpp, m) {
           },
           "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
-      .def_property_readonly("flags", &fftw::PlanFactory::get_flags);
+      .def_property_readonly("flags", &PlanFactory::get_flags);
 
-  pybind11::class_<fftw::Plan>(m, "Plan")
-      .def("execute", &fftw::Plan::execute)
-      .def("cost", &fftw::Plan::cost)
-      .def("flops", &fftw::Plan::flops)
-      .def("__repr__", &fftw::Plan::repr);
+  using Plan = fftwpp::Plan;
+  pybind11::class_<Plan>(m, "Plan")
+      .def("execute", &Plan::execute)
+      .def("cost", &Plan::cost)
+      .def("flops", &Plan::flops)
+      .def("__repr__", &Plan::repr);
 
-  m.def("init_threads", &fftw::init_threads);
-  m.def("plan_with_nthreads", &fftw::plan_with_nthreads);
+  m.def("init_threads", &fftwpp::init_threads);
+  m.def("plan_with_nthreads", &fftwpp::plan_with_nthreads);
 }

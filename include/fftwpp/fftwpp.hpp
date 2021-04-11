@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-namespace fftw {
+namespace fftwpp {
 
 /**
  * A wrapper class around `fftw_plan`.
