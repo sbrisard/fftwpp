@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classfftw_1_1_plan_factory" kind="class" language="C++" prot="public">
+    <compoundname>fftw::PlanFactory</compoundname>
+    <includes refid="fftwpp_8hpp" local="no">fftwpp.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classfftw_1_1_plan_factory_1a3a55cf9d19f1831588b0ed26af02fb6e" prot="private" static="no" mutable="no">
+        <type>unsigned</type>
+        <definition>unsigned fftw::PlanFactory::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="82" column="12" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a1dcc7b6290524b7373cae0162718d102" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_flag</definition>
+        <argsstring>(unsigned flag)</argsstring>
+        <name>set_flag</name>
+        <param>
+          <type>unsigned</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="84" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="84" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1ada7a546a00febe4d5889dc840353ba32" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_flag</definition>
+        <argsstring>(unsigned flag)</argsstring>
+        <name>unset_flag</name>
+        <param>
+          <type>unsigned</type>
+          <declname>flag</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="89" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="89" bodyend="92"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a13979803fbc3fbeaf2bd0b71071c0900" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan" kindref="compound">Plan</ref></type>
+        <definition>Plan fftw::PlanFactory::create_plan</definition>
+        <argsstring>(int rank, std::vector&lt; int &gt; const &amp;shape, std::complex&lt; double &gt; *in, std::complex&lt; double &gt; *out, int sign)</argsstring>
+        <name>create_plan</name>
+        <param>
+          <type>int</type>
+          <declname>rank</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; int &gt; const &amp;</type>
+          <declname>shape</declname>
+        </param>
+        <param>
+          <type>std::complex&lt; double &gt; *</type>
+          <declname>in</declname>
+        </param>
+        <param>
+          <type>std::complex&lt; double &gt; *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>sign</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="95" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="95" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a2fdb5abcdf629d34d87bdc13ceef975d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan" kindref="compound">Plan</ref></type>
+        <definition>Plan fftw::PlanFactory::create_plan</definition>
+        <argsstring>(int rank, std::vector&lt; int &gt; const &amp;shape, double *in, std::complex&lt; double &gt; *out, int sign)</argsstring>
+        <name>create_plan</name>
+        <param>
+          <type>int</type>
+          <declname>rank</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; int &gt; const &amp;</type>
+          <declname>shape</declname>
+        </param>
+        <param>
+          <type>double *</type>
+          <declname>in</declname>
+        </param>
+        <param>
+          <type>std::complex&lt; double &gt; *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>sign</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="111" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="111" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1ae5cc5bb0b979deac9bc8c379be08e255" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan" kindref="compound">Plan</ref></type>
+        <definition>Plan fftw::PlanFactory::create_plan</definition>
+        <argsstring>(int rank, std::vector&lt; int &gt; const &amp;shape, std::complex&lt; double &gt; *in, double *out, int sign)</argsstring>
+        <name>create_plan</name>
+        <param>
+          <type>int</type>
+          <declname>rank</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; int &gt; const &amp;</type>
+          <declname>shape</declname>
+        </param>
+        <param>
+          <type>std::complex&lt; double &gt; *</type>
+          <declname>in</declname>
+        </param>
+        <param>
+          <type>double *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>sign</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="125" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="125" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a87bc9afb1f9079d9f444f660326ae799" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>unsigned</type>
+        <definition>unsigned fftw::PlanFactory::get_flags</definition>
+        <argsstring>()</argsstring>
+        <name>get_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="139" column="12" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="139" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1ac629d76fbbe6a6da2c52b0f795c77f14" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_estimate</definition>
+        <argsstring>()</argsstring>
+        <name>set_estimate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="141" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="141" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a90ff6e4a0510e15f169d96de869d389b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_estimate</definition>
+        <argsstring>()</argsstring>
+        <name>unset_estimate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="143" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="143" bodyend="143"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1aca4f80e752bb8232b8ef7b9d7bed1e6b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_measure</definition>
+        <argsstring>()</argsstring>
+        <name>set_measure</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="145" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="145" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a534f2bbfcaadc30da96c3d1358973182" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_measure</definition>
+        <argsstring>()</argsstring>
+        <name>unset_measure</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="147" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="147" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a8dc8eae24b3e443a42a1ff45075eae67" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_patient</definition>
+        <argsstring>()</argsstring>
+        <name>set_patient</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="149" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="149" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a8400efa4311bfb2134693f8c15de09a3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_patient</definition>
+        <argsstring>()</argsstring>
+        <name>unset_patient</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="151" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="151" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a3fe151c493d61096ae9dc176a0603855" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_exhaustive</definition>
+        <argsstring>()</argsstring>
+        <name>set_exhaustive</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="153" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="153" bodyend="153"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a2f84141b29afadc683043d67a8646d16" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_exhaustive</definition>
+        <argsstring>()</argsstring>
+        <name>unset_exhaustive</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="155" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="155" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a0c64ad55e462bd3584afbe7a7cdac2d8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_wisdom_only</definition>
+        <argsstring>()</argsstring>
+        <name>set_wisdom_only</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="157" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="157" bodyend="157"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a31ff4a85f00834a64ec507ae80f1743f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_wisdom_only</definition>
+        <argsstring>()</argsstring>
+        <name>unset_wisdom_only</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="159" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="159" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1ae25349d17bad9c8ece9049c58f14fa9b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_destroy_input</definition>
+        <argsstring>()</argsstring>
+        <name>set_destroy_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="161" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="161" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a513f1688393b012b2e22321e37bb796d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_destroy_input</definition>
+        <argsstring>()</argsstring>
+        <name>unset_destroy_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="163" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="163" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a9da5b23921501f4e64550b6b55ae711e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_preserve_input</definition>
+        <argsstring>()</argsstring>
+        <name>set_preserve_input</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="165" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="165" bodyend="165"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a626d11322cfc2424d906e401283455f3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_preserve_intput</definition>
+        <argsstring>()</argsstring>
+        <name>unset_preserve_intput</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="167" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="167" bodyend="169"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1a990f5c023ceefc4f22cf0b71ff47bab6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::set_unaligned</definition>
+        <argsstring>()</argsstring>
+        <name>set_unaligned</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="171" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="171" bodyend="171"/>
+      </memberdef>
+      <memberdef kind="function" id="classfftw_1_1_plan_factory_1ae0a4a08571c74ec56b62437384b36a1e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="classfftw_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
+        <definition>PlanFactory&amp; fftw::PlanFactory::unset_unaligned</definition>
+        <argsstring>()</argsstring>
+        <name>unset_unaligned</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="173" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="173" bodyend="173"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This factory class is used to create new instances of <ref refid="classfftw_1_1_plan" kindref="compound">Plan</ref>.</para>
+<para>Planner flags (see section 4.3.2, <emphasis>Planner Flags</emphasis>, in the FFTW documentation, <ulink url="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags</ulink>) are set through <computeroutput>set_XXX()/unset_XXX()</computeroutput> methods.</para>
+<para>This class exposes a fluent interface, which allows to chain <computeroutput>set_XXX()/unset_XXX()</computeroutput> methods like so</para>
+<para><programlisting filename=".cpp"><codeline><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>plan<sp/>=<sp/>factory.set_estimate().set_preserve_input().create_plan();</highlight></codeline>
+</programlisting> </para>
+    </detaileddescription>
+    <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="80" column="1" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="80" bodyend="174"/>
+    <listofallmembers>
+      <member refid="classfftw_1_1_plan_factory_1a13979803fbc3fbeaf2bd0b71071c0900" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>create_plan</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a2fdb5abcdf629d34d87bdc13ceef975d" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>create_plan</name></member>
+      <member refid="classfftw_1_1_plan_factory_1ae5cc5bb0b979deac9bc8c379be08e255" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>create_plan</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a3a55cf9d19f1831588b0ed26af02fb6e" prot="private" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>flags</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a87bc9afb1f9079d9f444f660326ae799" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>get_flags</name></member>
+      <member refid="classfftw_1_1_plan_factory_1ae25349d17bad9c8ece9049c58f14fa9b" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_destroy_input</name></member>
+      <member refid="classfftw_1_1_plan_factory_1ac629d76fbbe6a6da2c52b0f795c77f14" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_estimate</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a3fe151c493d61096ae9dc176a0603855" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_exhaustive</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a1dcc7b6290524b7373cae0162718d102" prot="private" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_flag</name></member>
+      <member refid="classfftw_1_1_plan_factory_1aca4f80e752bb8232b8ef7b9d7bed1e6b" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_measure</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a8dc8eae24b3e443a42a1ff45075eae67" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_patient</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a9da5b23921501f4e64550b6b55ae711e" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_preserve_input</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a990f5c023ceefc4f22cf0b71ff47bab6" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_unaligned</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a0c64ad55e462bd3584afbe7a7cdac2d8" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>set_wisdom_only</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a513f1688393b012b2e22321e37bb796d" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_destroy_input</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a90ff6e4a0510e15f169d96de869d389b" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_estimate</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a2f84141b29afadc683043d67a8646d16" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_exhaustive</name></member>
+      <member refid="classfftw_1_1_plan_factory_1ada7a546a00febe4d5889dc840353ba32" prot="private" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_flag</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a534f2bbfcaadc30da96c3d1358973182" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_measure</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a8400efa4311bfb2134693f8c15de09a3" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_patient</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a626d11322cfc2424d906e401283455f3" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_preserve_intput</name></member>
+      <member refid="classfftw_1_1_plan_factory_1ae0a4a08571c74ec56b62437384b36a1e" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_unaligned</name></member>
+      <member refid="classfftw_1_1_plan_factory_1a31ff4a85f00834a64ec507ae80f1743f" prot="public" virt="non-virtual"><scope>fftw::PlanFactory</scope><name>unset_wisdom_only</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>API documentation of the Python bindings &#8212; fftwpp 0.1
+ documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API documentation of the C++ library" href="cpp_api.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-pyfftwpp">
+<span id="api-documentation-of-the-python-bindings"></span><h1>API documentation of the Python bindings<a class="headerlink" href="#module-pyfftwpp" title="Permalink to this headline">¶</a></h1>
+<p>Python bindings to the fftwpp library</p>
+<dl class="py class">
+<dt id="pyfftwpp.Plan">
+<em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">Plan</code><a class="headerlink" href="#pyfftwpp.Plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt id="pyfftwpp.Plan.cost">
+<code class="sig-name descname">cost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#pyfftwpp.Plan.cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.Plan.execute">
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyfftwpp.Plan.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.Plan.flops">
+<code class="sig-name descname">flops</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>float<span class="p">]</span><a class="headerlink" href="#pyfftwpp.Plan.flops" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyfftwpp.PlanFactory">
+<em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">PlanFactory</code><a class="headerlink" href="#pyfftwpp.PlanFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.create_plan">
+<code class="sig-name descname">create_plan</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyfftwpp.PlanFactory.create_plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.complex128], out: numpy.ndarray[numpy.complex128], sign: int = -1) -&gt; fftw::Plan</p></li>
+<li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.float64], out: numpy.ndarray[numpy.complex128], sign: int = -1) -&gt; fftw::Plan</p></li>
+<li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.complex128], out: numpy.ndarray[numpy.float64], sign: int = -1) -&gt; fftw::Plan</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.flags">
+<em class="property">property </em><code class="sig-name descname">flags</code><a class="headerlink" href="#pyfftwpp.PlanFactory.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_destroy_input">
+<code class="sig-name descname">set_destroy_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_destroy_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_estimate">
+<code class="sig-name descname">set_estimate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_estimate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_exhaustive">
+<code class="sig-name descname">set_exhaustive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_exhaustive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_measure">
+<code class="sig-name descname">set_measure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_measure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_patient">
+<code class="sig-name descname">set_patient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_patient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_preserve_input">
+<code class="sig-name descname">set_preserve_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_preserve_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_unaligned">
+<code class="sig-name descname">set_unaligned</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_unaligned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.set_wisdom_only">
+<code class="sig-name descname">set_wisdom_only</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_wisdom_only" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_destroy_input">
+<code class="sig-name descname">unset_destroy_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_destroy_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_estimate">
+<code class="sig-name descname">unset_estimate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_estimate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_exhaustive">
+<code class="sig-name descname">unset_exhaustive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_exhaustive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_measure">
+<code class="sig-name descname">unset_measure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_measure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_patient">
+<code class="sig-name descname">unset_patient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_patient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_preserve_input">
+<code class="sig-name descname">unset_preserve_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_preserve_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_unaligned">
+<code class="sig-name descname">unset_unaligned</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_unaligned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyfftwpp.PlanFactory.unset_wisdom_only">
+<code class="sig-name descname">unset_wisdom_only</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_wisdom_only" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyfftwpp.init_threads">
+<code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#pyfftwpp.init_threads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pyfftwpp.plan_with_nthreads">
+<code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyfftwpp.plan_with_nthreads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">fftwpp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">API documentation of the C++ library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation of the Python bindings</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cpp_api.html" title="previous chapter">API documentation of the C++ library</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021
+, S. Brisard
+.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/py_api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

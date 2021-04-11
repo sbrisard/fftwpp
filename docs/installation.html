@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Installation &#8212; fftwpp 0.1
+ documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="fftwpp — Version 0.1" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<section id="installing-the-c-library">
+<h2>Installing the C++ library<a class="headerlink" href="#installing-the-c-library" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> depends on <a class="reference external" href="http://fftw.org/">FFTW</a>.</p>
+<p>This is a <a class="reference external" href="https://cmake.org/">CMake</a> based project. The installation procedure is
+standard. However, <a class="reference external" href="http://fftw.org/">FFTW</a> is not detected automatically by <a class="reference external" href="https://cmake.org/">CMake</a> and
+you might need to specify its location manually (follow the <a class="reference external" href="https://cmake.org/">CMake</a>
+instructions if needed).</p>
+<p>First, clone the repository. Then, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the root directory of
+the <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> project. Let <code class="docutils literal notranslate"><span class="pre">fftwpp_INSTALL_PREFIX</span></code> be the path to
+the directory where <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> should be installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/sbrisard/fftwpp
+$ cd fftwpp
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=fftwpp_INSTALL_PREFIX ..
+$ cmake --build . --config Release
+$ cmake --install . --config Release
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--config</span></code> option might not be available, depending on
+the selected generator.</p>
+</div>
+<p>At this point, <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> should be installed. To run the tests, you
+need to build the python bindings (see <a class="reference internal" href="#sec20210410191726"><span class="std std-ref">below</span></a>).</p>
+</section>
+<section id="compiling-your-first-fftwpp-program">
+<h2>Compiling your first <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> program<a class="headerlink" href="#compiling-your-first-fftwpp-program" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">example</span></code> subdirectory. The provided example program
+should be compiled and linked against <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir build
+$ cd build
+$ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
+$ cmake --build . --config Release
+</pre></div>
+</div>
+<p>An executable called <code class="docutils literal notranslate"><span class="pre">example_fftwpp</span></code> should be present in the
+<code class="docutils literal notranslate"><span class="pre">build/Release</span></code> subdirectory.</p>
+</section>
+<section id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The documentation of <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> requires <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>. The C++ API docs are
+built with <a class="reference external" href="https://www.doxygen.nl/">Doxygen</a> and the <a class="reference external" href="https://breathe.readthedocs.io/">Breathe</a> extension to <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>.</p>
+<p>To build the HTML version of the docs in the <code class="docutils literal notranslate"><span class="pre">public</span></code> subdirectory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
+$ sphinx-build -b html . ../public
+</pre></div>
+</div>
+<p>To build the LaTeX version of the docs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
+$ make latex
+</pre></div>
+</div>
+</section>
+<section id="installing-the-python-bindings">
+<span id="sec20210410191726"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
+<p>To install the <code class="docutils literal notranslate"><span class="pre">pyfftwpp</span></code> module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code>
+subdirectory and edit or create the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code>. You need to specify
+the location of</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">pyfftwpp</span></code> headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftwpp]</span></code>,</p></li>
+<li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>,</p></li>
+<li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> binaries, see <code class="docutils literal notranslate"><span class="pre">library_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>.</p></li>
+</ul>
+<p>The resulting file should look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[pyfftwpp]
+include_dir = ${CMAKE_INSTALL_PREFIX}/include
+[fftw]
+include_dir = path/to/FFTW/headers
+library_dir = path/to/FFTW/binaries
+</pre></div>
+</div>
+<p>Then, issue the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install --user
+</pre></div>
+</div>
+<p>or (if you intend to edit the project):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py develop --user
+</pre></div>
+</div>
+<p>To run the tests with <a class="reference external" href="https://docs.pytest.org/">Pytest</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m pytest tests
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">fftwpp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-c-library">Installing the C++ library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-your-first-fftwpp-program">Compiling your first <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-python-bindings">Installing the Python bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api.html">API documentation of the C++ library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py_api.html">API documentation of the Python bindings</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">fftwpp — Version 0.1</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021
+, S. Brisard
+.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

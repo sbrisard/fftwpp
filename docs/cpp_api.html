@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>API documentation of the C++ library &#8212; fftwpp 0.1
+ documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API documentation of the Python bindings" href="py_api.html" />
+    <link rel="prev" title="Theory" href="theory.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api-documentation-of-the-c-library">
+<h1>API documentation of the C++ library<a class="headerlink" href="#api-documentation-of-the-c-library" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp type">
+<dt id="_CPPv44fftw">
+<span id="_CPPv34fftw"></span><span id="_CPPv24fftw"></span><span id="fftw"></span><span class="target" id="namespacefftw"></span><em class="property">namespace </em><code class="sig-name descname">fftw</code><a class="headerlink" href="#_CPPv44fftw" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>C++ bindings to the <a class="reference external" href="http://fftw.org/">FFTW</a> library.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> strives to remain as close as possible to the orginal C library, while being more idiomatic. The user should refer to the documentations of the FFTW library for a more in-depth description. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw12init_threadsEv">
+<span id="_CPPv3N4fftw12init_threadsEv"></span><span id="_CPPv2N4fftw12init_threadsEv"></span><span id="fftw::init_threads"></span><span class="target" id="namespacefftw_1ab7f83752aec931e9fe528f257abb1ee7"></span>int <code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw12init_threadsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw18plan_with_nthreadsEi">
+<span id="_CPPv3N4fftw18plan_with_nthreadsEi"></span><span id="_CPPv2N4fftw18plan_with_nthreadsEi"></span><span id="fftw::plan_with_nthreads__i"></span><span class="target" id="namespacefftw_1a2222427ea5d942e05f9de98c1f778e8d"></span>void <code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span>int <em>nthreads</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw18plan_with_nthreadsEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw10is_alignedE6size_tPKv">
+<span id="_CPPv3N4fftw10is_alignedE6size_tPKv"></span><span id="_CPPv2N4fftw10is_alignedE6size_tPKv"></span><span id="fftw::is_aligned__s.voidCP"></span><span class="target" id="namespacefftw_1a9e53a7a0bffe3566346595cc2b5a881b"></span>bool <code class="sig-name descname">is_aligned</code><span class="sig-paren">(</span>size_t <em>size</em>, void <em class="property">const</em> *<em>ptr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw10is_alignedE6size_tPKv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt id="_CPPv4N4fftw4PlanE">
+<span id="_CPPv3N4fftw4PlanE"></span><span id="_CPPv2N4fftw4PlanE"></span><span id="fftw::Plan"></span><span class="target" id="classfftw_1_1_plan"></span><em class="property">class </em><code class="sig-name descname">Plan</code><a class="headerlink" href="#_CPPv4N4fftw4PlanE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;fftwpp.hpp&gt;</em><p>A wrapper class around <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+<p>The user is referred to section 4.2, <em>Using Plans</em>, in the FFTW documentation (<a class="reference external" href="http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans">http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans</a>).</p>
+<p>This class implements the RAII paradigm: the underlying <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code> is released when the wrapper object falls out of scope.</p>
+<p>The constructor of this class should in general not be called directly. Rather, use a <a class="reference internal" href="#classfftw_1_1_plan_factory"><span class="std std-ref">PlanFactory</span></a>. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw4Plan4PlanEK9fftw_plan">
+<span id="_CPPv3N4fftw4Plan4PlanEK9fftw_plan"></span><span id="_CPPv2N4fftw4Plan4PlanEK9fftw_plan"></span><span id="fftw::Plan::Plan__fftw_planC"></span><span class="target" id="classfftw_1_1_plan_1affb0f101e311e1c69f5a2b51e35ab648"></span><em class="property">inline</em> <code class="sig-name descname">Plan</code><span class="sig-paren">(</span>fftw_plan <em class="property">const</em> <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw4Plan4PlanEK9fftw_plan" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create a new instance around the specified <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4fftw4Plan7executeEv">
+<span id="_CPPv3NK4fftw4Plan7executeEv"></span><span id="_CPPv2NK4fftw4Plan7executeEv"></span><span id="fftw::Plan::executeC"></span><span class="target" id="classfftw_1_1_plan_1a8c6909d8f4860b98c913267f15c9af05"></span><em class="property">inline</em> void <code class="sig-name descname">execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4fftw4Plan7executeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_execute()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4fftw4Plan4costEv">
+<span id="_CPPv3NK4fftw4Plan4costEv"></span><span id="_CPPv2NK4fftw4Plan4costEv"></span><span id="fftw::Plan::costC"></span><span class="target" id="classfftw_1_1_plan_1ad9ed1e3c3e9ef245cf4be2ee3aede8d4"></span><em class="property">inline</em> double <code class="sig-name descname">cost</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4fftw4Plan4costEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_cost()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4fftw4Plan5flopsEv">
+<span id="_CPPv3NK4fftw4Plan5flopsEv"></span><span id="_CPPv2NK4fftw4Plan5flopsEv"></span><span id="fftw::Plan::flopsC"></span><span class="target" id="classfftw_1_1_plan_1a2205ff17d98babbf0d8abb40a6223f63"></span><em class="property">inline</em> std::tuple&lt;double, double, double&gt; <code class="sig-name descname">flops</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4fftw4Plan5flopsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_flops()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+<p>The returned tuple is the number of floating-point additions, multiplications and fused multiply-add operations, in this order. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4fftw4Plan4reprEv">
+<span id="_CPPv3NK4fftw4Plan4reprEv"></span><span id="_CPPv2NK4fftw4Plan4reprEv"></span><span id="fftw::Plan::reprC"></span><span class="target" id="classfftw_1_1_plan_1ae71aa816eb42207e97317719b152cb79"></span><em class="property">inline</em> std::string <code class="sig-name descname">repr</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4fftw4Plan4reprEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_sprint_plan()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N4fftw4Plan1pE">
+<span id="_CPPv3N4fftw4Plan1pE"></span><span id="_CPPv2N4fftw4Plan1pE"></span><span id="fftw::Plan::p__std::shared_ptr:fftw_plan_s:"></span><span class="target" id="classfftw_1_1_plan_1aaf62bbc805b53287a1f8e7b76231f5cb"></span>std::shared_ptr&lt;<em class="property">struct</em> fftw_plan_s&gt; <code class="sig-name descname">p</code><a class="headerlink" href="#_CPPv4N4fftw4Plan1pE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N4fftw11PlanFactoryE">
+<span id="_CPPv3N4fftw11PlanFactoryE"></span><span id="_CPPv2N4fftw11PlanFactoryE"></span><span id="fftw::PlanFactory"></span><span class="target" id="classfftw_1_1_plan_factory"></span><em class="property">class </em><code class="sig-name descname">PlanFactory</code><a class="headerlink" href="#_CPPv4N4fftw11PlanFactoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><em>#include &lt;fftwpp.hpp&gt;</em><p>This factory class is used to create new instances of <a class="reference internal" href="#classfftw_1_1_plan"><span class="std std-ref">Plan</span></a>.</p>
+<p>Planner flags (see section 4.3.2, <em>Planner Flags</em>, in the FFTW documentation, <a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags</a>) are set through <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods.</p>
+<p>This class exposes a fluent interface, which allows to chain <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods like so</p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">set_estimate</span><span class="p">()</span><span class="o">.</span><span class="n">set_preserve_input</span><span class="p">()</span><span class="o">.</span><span class="n">create_plan</span><span class="p">();</span>
+</pre></div>
+</div>
+ </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPNSt7complexIdEEi">
+<span id="_CPPv3N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPNSt7complexIdEEi"></span><span id="_CPPv2N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPNSt7complexIdEEi"></span><span id="fftw::PlanFactory::create_plan__i.std::vector:i:CR.std::complex:double:P.std::complex:double:P.i"></span><span class="target" id="classfftw_1_1_plan_factory_1a13979803fbc3fbeaf2bd0b71071c0900"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw4PlanE" title="fftw::Plan">Plan</a> <code class="sig-name descname">create_plan</code><span class="sig-paren">(</span>int <em>rank</em>, std::vector&lt;int&gt; <em class="property">const</em> &amp;<em>shape</em>, std::complex&lt;double&gt; *<em>in</em>, std::complex&lt;double&gt; *<em>out</em>, int <em>sign</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPNSt7complexIdEEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPdPNSt7complexIdEEi">
+<span id="_CPPv3N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPdPNSt7complexIdEEi"></span><span id="_CPPv2N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPdPNSt7complexIdEEi"></span><span id="fftw::PlanFactory::create_plan__i.std::vector:i:CR.doubleP.std::complex:double:P.i"></span><span class="target" id="classfftw_1_1_plan_factory_1a2fdb5abcdf629d34d87bdc13ceef975d"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw4PlanE" title="fftw::Plan">Plan</a> <code class="sig-name descname">create_plan</code><span class="sig-paren">(</span>int <em>rank</em>, std::vector&lt;int&gt; <em class="property">const</em> &amp;<em>shape</em>, double *<em>in</em>, std::complex&lt;double&gt; *<em>out</em>, int <em>sign</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPdPNSt7complexIdEEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPdi">
+<span id="_CPPv3N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPdi"></span><span id="_CPPv2N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPdi"></span><span id="fftw::PlanFactory::create_plan__i.std::vector:i:CR.std::complex:double:P.doubleP.i"></span><span class="target" id="classfftw_1_1_plan_factory_1ae5cc5bb0b979deac9bc8c379be08e255"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw4PlanE" title="fftw::Plan">Plan</a> <code class="sig-name descname">create_plan</code><span class="sig-paren">(</span>int <em>rank</em>, std::vector&lt;int&gt; <em class="property">const</em> &amp;<em>shape</em>, std::complex&lt;double&gt; *<em>in</em>, double *<em>out</em>, int <em>sign</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory11create_planEiRKNSt6vectorIiEEPNSt7complexIdEEPdi" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory9get_flagsEv">
+<span id="_CPPv3N4fftw11PlanFactory9get_flagsEv"></span><span id="_CPPv2N4fftw11PlanFactory9get_flagsEv"></span><span id="fftw::PlanFactory::get_flags"></span><span class="target" id="classfftw_1_1_plan_factory_1a87bc9afb1f9079d9f444f660326ae799"></span><em class="property">inline</em> unsigned <code class="sig-name descname">get_flags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory9get_flagsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory12set_estimateEv">
+<span id="_CPPv3N4fftw11PlanFactory12set_estimateEv"></span><span id="_CPPv2N4fftw11PlanFactory12set_estimateEv"></span><span id="fftw::PlanFactory::set_estimate"></span><span class="target" id="classfftw_1_1_plan_factory_1ac629d76fbbe6a6da2c52b0f795c77f14"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_estimate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory12set_estimateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory14unset_estimateEv">
+<span id="_CPPv3N4fftw11PlanFactory14unset_estimateEv"></span><span id="_CPPv2N4fftw11PlanFactory14unset_estimateEv"></span><span id="fftw::PlanFactory::unset_estimate"></span><span class="target" id="classfftw_1_1_plan_factory_1a90ff6e4a0510e15f169d96de869d389b"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_estimate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory14unset_estimateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory11set_measureEv">
+<span id="_CPPv3N4fftw11PlanFactory11set_measureEv"></span><span id="_CPPv2N4fftw11PlanFactory11set_measureEv"></span><span id="fftw::PlanFactory::set_measure"></span><span class="target" id="classfftw_1_1_plan_factory_1aca4f80e752bb8232b8ef7b9d7bed1e6b"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_measure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory11set_measureEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory13unset_measureEv">
+<span id="_CPPv3N4fftw11PlanFactory13unset_measureEv"></span><span id="_CPPv2N4fftw11PlanFactory13unset_measureEv"></span><span id="fftw::PlanFactory::unset_measure"></span><span class="target" id="classfftw_1_1_plan_factory_1a534f2bbfcaadc30da96c3d1358973182"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_measure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory13unset_measureEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory11set_patientEv">
+<span id="_CPPv3N4fftw11PlanFactory11set_patientEv"></span><span id="_CPPv2N4fftw11PlanFactory11set_patientEv"></span><span id="fftw::PlanFactory::set_patient"></span><span class="target" id="classfftw_1_1_plan_factory_1a8dc8eae24b3e443a42a1ff45075eae67"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_patient</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory11set_patientEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory13unset_patientEv">
+<span id="_CPPv3N4fftw11PlanFactory13unset_patientEv"></span><span id="_CPPv2N4fftw11PlanFactory13unset_patientEv"></span><span id="fftw::PlanFactory::unset_patient"></span><span class="target" id="classfftw_1_1_plan_factory_1a8400efa4311bfb2134693f8c15de09a3"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_patient</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory13unset_patientEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory14set_exhaustiveEv">
+<span id="_CPPv3N4fftw11PlanFactory14set_exhaustiveEv"></span><span id="_CPPv2N4fftw11PlanFactory14set_exhaustiveEv"></span><span id="fftw::PlanFactory::set_exhaustive"></span><span class="target" id="classfftw_1_1_plan_factory_1a3fe151c493d61096ae9dc176a0603855"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_exhaustive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory14set_exhaustiveEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory16unset_exhaustiveEv">
+<span id="_CPPv3N4fftw11PlanFactory16unset_exhaustiveEv"></span><span id="_CPPv2N4fftw11PlanFactory16unset_exhaustiveEv"></span><span id="fftw::PlanFactory::unset_exhaustive"></span><span class="target" id="classfftw_1_1_plan_factory_1a2f84141b29afadc683043d67a8646d16"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_exhaustive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory16unset_exhaustiveEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory15set_wisdom_onlyEv">
+<span id="_CPPv3N4fftw11PlanFactory15set_wisdom_onlyEv"></span><span id="_CPPv2N4fftw11PlanFactory15set_wisdom_onlyEv"></span><span id="fftw::PlanFactory::set_wisdom_only"></span><span class="target" id="classfftw_1_1_plan_factory_1a0c64ad55e462bd3584afbe7a7cdac2d8"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_wisdom_only</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory15set_wisdom_onlyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory17unset_wisdom_onlyEv">
+<span id="_CPPv3N4fftw11PlanFactory17unset_wisdom_onlyEv"></span><span id="_CPPv2N4fftw11PlanFactory17unset_wisdom_onlyEv"></span><span id="fftw::PlanFactory::unset_wisdom_only"></span><span class="target" id="classfftw_1_1_plan_factory_1a31ff4a85f00834a64ec507ae80f1743f"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_wisdom_only</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory17unset_wisdom_onlyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory17set_destroy_inputEv">
+<span id="_CPPv3N4fftw11PlanFactory17set_destroy_inputEv"></span><span id="_CPPv2N4fftw11PlanFactory17set_destroy_inputEv"></span><span id="fftw::PlanFactory::set_destroy_input"></span><span class="target" id="classfftw_1_1_plan_factory_1ae25349d17bad9c8ece9049c58f14fa9b"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_destroy_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory17set_destroy_inputEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory19unset_destroy_inputEv">
+<span id="_CPPv3N4fftw11PlanFactory19unset_destroy_inputEv"></span><span id="_CPPv2N4fftw11PlanFactory19unset_destroy_inputEv"></span><span id="fftw::PlanFactory::unset_destroy_input"></span><span class="target" id="classfftw_1_1_plan_factory_1a513f1688393b012b2e22321e37bb796d"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_destroy_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory19unset_destroy_inputEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory18set_preserve_inputEv">
+<span id="_CPPv3N4fftw11PlanFactory18set_preserve_inputEv"></span><span id="_CPPv2N4fftw11PlanFactory18set_preserve_inputEv"></span><span id="fftw::PlanFactory::set_preserve_input"></span><span class="target" id="classfftw_1_1_plan_factory_1a9da5b23921501f4e64550b6b55ae711e"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_preserve_input</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory18set_preserve_inputEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory21unset_preserve_intputEv">
+<span id="_CPPv3N4fftw11PlanFactory21unset_preserve_intputEv"></span><span id="_CPPv2N4fftw11PlanFactory21unset_preserve_intputEv"></span><span id="fftw::PlanFactory::unset_preserve_intput"></span><span class="target" id="classfftw_1_1_plan_factory_1a626d11322cfc2424d906e401283455f3"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_preserve_intput</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory21unset_preserve_intputEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory13set_unalignedEv">
+<span id="_CPPv3N4fftw11PlanFactory13set_unalignedEv"></span><span id="_CPPv2N4fftw11PlanFactory13set_unalignedEv"></span><span id="fftw::PlanFactory::set_unaligned"></span><span class="target" id="classfftw_1_1_plan_factory_1a990f5c023ceefc4f22cf0b71ff47bab6"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_unaligned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory13set_unalignedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory15unset_unalignedEv">
+<span id="_CPPv3N4fftw11PlanFactory15unset_unalignedEv"></span><span id="_CPPv2N4fftw11PlanFactory15unset_unalignedEv"></span><span id="fftw::PlanFactory::unset_unaligned"></span><span class="target" id="classfftw_1_1_plan_factory_1ae0a4a08571c74ec56b62437384b36a1e"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_unaligned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory15unset_unalignedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory8set_flagEj">
+<span id="_CPPv3N4fftw11PlanFactory8set_flagEj"></span><span id="_CPPv2N4fftw11PlanFactory8set_flagEj"></span><span id="fftw::PlanFactory::set_flag__unsigned"></span><span class="target" id="classfftw_1_1_plan_factory_1a1dcc7b6290524b7373cae0162718d102"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_flag</code><span class="sig-paren">(</span>unsigned <em>flag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory8set_flagEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4fftw11PlanFactory10unset_flagEj">
+<span id="_CPPv3N4fftw11PlanFactory10unset_flagEj"></span><span id="_CPPv2N4fftw11PlanFactory10unset_flagEj"></span><span id="fftw::PlanFactory::unset_flag__unsigned"></span><span class="target" id="classfftw_1_1_plan_factory_1ada7a546a00febe4d5889dc840353ba32"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N4fftw11PlanFactoryE" title="fftw::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">unset_flag</code><span class="sig-paren">(</span>unsigned <em>flag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4fftw11PlanFactory10unset_flagEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Private Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N4fftw11PlanFactory5flagsE">
+<span id="_CPPv3N4fftw11PlanFactory5flagsE"></span><span id="_CPPv2N4fftw11PlanFactory5flagsE"></span><span id="fftw::PlanFactory::flags__unsigned"></span><span class="target" id="classfftw_1_1_plan_factory_1a3a55cf9d19f1831588b0ed26af02fb6e"></span>unsigned <code class="sig-name descname">flags</code> = 0<a class="headerlink" href="#_CPPv4N4fftw11PlanFactory5flagsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">fftwpp</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation of the C++ library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py_api.html">API documentation of the Python bindings</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="theory.html" title="previous chapter">Theory</a></li>
+      <li>Next: <a href="py_api.html" title="next chapter">API documentation of the Python bindings</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021
+, S. Brisard
+.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/cpp_api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

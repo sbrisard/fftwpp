@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacefftw" kind="namespace" language="C++">
+    <compoundname>fftw</compoundname>
+    <innerclass refid="classfftw_1_1_plan" prot="public">fftw::Plan</innerclass>
+    <innerclass refid="classfftw_1_1_plan_factory" prot="public">fftw::PlanFactory</innerclass>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namespacefftw_1ab7f83752aec931e9fe528f257abb1ee7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fftw::init_threads</definition>
+        <argsstring>()</argsstring>
+        <name>init_threads</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="176" column="5" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="176" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacefftw_1a2222427ea5d942e05f9de98c1f778e8d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fftw::plan_with_nthreads</definition>
+        <argsstring>(int nthreads)</argsstring>
+        <name>plan_with_nthreads</name>
+        <param>
+          <type>int</type>
+          <declname>nthreads</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="178" column="6" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="178" bodyend="178"/>
+      </memberdef>
+      <memberdef kind="function" id="namespacefftw_1a9e53a7a0bffe3566346595cc2b5a881b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool fftw::is_aligned</definition>
+        <argsstring>(size_t size, void const *ptr)</argsstring>
+        <name>is_aligned</name>
+        <param>
+          <type>size_t</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>void const *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="180" column="6" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="180" bodyend="186"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>C++ bindings to the <ulink url="http://fftw.org/">FFTW</ulink> library.</para>
+<para><computeroutput>fftwpp</computeroutput> strives to remain as close as possible to the orginal C library, while being more idiomatic. The user should refer to the documentations of the FFTW library for a more in-depth description. </para>
+    </detaileddescription>
+    <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="17" column="1"/>
+  </compounddef>
+</doxygen>

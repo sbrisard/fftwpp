@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_d44c64559bbebec7f509842c48db8b23" kind="dir">
+    <compoundname>C:/Users/sbrisard/Git/programmes/fftwpp/include</compoundname>
+    <innerdir refid="dir_2eb30ea5eb0218f288f9e85c1c37953a">C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/"/>
+  </compounddef>
+</doxygen>
