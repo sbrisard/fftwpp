@@ -8,15 +8,6 @@
 using DoubleArray = pybind11::array_t<double>;
 using ComplexArray = pybind11::array_t<std::complex<double>>;
 
-template <typename T>
-std::vector<int> to_ints(std::vector<T> a) {
-  std::vector<int> out(a.size());
-  for (size_t i = 0; i < a.size(); i++) {
-    out[i] = a[i];
-  }
-  return out;
-}
-
 void assert_rank_lower_than_ndim(size_t rank, size_t ndim) {
   if (rank > ndim) {
     std::ostringstream stream;
@@ -68,7 +59,7 @@ template <typename T>
 void assert_c_contiguous(pybind11::array_t<T> array) {
   pybind11::buffer_info info = array.request();
   size_t stride = info.itemsize;
-  for (int i = info.ndim - 1; i >= 0; i--) {
+  for (auto i = info.ndim - 1; i >= 0; i--) {
     if (info.strides[i] != stride) {
       throw std::invalid_argument("expected C contiguous array");
     }
@@ -98,19 +89,20 @@ PYBIND11_MODULE(pyfftwpp, m) {
       .def("set_destroy_input", &PlanFactory::set_destroy_input)
       .def("unset_destroy_input", &PlanFactory::unset_destroy_input)
       .def("set_preserve_input", &PlanFactory::set_preserve_input)
-      .def("unset_preserve_input", &PlanFactory::unset_preserve_intput)
+      .def("unset_preserve_input", &PlanFactory::unset_preserve_input)
       .def("set_unaligned", &PlanFactory::set_unaligned)
       .def("unset_unaligned", &PlanFactory::unset_unaligned)
       .def(
           "create_plan",
-          [](PlanFactory& self, int rank, ComplexArray in, ComplexArray out,
+          [](PlanFactory& self, size_t rank, ComplexArray in, ComplexArray out,
              int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_same_shape(in, out);
             auto info = in.request();
             assert_rank_lower_than_ndim(rank, info.ndim);
-            auto shape = to_ints(info.shape);
+            auto shape =
+                std::vector<size_t>{info.shape.cbegin(), info.shape.cend()};
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
@@ -118,14 +110,15 @@ PYBIND11_MODULE(pyfftwpp, m) {
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
-          [](PlanFactory& self, int rank, DoubleArray in, ComplexArray out,
+          [](PlanFactory& self, size_t rank, DoubleArray in, ComplexArray out,
              int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, in, out);
             auto info = in.request();
             assert_rank_lower_than_ndim(rank, info.ndim);
-            auto shape = to_ints(info.shape);
+            auto shape =
+                std::vector<size_t>{info.shape.cbegin(), info.shape.cend()};
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
@@ -133,14 +126,15 @@ PYBIND11_MODULE(pyfftwpp, m) {
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
-          [](PlanFactory& self, int rank, ComplexArray in, DoubleArray out,
+          [](PlanFactory& self, size_t rank, ComplexArray in, DoubleArray out,
              int sign) {
             assert_c_contiguous(in);
             assert_c_contiguous(out);
             assert_compatible_shapes(rank, out, in);
             auto info = out.request();
             assert_rank_lower_than_ndim(rank, info.ndim);
-            auto shape = to_ints(info.shape);
+            auto shape =
+                std::vector<size_t>{info.shape.cbegin(), info.shape.cend()};
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },

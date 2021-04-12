@@ -38,6 +38,7 @@ if __name__ == "__main__":
             ("__FFTWPP_VERSION__", r"\"" + metadata["version"] + r"\""),
             ("__FFTWPP_AUTHOR__", r"\"" + metadata["author"] + r"\""),
         ],
+        extra_compile_args=["/std:c++17"]
     )
 
     setuptools.setup(

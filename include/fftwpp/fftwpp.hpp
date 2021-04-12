@@ -1,7 +1,7 @@
 /**
  * C++ bindings to the [FFTW](http://fftw.org/) library.
  *
- * `fftwpp` strives to remain as close as possible to the orginal C library,
+ * `fftwpp` strives to remain as close as possible to the original C library,
  * while being more idiomatic. The user should refer to the documentations of
  * the FFTW library for a more in-depth description.
  */
@@ -11,6 +11,7 @@
 #include <complex>
 #include <cstdlib>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 
@@ -114,22 +115,25 @@ class PlanFactory {
    * merely iterated over).
    *
    * The `sign` parameter is used to ask for a forward (`sign == -1`, default
-   * value) or backward (`sign == +1`) transform. Note that backward tranforms
+   * value) or backward (`sign == +1`) transform. Note that backward transforms
    * are *not normalized*.
    */
-  Plan create_plan(int rank, std::vector<int> const &shape,
+  Plan create_plan(size_t rank, std::vector<size_t> const &shape,
                    std::complex<double> *in, std::complex<double> *out,
                    int sign) {
     if ((sign != -1) && (sign != 1)) {
       throw std::invalid_argument("sign must be -1 or +1");
     }
-    auto ndim = shape.size();
-    int stride = 1;
-    for (int i = rank; i < ndim; i++) stride *= shape[i];
+    int stride =
+        static_cast<int>(std::reduce(shape.cbegin() + rank, shape.cend(),
+                                     size_t{1}, std::multiplies<size_t>()));
+    std::vector<int> shape_(shape.size());
+    std::transform(shape.cbegin(), shape.cend(), shape_.begin(),
+                   [](size_t n) { return static_cast<int>(n); });
     fftw_plan p = fftw_plan_many_dft(
-        rank, shape.data(), stride, reinterpret_cast<fftw_complex *>(in),
-        nullptr, stride, 1, reinterpret_cast<fftw_complex *>(out), nullptr,
-        stride, 1, sign, flags);
+        static_cast<int>(rank), shape_.data(), stride,
+        reinterpret_cast<fftw_complex *>(in), nullptr, stride, 1,
+        reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1, sign, flags);
     return Plan{p};
   }
 
@@ -143,16 +147,19 @@ class PlanFactory {
    * See @link #create_plan(int, std::vector<int> const &, std::complex<double> *, std::complex<double> *, int) complex-to-complex plan creation@endlink.
    */
   // clang-format on
-  Plan create_plan(int rank, std::vector<int> const &shape, double *in,
+  Plan create_plan(size_t rank, std::vector<size_t> const &shape, double *in,
                    std::complex<double> *out, int sign) {
     if (sign != -1) {
       throw std::invalid_argument("sign must be -1");
     }
-    auto ndim = shape.size();
-    int stride = 1;
-    for (int i = rank; i < ndim; i++) stride *= shape[i];
+    int stride =
+        static_cast<int>(std::reduce(shape.cbegin() + rank, shape.cend(),
+                                     size_t{1}, std::multiplies<size_t>()));
+    std::vector<int> shape_(shape.size());
+    std::transform(shape.cbegin(), shape.cend(), shape_.begin(),
+                   [](size_t n) { return static_cast<int>(n); });
     fftw_plan p = fftw_plan_many_dft_r2c(
-        rank, shape.data(), stride, in, nullptr, stride, 1,
+        static_cast<int>(rank), shape_.data(), stride, in, nullptr, stride, 1,
         reinterpret_cast<fftw_complex *>(out), nullptr, stride, 1, flags);
     return Plan{p};
   }
@@ -167,17 +174,21 @@ class PlanFactory {
    * See @link #create_plan(int, std::vector<int> const &, std::complex<double> *, std::complex<double> *, int) complex-to-complex plan creation@endlink.
    */
   // clang-format on
-  Plan create_plan(int rank, std::vector<int> const &shape,
+  Plan create_plan(size_t rank, std::vector<size_t> const &shape,
                    std::complex<double> *in, double *out, int sign) {
     if (sign != -1) {
       throw std::invalid_argument("sign must be -1");
     }
-    auto ndim = shape.size();
-    int stride = 1;
-    for (int i = rank; i < ndim; i++) stride *= shape[i];
-    fftw_plan p = fftw_plan_many_dft_c2r(
-        rank, shape.data(), stride, reinterpret_cast<fftw_complex *>(in),
-        nullptr, stride, 1, out, nullptr, stride, 1, flags);
+    int stride =
+        static_cast<int>(std::reduce(shape.cbegin() + rank, shape.cend(),
+                                     size_t{1}, std::multiplies<size_t>()));
+    std::vector<int> shape_(shape.size());
+    std::transform(shape.cbegin(), shape.cend(), shape_.begin(),
+                   [](size_t n) { return static_cast<int>(n); });
+    fftw_plan p =
+        fftw_plan_many_dft_c2r(static_cast<int>(rank), shape_.data(), stride,
+                               reinterpret_cast<fftw_complex *>(in), nullptr,
+                               stride, 1, out, nullptr, stride, 1, flags);
     return Plan{p};
   }
 
@@ -228,7 +239,7 @@ class PlanFactory {
   PlanFactory &set_preserve_input() { return set_flag(FFTW_PRESERVE_INPUT); }
 
   /** Unset the `FFTW_PRESERVE_INPUT` flag. */
-  PlanFactory &unset_preserve_intput() {
+  PlanFactory &unset_preserve_input() {
     return unset_flag(FFTW_PRESERVE_INPUT);
   }
 
@@ -250,4 +261,4 @@ int init_threads() { return fftw_init_threads(); }
 /** Set the number of threads to be used by all subsequently created plans. */
 void plan_with_nthreads(int nthreads) { fftw_plan_with_nthreads(nthreads); }
 
-}  // namespace fftw
+}  // namespace fftwpp
