@@ -35,7 +35,7 @@
             
   <section id="module-pyfftwpp">
 <span id="api-documentation-of-the-python-bindings"></span><h1>API documentation of the Python bindings<a class="headerlink" href="#module-pyfftwpp" title="Permalink to this headline">¶</a></h1>
-<p>Python bindings to the fftwpp library</p>
+<p>Python bindings to the fftwpp library, which is itself a wrapper around the FFTW library.</p>
 <dl class="py class">
 <dt id="pyfftwpp.Plan">
 <em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">Plan</code><a class="headerlink" href="#pyfftwpp.Plan" title="Permalink to this definition">¶</a></dt>
@@ -61,6 +61,19 @@
 <dt id="pyfftwpp.PlanFactory">
 <em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">PlanFactory</code><a class="headerlink" href="#pyfftwpp.PlanFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<p>Factory class that is used to create new instances of <a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a>.</p>
+<p>Planner flags are set through <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods. The user
+is referred to section 4.3.2, <em>Planner Flags</em>, in the FFTW documentation
+(<a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags</a>), for a full
+description of the various flags.</p>
+<p>This class exposes a fluent interface: all <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code>
+methods return the current object. This allows for chaining, like so</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">PlanFactory</span><span class="p">()</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">set_estimate</span><span class="p">()</span><span class="o">.</span><span class="n">set_preserve_input</span><span class="p">()</span><span class="o">.</span><span class="n">create_plan</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that if no planner flags are set/unset, Plan instances will be
+created with <code class="docutils literal notranslate"><span class="pre">flags</span></code> set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.create_plan">
 <code class="sig-name descname">create_plan</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyfftwpp.PlanFactory.create_plan" title="Permalink to this definition">¶</a></dt>
@@ -80,82 +93,98 @@
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_destroy_input">
 <code class="sig-name descname">set_destroy_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_destroy_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_DESTROY_INPUT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_estimate">
 <code class="sig-name descname">set_estimate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_estimate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_exhaustive">
 <code class="sig-name descname">set_exhaustive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_exhaustive" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_EXHAUSTIVE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_measure">
 <code class="sig-name descname">set_measure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_measure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_MEASURE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_patient">
 <code class="sig-name descname">set_patient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_patient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_PATIENT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_preserve_input">
 <code class="sig-name descname">set_preserve_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_preserve_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_PRESERVE_INPUT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_unaligned">
 <code class="sig-name descname">set_unaligned</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_unaligned" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_UNALIGNED</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_wisdom_only">
 <code class="sig-name descname">set_wisdom_only</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.set_wisdom_only" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the <code class="docutils literal notranslate"><span class="pre">FFTW_WISDOM_ONLY</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_destroy_input">
 <code class="sig-name descname">unset_destroy_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_destroy_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_DESTROY_INPUT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_estimate">
 <code class="sig-name descname">unset_estimate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_estimate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_exhaustive">
 <code class="sig-name descname">unset_exhaustive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_exhaustive" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_EXHAUSTIVE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_measure">
 <code class="sig-name descname">unset_measure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_measure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_MEASURE</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_patient">
 <code class="sig-name descname">unset_patient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_patient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_PATIENT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_preserve_input">
 <code class="sig-name descname">unset_preserve_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_preserve_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_PRESERVE_INPUT</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_unaligned">
 <code class="sig-name descname">unset_unaligned</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_unaligned" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_UNALIGNED</span></code> flag.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.unset_wisdom_only">
 <code class="sig-name descname">unset_wisdom_only</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory">pyfftwpp.PlanFactory</a><a class="headerlink" href="#pyfftwpp.PlanFactory.unset_wisdom_only" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Unset the <code class="docutils literal notranslate"><span class="pre">FFTW_WISDOM_ONLY</span></code> flag.</p>
+</dd></dl>
 
 </dd></dl>
 

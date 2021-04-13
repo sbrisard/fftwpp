@@ -12,9 +12,9 @@
     <member refid="classfftwpp_1_1_plan_factory_1a36c188719b31631e0237af04cdf0aa1f" kind="variable"><name>flags</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1adf64b0481979cdc6e02a89987903e5cb" kind="function"><name>set_flag</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1a69cbd91b5bb11dea610d30364f8378ee" kind="function"><name>unset_flag</name></member>
-    <member refid="classfftwpp_1_1_plan_factory_1abd620611241542fcdc392c3524f3287b" kind="function"><name>create_plan</name></member>
-    <member refid="classfftwpp_1_1_plan_factory_1ab9f141e9f2af8517f39903f0e71f6295" kind="function"><name>create_plan</name></member>
-    <member refid="classfftwpp_1_1_plan_factory_1a5296b01c1099d1d52998cf540c8dd766" kind="function"><name>create_plan</name></member>
+    <member refid="classfftwpp_1_1_plan_factory_1a4a3b9ace05494212bbd8a52746ef062e" kind="function"><name>create_plan</name></member>
+    <member refid="classfftwpp_1_1_plan_factory_1abfc4425a5f2a77305381cb2066b699c9" kind="function"><name>create_plan</name></member>
+    <member refid="classfftwpp_1_1_plan_factory_1a93736389af57a72a5403288f14a8f622" kind="function"><name>create_plan</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1a9d2ed06c2094bb610aa8ca4255c37c02" kind="function"><name>get_flags</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1af27a4117226e967b6521722517d4f782" kind="function"><name>set_estimate</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1a8c2190d70f21c73871bcbf07eb87f905" kind="function"><name>unset_estimate</name></member>
@@ -29,7 +29,7 @@
     <member refid="classfftwpp_1_1_plan_factory_1ac0a903e9c028ba7e30c8d95cb75476c5" kind="function"><name>set_destroy_input</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1a84a56a6aabcacff0f66c25dc7d89f67a" kind="function"><name>unset_destroy_input</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1adddab119ee547a5f19edf15397be1b14" kind="function"><name>set_preserve_input</name></member>
-    <member refid="classfftwpp_1_1_plan_factory_1affd3e1d094e4a36517c2d57987312a7a" kind="function"><name>unset_preserve_intput</name></member>
+    <member refid="classfftwpp_1_1_plan_factory_1aba3b1e10df1a063b2da075934fc2ab4a" kind="function"><name>unset_preserve_input</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1ac5725be4e1ca2faaa60150a994235fe7" kind="function"><name>set_unaligned</name></member>
     <member refid="classfftwpp_1_1_plan_factory_1a872deb12fd6a512107d05aadbdfbbcbb" kind="function"><name>unset_unaligned</name></member>
   </compound>
