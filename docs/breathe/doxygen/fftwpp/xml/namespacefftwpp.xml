@@ -18,7 +18,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="259" column="5" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="259" bodyend="259"/>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="258" column="5" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="258" bodyend="258"/>
       </memberdef>
       <memberdef kind="function" id="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -36,7 +36,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="262" column="6" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="262" bodyend="262"/>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="261" column="6" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="261" bodyend="261"/>
       </memberdef>
       </sectiondef>
     <briefdescription>

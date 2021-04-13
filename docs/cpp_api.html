@@ -9,7 +9,7 @@
     <title>API documentation of the C++ library &#8212; fftwpp 0.1
  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -17,21 +17,32 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API documentation of the Python bindings" href="py_api.html" />
-    <link rel="prev" title="Tutorial" href="tutorial.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="prev" title="Tutorial" href="tutorial.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="py_api.html" title="API documentation of the Python bindings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
+ documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">API documentation of the C++ library</a></li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <section id="api-documentation-of-the-c-library">
@@ -113,7 +124,7 @@
 <span id="_CPPv3N6fftwpp11PlanFactoryE"></span><span id="_CPPv2N6fftwpp11PlanFactoryE"></span><span id="fftwpp::PlanFactory"></span><span class="target" id="classfftwpp_1_1_plan_factory"></span><em class="property">class </em><code class="sig-name descname">PlanFactory</code><a class="headerlink" href="#_CPPv4N6fftwpp11PlanFactoryE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><em>#include &lt;fftwpp.hpp&gt;</em><p>Factory class that is used to create new instances of <a class="reference internal" href="#classfftwpp_1_1_plan"><span class="std std-ref">Plan</span></a>.</p>
 <p>Planner flags are set through <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods. The user is referred to section 4.3.2, <em>Planner Flags</em>, in the FFTW documentation (<a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags</a>), for a full description of the various flags.</p>
-<p>This class exposes a fluent interface: all methods (but the plan creations methods) return the current object. This allows to chain <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods like so</p>
+<p>This class exposes a fluent interface: all <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods return the current object. This allows for chaining, like so</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">set_estimate</span><span class="p">()</span><span class="o">.</span><span class="n">set_preserve_input</span><span class="p">()</span><span class="o">.</span><span class="n">create_plan</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -280,39 +291,25 @@
 </section>
 
 
+            <div class="clearer"></div>
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">fftwpp</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation of the C++ library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="py_api.html">API documentation of the Python bindings</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
-      <li>Next: <a href="py_api.html" title="next chapter">API documentation of the Python bindings</a></li>
-  </ul></li>
-</ul>
-</div>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="py_api.html"
+                        title="next chapter">API documentation of the Python bindings</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/cpp_api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -323,34 +320,35 @@
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2021
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="py_api.html" title="API documentation of the Python bindings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
+ documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">API documentation of the C++ library</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021
 , S. Brisard
 .
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/cpp_api.rst.txt"
-          rel="nofollow">Page source</a>
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
-
-    
-
-    
   </body>
 </html>
