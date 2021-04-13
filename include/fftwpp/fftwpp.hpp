@@ -65,16 +65,15 @@ class Plan {
 };
 
 /**
- * This factory class is used to create new instances of Plan.
+ * Factory class that is used to create new instances of Plan.
  *
  * Planner flags are set through `set_XXX()/unset_XXX()` methods. The user is
  * referred to section 4.3.2, *Planner Flags*, in the FFTW documentation
  * (http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags), for a full
  * description of the various flags.
  *
- * This class exposes a fluent interface: all methods (but the plan creations
- * methods) return the current object. This allows to chain
- * `set_XXX()/unset_XXX()` methods like so
+ * This class exposes a fluent interface: all `set_XXX()/unset_XXX()` methods
+ * return the current object. This allows for chaining, like so
  *
  * @code{.cpp}
  * auto plan = factory.set_estimate().set_preserve_input().create_plan();

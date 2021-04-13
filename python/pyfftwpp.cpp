@@ -68,30 +68,68 @@ void assert_c_contiguous(pybind11::array_t<T> array) {
 }
 
 PYBIND11_MODULE(pyfftwpp, m) {
-  m.doc() = "Python bindings to the fftwpp library";
+  m.doc() =
+      "Python bindings to the fftwpp library, which is itself a wrapper around "
+      "the FFTW library.";
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
   m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
   using PlanFactory = fftwpp::PlanFactory;
 
-  pybind11::class_<PlanFactory>(m, "PlanFactory")
+  pybind11::class_<PlanFactory>(
+      m, "PlanFactory",
+      "Factory class that is used to create new instances of "
+      ":py:class:`Plan`.\n\n"
+      "Planner flags are set through ``set_XXX()/unset_XXX()`` methods. The "
+      "user\n"
+      "is referred to section 4.3.2, *Planner Flags*, in the FFTW "
+      "documentation\n"
+      "(http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags), for a "
+      "full\n"
+      "description of the various flags.\n\n"
+
+      "This class exposes a fluent interface: all ``set_XXX()/unset_XXX()``\n"
+      "methods return the current object. This allows for chaining, like so\n\n"
+
+      ".. code-block:: python\n\n"
+
+      "   factory = PlanFactory()\n"
+      "   plan = factory.set_estimate().set_preserve_input().create_plan()\n\n"
+      "Note that if no planner flags are set/unset, Plan instances will be\n"
+      "created with ``flags`` set to ``0``.\n")
       .def(pybind11::init<>())
-      .def("set_estimate", &PlanFactory::set_estimate)
-      .def("unset_estimate", &PlanFactory::unset_estimate)
-      .def("set_measure", &PlanFactory::set_measure)
-      .def("unset_measure", &PlanFactory::unset_measure)
-      .def("set_patient", &PlanFactory::set_patient)
-      .def("unset_patient", &PlanFactory::unset_patient)
-      .def("set_exhaustive", &PlanFactory::set_exhaustive)
-      .def("unset_exhaustive", &PlanFactory::unset_exhaustive)
-      .def("set_wisdom_only", &PlanFactory::set_wisdom_only)
-      .def("unset_wisdom_only", &PlanFactory::unset_wisdom_only)
-      .def("set_destroy_input", &PlanFactory::set_destroy_input)
-      .def("unset_destroy_input", &PlanFactory::unset_destroy_input)
-      .def("set_preserve_input", &PlanFactory::set_preserve_input)
-      .def("unset_preserve_input", &PlanFactory::unset_preserve_input)
-      .def("set_unaligned", &PlanFactory::set_unaligned)
-      .def("unset_unaligned", &PlanFactory::unset_unaligned)
+      .def("set_estimate", &PlanFactory::set_estimate,
+           "Set the ``FFTW_ESTIMATE`` flag.")
+      .def("unset_estimate", &PlanFactory::unset_estimate,
+           "Unset the ``FFTW_ESTIMATE`` flag.")
+      .def("set_measure", &PlanFactory::set_measure,
+           "Set the ``FFTW_MEASURE`` flag.")
+      .def("unset_measure", &PlanFactory::unset_measure,
+           "Unset the ``FFTW_MEASURE`` flag.")
+      .def("set_patient", &PlanFactory::set_patient,
+           "Set the ``FFTW_PATIENT`` flag.")
+      .def("unset_patient", &PlanFactory::unset_patient,
+           "Unset the ``FFTW_PATIENT`` flag.")
+      .def("set_exhaustive", &PlanFactory::set_exhaustive,
+           "Set the ``FFTW_EXHAUSTIVE`` flag.")
+      .def("unset_exhaustive", &PlanFactory::unset_exhaustive,
+           "Unset the ``FFTW_EXHAUSTIVE`` flag.")
+      .def("set_wisdom_only", &PlanFactory::set_wisdom_only,
+           "Set the ``FFTW_WISDOM_ONLY`` flag.")
+      .def("unset_wisdom_only", &PlanFactory::unset_wisdom_only,
+           "Unset the ``FFTW_WISDOM_ONLY`` flag.")
+      .def("set_destroy_input", &PlanFactory::set_destroy_input,
+           "Set the ``FFTW_DESTROY_INPUT`` flag.")
+      .def("unset_destroy_input", &PlanFactory::unset_destroy_input,
+           "Unset the ``FFTW_DESTROY_INPUT`` flag.")
+      .def("set_preserve_input", &PlanFactory::set_preserve_input,
+           "Set the ``FFTW_PRESERVE_INPUT`` flag.")
+      .def("unset_preserve_input", &PlanFactory::unset_preserve_input,
+           "Unset the ``FFTW_PRESERVE_INPUT`` flag.")
+      .def("set_unaligned", &PlanFactory::set_unaligned,
+           "Set the ``FFTW_UNALIGNED`` flag.")
+      .def("unset_unaligned", &PlanFactory::unset_unaligned,
+           "Unset the ``FFTW_UNALIGNED`` flag.")
       .def(
           "create_plan",
           [](PlanFactory& self, size_t rank, ComplexArray in, ComplexArray out,
