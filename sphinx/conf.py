@@ -32,5 +32,5 @@ breathe_projects_source = {
 
 breathe_doxygen_config_options = {"GENERATE_TODOLIST": "YES"}
 
-html_theme = "alabaster"
+html_theme = "sphinxdoc"
 html_static_path = ["_static"]
