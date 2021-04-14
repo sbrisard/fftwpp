@@ -163,7 +163,9 @@ PYBIND11_MODULE(pyfftwpp, m) {
 #include "docstrings/PlanFactory/create_plan-c2r.txt"
           , pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
-      .def_property_readonly("flags", &PlanFactory::get_flags);
+      .def_property_readonly("flags", &PlanFactory::get_flags,
+#include "docstrings/PlanFactory/flags.txt"
+                             );
 
   using Plan = fftwpp::Plan;
   pybind11::class_<Plan>(m, "Plan",

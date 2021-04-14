@@ -1,0 +1,4 @@
+"Current bitwise or combination of planner flags.\n"
+"\n"
+"These planner flags apply to all subsequently created instances of\n"
+":py:class:`Plan`.\n"
