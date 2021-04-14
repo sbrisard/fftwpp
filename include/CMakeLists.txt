@@ -10,7 +10,7 @@ if (MATH_LIBRARY)
     target_link_libraries(${PROJECT_NAME} INTERFACE ${MATH_LIBRARY})
 endif()
 
-find_package(OpenMP)
+find_package(OpenMP CONFIG)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(${PROJECT_NAME} INTERFACE OpenMP::OpenMP_CXX)
 endif()
