@@ -7,13 +7,15 @@
  */
 #pragma once
 
-#include <fftw/fftw3.h>
+#include <algorithm>
 #include <complex>
 #include <cstdlib>
 #include <iostream>
 #include <numeric>
 #include <string>
 #include <vector>
+
+#include <fftw/fftw3.h>
 
 namespace fftwpp {
 
