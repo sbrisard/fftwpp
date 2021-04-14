@@ -1,1 +1,1 @@
-Python bindings to the fftwpp library, a C++ wrapper around the FFTW library.
+"Python bindings to the fftwpp library, a C++ wrapper around the FFTW library."
