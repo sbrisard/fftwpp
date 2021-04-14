@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include <fftw/fftw3.h>
+#include <fftw3.h>
 
 namespace fftwpp {
 
