@@ -58,7 +58,10 @@ class Plan {
   std::string repr() const {
     char *c_str = fftw_sprint_plan(p.get());
     std::string cpp_str{c_str};
-    std::free(c_str);
+    std::cerr << (cpp_str.data() == c_str) << std::endl;
+    // TODO Check that fftw_free is really the function that needs to be called
+    // (see https://github.com/FFTW/fftw3/issues/238)
+    fftw_free(c_str);
     return cpp_str;
   }
 
@@ -66,7 +69,7 @@ class Plan {
   std::shared_ptr<struct fftw_plan_s> p;
 };
 
-std::ostream& operator<<(std::ostream& os, const Plan& plan) {
+std::ostream &operator<<(std::ostream &os, const Plan &plan) {
   return os << plan.repr();
 }
 
