@@ -66,6 +66,10 @@ class Plan {
   std::shared_ptr<struct fftw_plan_s> p;
 };
 
+std::ostream& operator<<(std::ostream& os, const Plan& plan) {
+  return os << plan.repr();
+}
+
 /**
  * Factory class that is used to create new instances of Plan.
  *
