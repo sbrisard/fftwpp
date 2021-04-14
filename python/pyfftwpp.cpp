@@ -178,6 +178,10 @@ PYBIND11_MODULE(pyfftwpp, m) {
            )
       .def("__repr__", &Plan::repr);
 
-  m.def("init_threads", &fftwpp::init_threads);
-  m.def("plan_with_nthreads", &fftwpp::plan_with_nthreads);
+  m.def("init_threads", &fftwpp::init_threads,
+#include "docstrings/init_threads.txt"
+  );
+  m.def("plan_with_nthreads", &fftwpp::plan_with_nthreads,
+        "Set the number of threads to be used by all subsequently created "
+        "plans.", pybind11::arg("nthreads"));
 }

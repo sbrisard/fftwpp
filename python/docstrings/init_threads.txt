@@ -1,0 +1,7 @@
+"Call ``fftw_init_threads()``.\n"
+"\n"
+"This function should be called before calling *any* ``FFTW`` or\n"
+"``fftwpp`` functions.\n"
+"\n"
+"Refer to section 5.2, `Usage of Multi-threaded FFTW`_, in the FFTW\n"
+"documentation.\n"
