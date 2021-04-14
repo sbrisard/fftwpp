@@ -43,25 +43,34 @@
             
   <section id="module-pyfftwpp">
 <span id="api-documentation-of-the-python-bindings"></span><h1>API documentation of the Python bindings<a class="headerlink" href="#module-pyfftwpp" title="Permalink to this headline">¶</a></h1>
-<p>Python bindings to the fftwpp library, which is itself a wrapper around the FFTW library.</p>
+<p>Python bindings to the fftwpp library, a C++ wrapper around the FFTW library.</p>
 <dl class="py class">
 <dt id="pyfftwpp.Plan">
 <em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">Plan</code><a class="headerlink" href="#pyfftwpp.Plan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<p>Wrapper class around <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+<p>Refer to section 4.2, <a class="reference external" href="http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans">Using Plans</a>, in the FFTW documentation.</p>
+<p>The initializer (<code class="docutils literal notranslate"><span class="pre">__init__()</span></code>)  of this class should in general not be
+called directly. Rather, use a <a class="reference internal" href="#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlanFactory</span></code></a>.</p>
 <dl class="py method">
 <dt id="pyfftwpp.Plan.cost">
 <code class="sig-name descname">cost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#pyfftwpp.Plan.cost" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_cost()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.Plan.execute">
 <code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyfftwpp.Plan.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_execute()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.Plan.flops">
 <code class="sig-name descname">flops</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan">pyfftwpp.Plan</a></span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>float<span class="p">]</span><a class="headerlink" href="#pyfftwpp.Plan.flops" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_flops()</span></code> for the wrapped <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code>.</p>
+<p>The returned tuple is the number of floating-point additions,
+multiplications and fused multiply-add operations, in this order.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -70,10 +79,9 @@
 <em class="property">class </em><code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">PlanFactory</code><a class="headerlink" href="#pyfftwpp.PlanFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
 <p>Factory class that is used to create new instances of <a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a>.</p>
-<p>Planner flags are set through <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods. The user
-is referred to section 4.3.2, <em>Planner Flags</em>, in the FFTW documentation
-(<a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags</a>), for a full
-description of the various flags.</p>
+<p>Planner flags are set through <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code> methods. The
+user is referred to section 4.3.2, <a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">Planner Flags</a>, in the FFTW
+documentation, for a full description of the various flags.</p>
 <p>This class exposes a fluent interface: all <code class="docutils literal notranslate"><span class="pre">set_XXX()/unset_XXX()</span></code>
 methods return the current object. This allows for chaining, like so</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">PlanFactory</span><span class="p">()</span>
@@ -88,15 +96,55 @@ created with <code class="docutils literal notranslate"><span class="pre">flags<
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.complex128], out: numpy.ndarray[numpy.complex128], sign: int = -1) -&gt; fftwpp::Plan</p></li>
+</ol>
+<p>Create a <a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a> for a complex-to-complex transform.</p>
+<p>Uses the so-called <em>advanced interface</em> that allows to compute multiple
+transforms at a time. Refer to section 4.4, <a class="reference external" href="http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface">Advanced Interface</a>, in
+the FFTW documentation, for more details.</p>
+<p>The input (<code class="docutils literal notranslate"><span class="pre">in</span></code>) and output (<code class="docutils literal notranslate"><span class="pre">out</span></code>) data arrays are stored in row-
+major order. Both arrays are assumed to have the same shape. Transforms
+are performed along the <code class="docutils literal notranslate"><span class="pre">rank</span></code> <em>first</em> axes of the arrays (the <em>last</em>
+axes are merely iterated over).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sign</span></code> parameter is used to ask for a forward (<code class="docutils literal notranslate"><span class="pre">sign</span> <span class="pre">==</span> <span class="pre">-1</span></code>,
+default value) or backward (<code class="docutils literal notranslate"><span class="pre">sign</span> <span class="pre">==</span> <span class="pre">+1</span></code>) transform. Note that
+backward transforms are <em>not normalized</em>.</p>
+<ol class="arabic simple" start="2">
 <li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.float64], out: numpy.ndarray[numpy.complex128], sign: int = -1) -&gt; fftwpp::Plan</p></li>
+</ol>
+<p>Create a <a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a> for a real-to-complex transform.</p>
+<p>Uses the so-called <em>advanced interface</em> that allows to compute multiple
+transforms at a time. Refer to section 4.4, <a class="reference external" href="http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface">Advanced Interface</a>, in
+the FFTW documentation, for more details.</p>
+<p>The logical shape of the transform, <code class="docutils literal notranslate"><span class="pre">(n[0],</span> <span class="pre">...,</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">1])</span></code>  is given
+by the (complex) <code class="docutils literal notranslate"><span class="pre">output</span></code> array. The shape of the <code class="docutils literal notranslate"><span class="pre">input</span></code> array must
+be <code class="docutils literal notranslate"><span class="pre">(n[0],</span> <span class="pre">...,</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">2],</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">1]</span> <span class="pre">//</span> <span class="pre">2</span> <span class="pre">+1)</span></code>.</p>
+<p>Transforms are performed along the <code class="docutils literal notranslate"><span class="pre">rank</span></code> <em>first</em> axes of the arrays
+(the <em>last</em> axes are merely iterated over).</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">sign</span></code> parameter is meaningless in the present case, and
+should not be specified.</p>
+<ol class="arabic simple" start="3">
 <li><p>create_plan(self: pyfftwpp.PlanFactory, rank: int, in: numpy.ndarray[numpy.complex128], out: numpy.ndarray[numpy.float64], sign: int = -1) -&gt; fftwpp::Plan</p></li>
 </ol>
+<p>Create a <a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a> for a complex-to-real transform.</p>
+<p>Uses the so-called <em>advanced interface</em> that allows to compute multiple
+transforms at a time. Refer to section 4.4, <a class="reference external" href="http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface">Advanced Interface</a>, in
+the FFTW documentation, for more details.</p>
+<p>The logical shape of the transform, <code class="docutils literal notranslate"><span class="pre">(n[0],</span> <span class="pre">...,</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">1])</span></code>  is given
+by the (complex) <code class="docutils literal notranslate"><span class="pre">input</span></code> array. The shape of the <code class="docutils literal notranslate"><span class="pre">output</span></code> array must
+be <code class="docutils literal notranslate"><span class="pre">(n[0],</span> <span class="pre">...,</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">2],</span> <span class="pre">n[d</span> <span class="pre">-</span> <span class="pre">1]</span> <span class="pre">//</span> <span class="pre">2</span> <span class="pre">+1)</span></code>.</p>
+<p>Transforms are performed along the <code class="docutils literal notranslate"><span class="pre">rank</span></code> <em>first</em> axes of the arrays
+(the <em>last</em> axes are merely iterated over).</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">sign</span></code> parameter is meaningless in the present case, and
+should not be specified.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.flags">
 <em class="property">property </em><code class="sig-name descname">flags</code><a class="headerlink" href="#pyfftwpp.PlanFactory.flags" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Current bitwise or combination of planner flags.</p>
+<p>These planner flags apply to all subsequently created instances of
+<a class="reference internal" href="#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Plan</span></code></a>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="pyfftwpp.PlanFactory.set_destroy_input">
@@ -199,12 +247,18 @@ created with <code class="docutils literal notranslate"><span class="pre">flags<
 <dl class="py function">
 <dt id="pyfftwpp.init_threads">
 <code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#pyfftwpp.init_threads" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_init_threads()</span></code>.</p>
+<p>This function should be called before calling <em>any</em> <code class="docutils literal notranslate"><span class="pre">FFTW</span></code> or
+<code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> functions.</p>
+<p>Refer to section 5.2, <a class="reference external" href="http://fftw.org/fftw3_doc/Usage-of-Multi_002dthreaded-FFTW.html#Usage-of-Multi_002dthreaded-FFTW">Usage of Multi-threaded FFTW</a>, in the FFTW
+documentation.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="pyfftwpp.plan_with_nthreads">
-<code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg0</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyfftwpp.plan_with_nthreads" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">pyfftwpp.</code><code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nthreads</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#pyfftwpp.plan_with_nthreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of threads to be used by all subsequently created plans.</p>
+</dd></dl>
 
 </section>
 

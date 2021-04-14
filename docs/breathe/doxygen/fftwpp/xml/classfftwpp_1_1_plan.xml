@@ -98,8 +98,8 @@
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-<para>A wrapper class around <computeroutput>fftw_plan</computeroutput>.</para>
-<para>The user is referred to section 4.2, <emphasis>Using Plans</emphasis>, in the FFTW documentation (<ulink url="http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans">http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans</ulink>).</para>
+<para>Wrapper class around <computeroutput>fftw_plan</computeroutput>.</para>
+<para>Refer to section 4.2, <emphasis>Using Plans</emphasis>, in the FFTW documentation (<ulink url="http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans">http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans</ulink>).</para>
 <para>This class implements the RAII paradigm: the underlying <computeroutput>fftw_plan</computeroutput> is released when the wrapper object falls out of scope.</para>
 <para>The constructor of this class should in general not be called directly. Rather, use a <ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref>. </para>
     </detaileddescription>
