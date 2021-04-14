@@ -166,10 +166,16 @@ PYBIND11_MODULE(pyfftwpp, m) {
       .def_property_readonly("flags", &PlanFactory::get_flags);
 
   using Plan = fftwpp::Plan;
-  pybind11::class_<Plan>(m, "Plan")
-      .def("execute", &Plan::execute)
-      .def("cost", &Plan::cost)
-      .def("flops", &Plan::flops)
+  pybind11::class_<Plan>(m, "Plan",
+#include "docstrings/Plan/Plan.txt"
+                         )
+      .def("execute", &Plan::execute,
+           "Call ``fftw_execute()`` for the wrapped ``fftw_plan``.")
+      .def("cost", &Plan::cost,
+           "Call ``fftw_cost()`` for the wrapped ``fftw_plan``.")
+      .def("flops", &Plan::flops,
+#include "docstrings/Plan/flops.txt"
+           )
       .def("__repr__", &Plan::repr);
 
   m.def("init_threads", &fftwpp::init_threads);

@@ -1,0 +1,6 @@
+"Wrapper class around ``fftw_plan``.\n"
+"\n"
+"Refer to section 4.2, `Using Plans`_, in the FFTW documentation.\n"
+"\n"
+"The initializer (``__init__()``)  of this class should in general not be\n"
+"called directly. Rather, use a :py:class:`PlanFactory`.\n"

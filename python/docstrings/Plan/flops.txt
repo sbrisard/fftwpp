@@ -1,0 +1,4 @@
+"Call ``fftw_flops()`` for the wrapped ``fftw_plan``.\n"
+"\n"
+"The returned tuple is the number of floating-point additions,\n"
+"multiplications and fused multiply-add operations, in this order.\n"
