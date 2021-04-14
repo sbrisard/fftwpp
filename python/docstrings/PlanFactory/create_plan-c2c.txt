@@ -11,6 +11,4 @@
 "\n"
 "The ``sign`` parameter is used to ask for a forward (``sign == -1``,\n"
 "default value) or backward (``sign == +1``) transform. Note that\n"
-"backward transforms are *not normalized*.\n"
-"\n"
-".. _Advanced Interface: http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface"
+"backward transforms are *not normalized*."

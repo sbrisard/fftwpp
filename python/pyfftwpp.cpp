@@ -76,27 +76,9 @@ PYBIND11_MODULE(pyfftwpp, m) {
 
   using PlanFactory = fftwpp::PlanFactory;
 
-  pybind11::class_<PlanFactory>(
-      m, "PlanFactory",
-      "Factory class that is used to create new instances of "
-      ":py:class:`Plan`.\n\n"
-      "Planner flags are set through ``set_XXX()/unset_XXX()`` methods. The "
-      "user\n"
-      "is referred to section 4.3.2, *Planner Flags*, in the FFTW "
-      "documentation\n"
-      "(http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags), for a "
-      "full\n"
-      "description of the various flags.\n\n"
-
-      "This class exposes a fluent interface: all ``set_XXX()/unset_XXX()``\n"
-      "methods return the current object. This allows for chaining, like so\n\n"
-
-      ".. code-block:: python\n\n"
-
-      "   factory = PlanFactory()\n"
-      "   plan = factory.set_estimate().set_preserve_input().create_plan()\n\n"
-      "Note that if no planner flags are set/unset, Plan instances will be\n"
-      "created with ``flags`` set to ``0``.\n")
+  pybind11::class_<PlanFactory>(m, "PlanFactory",
+#include "docstrings/PlanFactory/PlanFactory.txt"
+                                )
       .def(pybind11::init<>())
       .def("set_estimate", &PlanFactory::set_estimate,
            "Set the ``FFTW_ESTIMATE`` flag.")
