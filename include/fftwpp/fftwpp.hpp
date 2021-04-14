@@ -76,6 +76,7 @@ class Plan {
  * return the current object. This allows for chaining, like so
  *
  * @code{.cpp}
+ * auto factory = fftwpp::Factory();
  * auto plan = factory.set_estimate().set_preserve_input().create_plan();
  * @endcode
  *
@@ -110,7 +111,7 @@ class PlanFactory {
    *
    * The input (`in`) and output (`out`) data arrays are stored in row-major
    * order. Both arrays are assumed to have the same `shape`. Transforms are
-   * performed along the `rank` *last* axes of the arrays (the first axes are
+   * performed along the `rank` *first* axes of the arrays (the *last* axes are
    * merely iterated over).
    *
    * The `sign` parameter is used to ask for a forward (`sign == -1`, default
