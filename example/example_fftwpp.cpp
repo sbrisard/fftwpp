@@ -13,8 +13,7 @@ int main() {
 
   auto factory = fftwpp::PlanFactory().set_estimate();
   auto plan = factory.create_plan(1, {N}, in.data(), out.data(), -1);
-  std::cout << "Created plan: " << std::endl;
-  std::cout << plan << std::endl;
+  std::cout << "Created plan: " << plan << std::endl;
   in[0] = 1.0;
   for (size_t n = 1; n < N; n++) in[n] = z * in[n - 1];
   auto z_pow_N = z * in[N - 1];
