@@ -103,9 +103,9 @@ class PlanFactory {
   /**
    * Create a Plan for a complex-to-complex transform.
    *
-   * This constructor uses the so-called “advanced interface” that allows to
-   * compute multiple transforms at a time. Refer to section 4.4, *Advanced
-   * Interface*, in the FFTW documentation
+   * Uses the so-called *advanced interface* that allows to compute multiple
+   * transforms at a time. Refer to section 4.4, *Advanced Interface*, in the
+   * FFTW documentation
    * (http://fftw.org/fftw3_doc/Advanced-Interface.html#Advanced-Interface), for
    * more details.
    *
