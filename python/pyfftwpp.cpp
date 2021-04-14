@@ -69,8 +69,8 @@ void assert_c_contiguous(pybind11::array_t<T> array) {
 
 PYBIND11_MODULE(pyfftwpp, m) {
   m.doc() =
-      "Python bindings to the fftwpp library, which is itself a wrapper around "
-      "the FFTW library.";
+#include "docstrings/pyfftwpp.txt"
+      ;
   m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
   m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
