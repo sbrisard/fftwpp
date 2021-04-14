@@ -18,10 +18,10 @@
 namespace fftwpp {
 
 /**
- * A wrapper class around `fftw_plan`.
+ * Wrapper class around `fftw_plan`.
  *
- * The user is referred to section 4.2, *Using Plans*, in the FFTW
- * documentation (http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans).
+ * Refer to section 4.2, *Using Plans*, in the FFTW documentation
+ * (http://fftw.org/fftw3_doc/Using-Plans.html#Using-Plans).
  *
  * This class implements the RAII paradigm: the underlying `fftw_plan` is
  * released when the wrapper object falls out of scope.
