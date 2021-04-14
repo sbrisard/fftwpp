@@ -144,7 +144,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
-          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+#include "docstrings/PlanFactory/create_plan-c2c.txt"
+          , pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
@@ -160,7 +161,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
-          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+#include "docstrings/PlanFactory/create_plan-r2c.txt"
+          , pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
       .def(
           "create_plan",
@@ -176,7 +178,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
             return self.create_plan(rank, shape, in.mutable_data(),
                                     out.mutable_data(), sign);
           },
-          "", pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
+#include "docstrings/PlanFactory/create_plan-c2r.txt"
+          , pybind11::arg("rank"), pybind11::arg("in"), pybind11::arg("out"),
           pybind11::arg("sign") = -1)
       .def_property_readonly("flags", &PlanFactory::get_flags);
 
