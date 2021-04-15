@@ -3,7 +3,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include "fftwpp/fftwpp.hpp"
+#include <fftwpp/fftwpp.hpp>
 
 using DoubleArray = pybind11::array_t<double>;
 using ComplexArray = pybind11::array_t<std::complex<double>>;
@@ -71,8 +71,8 @@ PYBIND11_MODULE(pyfftwpp, m) {
   m.doc() =
 #include "docstrings/pyfftwpp.txt"
       ;
-  m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
-  m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
+//  m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
+//  m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
 
   using PlanFactory = fftwpp::PlanFactory;
 
