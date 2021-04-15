@@ -6,7 +6,7 @@ Installation
 Installing the C++ library
 ==========================
 
-``fftwpp`` depends on FFTW_.
+fftwpp depends on FFTW_.
 
 This is a CMake_ based project. The installation procedure is
 standard. However, FFTW_ is not detected automatically by CMake_ and
@@ -14,8 +14,8 @@ you might need to specify its location manually (follow the CMake_
 instructions if needed).
 
 First, clone the repository. Then, ``cd`` into the root directory of
-the ``fftwpp`` project. Let ``fftwpp_INSTALL_PREFIX`` be the path to
-the directory where ``fftwpp`` should be installed::
+the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the path to the
+directory where fftwpp should be installed::
 
   $ git clone https://github.com/sbrisard/fftwpp
   $ cd fftwpp
@@ -28,9 +28,8 @@ the directory where ``fftwpp`` should be installed::
 .. note:: The ``--config`` option might not be available, depending on
    the selected generator.
 
-At this point, ``fftwpp`` should be installed. To check your
-installation, you could try to :ref:`compile a program
-<20210415083504>`.
+At this point, fftwpp should be installed. To check your installation,
+you could try to :ref:`compile a program <20210415083504>`.
 
 To run the tests or build the documentation properly, you need to
 first build the python bindings (see :ref:`below
@@ -41,11 +40,11 @@ first build the python bindings (see :ref:`below
 Installing the Python bindings
 ==============================
 
-To install the ``pyfftwpp`` module, ``cd`` into the ``python``
+To install the pyfftwpp module, ``cd`` into the ``python``
 subdirectory and edit or create the ``setup.cfg``. You need to specify
 the location of
 
-- the ``pyfftwpp`` headers, see ``include_dir`` in section ``[fftwpp]``,
+- the pyfftwpp headers, see ``include_dir`` in section ``[fftwpp]``,
 - the FFTW_ headers, see ``include_dir`` in section ``[fftw]``,
 - the FFTW_ binaries, see ``library_dir`` in section ``[fftw]``.
 
@@ -73,7 +72,7 @@ To run the tests with Pytest_::
 Building the documentation
 ==========================
 
-The documentation of ``fftwpp`` requires Sphinx_. The C++ API docs are
+The documentation of fftwpp requires Sphinx_. The C++ API docs are
 built with Doxygen_ and the Breathe_ extension to Sphinx_.
 
 To build the HTML version of the docs in the ``public`` subdirectory::
