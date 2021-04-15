@@ -13,12 +13,13 @@ def get_metadata(key):
 
 
 class build_ext_cpp17(build_ext):
-    args = {"msvc": "/std:c++17", "unix": "-std=c++17"}
+    fftw_libraries = {"msvc": ["fftw3"], "unix": ["fftw3", "fftw3_omp"]}
+    extra_compile_args = {"msvc": ["/std:c++17", "/openmp"], "unix": ["-std=c++17", "-fopenmp"]}
 
     def build_extensions(self):
-        print(f"***{self.compiler.compiler_type}***")
         for extension in self.extensions:
-            extension.extra_compile_args.append(self.args[self.compiler.compiler_type])
+            extension.libraries += self.fftw_libraries[self.compiler.compiler_type]
+            extension.extra_compile_args += self.extra_compile_args[self.compiler.compiler_type]
         build_ext.build_extensions(self)
 
 
@@ -50,7 +51,6 @@ if __name__ == "__main__":
         "pyfftwpp",
         include_dirs=include_dirs,
         library_dirs=library_dirs,
-        libraries=["fftw3"],
         sources=["pyfftwpp.cpp"],
         # define_macros=[
         #     ("__FFTWPP_VERSION__", r"\"" + metadata["version"] + r"\""),
