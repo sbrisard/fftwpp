@@ -1,6 +1,5 @@
 build
-cmake-build-debug
-cmake-build-release
+cmake-build-*
 *.egg-info
 .idea
 __pycache__
