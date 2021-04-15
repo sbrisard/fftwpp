@@ -4,3 +4,4 @@ cmake-build-*
 .idea
 __pycache__
 *.pyd
+*.so
