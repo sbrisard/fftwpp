@@ -28,44 +28,15 @@ the directory where ``fftwpp`` should be installed::
 .. note:: The ``--config`` option might not be available, depending on
    the selected generator.
 
-At this point, ``fftwpp`` should be installed. To run the tests, you
-need to build the python bindings (see :ref:`below
-<sec20210410191726>`).
+At this point, ``fftwpp`` should be installed. To check your
+installation, you could try to :ref:`compile a program
+<20210415083504>`.
 
+To run the tests or build the documentation properly, you need to
+first build the python bindings (see :ref:`below
+<20210415083658>`).
 
-Compiling your first ``fftwpp`` program
-=======================================
-
-``cd`` into the ``example`` subdirectory. The provided example program
-should be compiled and linked against ``fftwpp``::
-
-  $ mkdir build
-  $ cd build
-  $ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
-  $ cmake --build . --config Release
-
-An executable called ``example_fftwpp`` should be present in the
-``build/Release`` subdirectory.
-
-
-Building the documentation
-==========================
-
-The documentation of ``fftwpp`` requires Sphinx_. The C++ API docs are
-built with Doxygen_ and the Breathe_ extension to Sphinx_.
-
-To build the HTML version of the docs in the ``public`` subdirectory::
-
-  $ cd docs
-  $ sphinx-build -b html . ../public
-
-To build the LaTeX version of the docs::
-
-  $ cd docs
-  $ make latex
-
-
-.. _sec20210410191726:
+.. _20210415083658:
 
 Installing the Python bindings
 ==============================
@@ -97,6 +68,24 @@ or (if you intend to edit the project)::
 To run the tests with Pytest_::
 
   $ python -m pytest tests
+
+
+Building the documentation
+==========================
+
+The documentation of ``fftwpp`` requires Sphinx_. The C++ API docs are
+built with Doxygen_ and the Breathe_ extension to Sphinx_.
+
+To build the HTML version of the docs in the ``public`` subdirectory::
+
+  $ cd docs
+  $ sphinx-build -b html . ../public
+
+To build the LaTeX version of the docs::
+
+  $ cd docs
+  $ make latex
+
 
 .. _Breathe: https://breathe.readthedocs.io/
 .. _CMake: https://cmake.org/
