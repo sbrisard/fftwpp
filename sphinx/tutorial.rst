@@ -15,9 +15,9 @@ explicit
 .. math::
 
    \hat{z}_{mn}
-   =\sum_{m=0}^M\sum_{n=0}^N
+   =\sum_{p=0}^M\sum_{q=0}^N
    z_{pq}\exp\Bigl[-2\mathrm{i}\pi\Bigl(\frac{mp}M+\frac{nq}N\Bigr)\Bigr]
-   =\sum_{m=0}^M\sum_{n=0}^Nx^py^q\phi^{mp}\psi^{mq},
+   =\sum_{p=0}^M\sum_{q=0}^Nx^py^q\phi^{mp}\psi^{mq},
 
 where :math:`\phi=\exp\bigl(-2\mathrm{i}\pi/M\bigr)` and
 :math:`\psi=\exp\bigl(-2\mathrm{i}\pi/N\bigr)`. The above double sum can be
@@ -26,14 +26,14 @@ factored as follows
 .. math::
 
    \hat{z}_{mn}
-   =\Bigl[\sum_{m=0}^M\bigl(x\phi^p\bigr)^m\Bigr]\Bigl[\sum_{n=0}^N\bigl(y\psi^q)^n\Bigr]
-   =\frac{1-\bigl(x\phi^p\bigr)^M}{1-x\phi^p}\frac{1-\bigl(y\phi^q\bigr)^N}{1-y\phi^q}.
+   =\Bigl[\sum_{p=0}^M\bigl(x\phi^m\bigr)^p\Bigr]\Bigl[\sum_{n=0}^N\bigl(y\psi^n)^q\Bigr]
+   =\frac{1-\bigl(x\phi^m\bigr)^M}{1-x\phi^m}\frac{1-\bigl(y\psi^n\bigr)^N}{1-y\psi^n}.
 
 Since :math:`\phi^M=1` and :math:`\psi^N=1`, we finally find
 
 .. math::
 
-   \hat{z}_{mn}=\frac{1-x^M}{1-x\phi^p}\frac{1-y^N}{1-y\phi^q}.
+   \hat{z}_{mn}=\frac{1-x^M}{1-x\phi^m}\frac{1-y^N}{1-y\psi^n}.
 
 We will use the above formula to check the validity of our fftwpp computation.
 
@@ -41,8 +41,9 @@ We will use the above formula to check the validity of our fftwpp computation.
 C++ tutorial
 ============
 
-The files for this example can be downloaded: C++ source and CMake file (for
-compilation).
+The files for this example can be downloaded: :download:`C++
+source<./cpp_tutorial/tutorial.cpp>` and :download:`CMake
+file<./cpp_tutorial/CMakelists.txt>`. (for compilation).
 
 
 .. _20210415083504:
