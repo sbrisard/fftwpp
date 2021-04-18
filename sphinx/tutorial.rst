@@ -242,6 +242,9 @@ subdirectory. Running this executable results in the following output
 Python tutorial
 ===============
 
+The files for this example can be downloaded: :download:`Python
+source<./py_tutorial/tutorial.py>`.
+
 As expected, the Python code is more compact. We first import the required
 modules and define the parameters of the tutorial.
 
