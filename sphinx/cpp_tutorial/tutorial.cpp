@@ -10,7 +10,9 @@
 
 using Real = double;
 using Complex = std::complex<Real>;
+// end20210418063811
 
+// begin20210418063940
 template <size_t DIM>
 std::vector<Real> powers_of(std::array<Real, DIM> x, size_t n) {
   std::vector<Real> x_pow(n * DIM);
@@ -21,7 +23,9 @@ std::vector<Real> powers_of(std::array<Real, DIM> x, size_t n) {
   }
   return x_pow;
 }
+// end20210418063940
 
+// begin20210418064253
 std::vector<Complex> powers_of_unit_complex(Real arg, size_t n) {
   std::vector<Complex> phi_pow(n);
   for (size_t k = 0; k < n; k++) {
@@ -29,7 +33,9 @@ std::vector<Complex> powers_of_unit_complex(Real arg, size_t n) {
   }
   return phi_pow;
 }
+// end20210418064253
 
+// begin20210418064539
 template <size_t DIM>
 std::vector<Complex> dft_of_powers_of(std::array<Real, DIM> x, size_t M) {
   Complex one{1};
@@ -51,7 +57,9 @@ std::vector<Complex> dft_of_powers_of(std::array<Real, DIM> x, size_t M) {
   }
   return x_hat;
 }
+// end20210418064539
 
+// begin20210418065331
 template <size_t DIM>
 void tutorial(std::array<Real, DIM> x, size_t M, std::array<Real, DIM> y,
               size_t N) {
@@ -63,17 +71,27 @@ void tutorial(std::array<Real, DIM> x, size_t M, std::array<Real, DIM> y,
 
   auto x_hat = dft_of_powers_of(x, M);
   auto y_hat = dft_of_powers_of(y, N);
+  // end20210418065331
 
+  // begin20210418065501
   std::vector<size_t> shape{M, N, DIM};
   size_t size =
       std::reduce(shape.cbegin(), shape.cend(), size_t{1}, std::multiplies());
   std::vector<Complex> in(size), exp(size), act(size);
+  // end20210418065501
 
+  // begin20210418065917
   auto factory = fftwpp::PlanFactory().set_estimate();
+  // end20210418065917
+  // begin20210418075847
   auto plan = factory.create_plan(2, shape, in.data(), act.data(), -1);
+  // end20210418075847
+  // begin20210418080020
   std::cout << "The following plan was created plan: " << plan << std::endl
             << std::endl;
+  // end20210418080020
 
+  // begin20210418080158
   for (size_t m = 0; m < M; m++) {
     auto x1 = x_pow.cbegin() + m * DIM;
     auto x2 = x_pow.cbegin() + (m + 1) * DIM;
@@ -88,13 +106,18 @@ void tutorial(std::array<Real, DIM> x, size_t M, std::array<Real, DIM> y,
                      std::multiplies());
     }
   }
+  // end20210418080158
+  // begin20210418080316
   plan.execute();
+  // end20210418080316
   for (size_t i = 0; i < size; i++) {
     std::cout << "expected = " << exp[i] << ", actual = " << act[i]
               << std::endl;
   }
+  // end20210418080316a
 }
 
+// begin20210418080545
 int main() {
   constexpr size_t dim = 2;
   std::array<Real, dim> x{0.8, -0.9};
@@ -106,3 +129,4 @@ int main() {
   tutorial(x, M, y, N);
   return 0;
 }
+// end20210418080545
