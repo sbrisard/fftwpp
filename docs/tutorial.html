@@ -14,6 +14,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API documentation of the C++ library" href="cpp_api.html" />
@@ -47,7 +48,349 @@
             
   <section id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This chapter provides a tutorial to the fftwpp project.</p>
+<p>This chapter provides a tutorial to the fftwpp project. We compute the DFT of
+the following 2D series of data points</p>
+<div class="math notranslate nohighlight">
+\[z_{pq} = x^p y^q,\quad 0\leq p&lt;M\quad\text{and}\quad 0\leq q&lt;N.\]</div>
+<p>The discrete Fourier transform <span class="math notranslate nohighlight">\(\hat{z}_{mn}\)</span> of the above series is
+explicit</p>
+<div class="math notranslate nohighlight">
+\[\hat{z}_{mn}
+=\sum_{p=0}^M\sum_{q=0}^N
+z_{pq}\exp\Bigl[-2\mathrm{i}\pi\Bigl(\frac{mp}M+\frac{nq}N\Bigr)\Bigr]
+=\sum_{p=0}^M\sum_{q=0}^Nx^py^q\phi^{mp}\psi^{mq},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi=\exp\bigl(-2\mathrm{i}\pi/M\bigr)\)</span> and
+<span class="math notranslate nohighlight">\(\psi=\exp\bigl(-2\mathrm{i}\pi/N\bigr)\)</span>. The above double sum can be
+factored as follows</p>
+<div class="math notranslate nohighlight">
+\[\hat{z}_{mn}
+=\Bigl[\sum_{p=0}^M\bigl(x\phi^m\bigr)^p\Bigr]\Bigl[\sum_{n=0}^N\bigl(y\psi^n)^q\Bigr]
+=\frac{1-\bigl(x\phi^m\bigr)^M}{1-x\phi^m}\frac{1-\bigl(y\psi^n\bigr)^N}{1-y\psi^n}.\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\phi^M=1\)</span> and <span class="math notranslate nohighlight">\(\psi^N=1\)</span>, we finally find</p>
+<div class="math notranslate nohighlight" id="equation-eq20210418065727">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq20210418065727" title="Permalink to this equation">¶</a></span>\[\hat{z}_{mn}=\frac{1-x^M}{1-x\phi^m}\frac{1-y^N}{1-y\psi^n}.\]</div>
+<p>We will use the above formula to check the validity of our fftwpp
+computation. To make things a little more interesting, we will consider two
+pairs of <span class="math notranslate nohighlight">\((x, y)\)</span> values at a time.</p>
+<p>In both the C++ and Python versions, computing the above DFT reduces to the
+following steps</p>
+<ol class="arabic simple">
+<li><p>Create the input and output arrays.</p></li>
+<li><p>Create a <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp11PlanFactoryE" title="fftwpp::PlanFactory"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::PlanFactory</span></code></a> or <a class="reference internal" href="py_api.html#pyfftwpp.PlanFactory" title="pyfftwpp.PlanFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp.PlanFactory</span></code></a>.</p></li>
+<li><p>Set the various <a class="reference external" href="http://fftw.org/fftw3_doc/Planner-Flags.html#Planner-Flags">planner flags</a> with the <code class="docutils literal notranslate"><span class="pre">set/unset</span></code> methods.</p></li>
+<li><p>Create the <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a> or <a class="reference internal" href="py_api.html#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp.Plan</span></code></a>.</p></li>
+<li><p>Set the values of the input data.</p></li>
+<li><p>Execute the <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a> or <a class="reference internal" href="py_api.html#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp.Plan</span></code></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The values in the input array should be set only <em>after</em> creation of
+the <code class="docutils literal notranslate"><span class="pre">Plan</span></code>. Indeed (quoting from the FFTW documentation): “these
+arrays are overwritten during planning, unless <code class="docutils literal notranslate"><span class="pre">FFTW_ESTIMATE</span></code> is
+used in the flags. (The arrays need not be initialized, but they must
+be allocated.)”</p>
+</div>
+<p>In the remainder of this chapter, we first present the <a class="reference internal" href="#sec20210418121122"><span class="std std-ref">C++ implementation</span></a>, then the <a class="reference internal" href="#sec20210418120954"><span class="std std-ref">Python implementation</span></a>
+of this example.</p>
+<section id="c-tutorial">
+<span id="sec20210418121122"></span><h2>C++ tutorial<a class="headerlink" href="#c-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>The files for this example can be downloaded: <a class="reference download internal" download="" href="_downloads/02b69ef7c71d4ed61131a60987fde10e/tutorial.cpp"><code class="xref download docutils literal notranslate"><span class="pre">C++</span>
+<span class="pre">source</span></code></a> and <a class="reference download internal" download="" href="_downloads/7fbeb856cb6ad689011f26624be656f0/CMakelists.txt"><code class="xref download docutils literal notranslate"><span class="pre">CMake</span>
+<span class="pre">file</span></code></a> (for compilation). Note that this tutorial
+uses C++20 features.</p>
+<p>The program is quite verbose, but the really interesting parts reduce to a few
+line, so keep reading!</p>
+<p>We start with a few includes and type definitions.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;array&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;complex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;numbers&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fftwpp/fftwpp.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="n">Real</span> <span class="o">=</span> <span class="kt">double</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">Complex</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The following function returns a 2d array (row-major order) of the powers of the
+specified 1d array, <code class="docutils literal notranslate"><span class="pre">x</span></code>. More specifically, <code class="docutils literal notranslate"><span class="pre">x_pow[k,</span> <span class="pre">i]</span> <span class="pre">=</span> <span class="pre">x[i]</span> <span class="pre">**</span> <span class="pre">k</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">DIM</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span> <span class="n">powers_of</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">DIM</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span> <span class="n">x_pow</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">x_pow</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">x_pow</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">DIM</span><span class="p">,</span> <span class="n">Real</span><span class="p">{</span><span class="mi">1</span><span class="p">});</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">x</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="n">x_pow</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">,</span>
+                   <span class="n">x_pow</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">multiplies</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">x_pow</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following function returns a 1d array of the powers of the complex with unit
+modulus <code class="docutils literal notranslate"><span class="pre">exp(1j</span> <span class="pre">*</span> <span class="pre">arg)</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span> <span class="n">powers_of_unit_complex</span><span class="p">(</span><span class="n">Real</span> <span class="n">arg</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span> <span class="n">phi_pow</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">phi_pow</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">{</span><span class="n">cos</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">arg</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">arg</span><span class="p">)};</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">phi_pow</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following function returns the expected 1d DFT of the powers of the array
+<cite>x</cite>. More precisely, given <span class="math notranslate nohighlight">\(\bigl(x_1, \ldots, x_d)\)</span>, the function
+computes</p>
+<div class="math notranslate nohighlight">
+\[\hat{x}_{mk}=\frac{1-x_k^M}{1-x_k\phi^m}.\]</div>
+<p>The returned array, <code class="docutils literal notranslate"><span class="pre">x_hat</span></code>, is such that <span class="math notranslate nohighlight">\(\hat{x}_{mk}\)</span> is stored in
+<code class="docutils literal notranslate"><span class="pre">x_hat[m,</span> <span class="pre">k]</span></code> (in row-major order).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">DIM</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span> <span class="n">dft_of_powers_of</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">DIM</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">M</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Complex</span> <span class="n">one</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">DIM</span><span class="o">&gt;</span> <span class="n">x_pow_M</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">x</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="n">x_pow_M</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>
+                 <span class="p">[</span><span class="n">M</span><span class="p">](</span><span class="k">auto</span> <span class="n">x_</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">pow</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="n">Real</span> <span class="n">arg_phi</span> <span class="o">=</span> <span class="mi">-2</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">numbers</span><span class="o">::</span><span class="n">pi_v</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span> <span class="o">/</span> <span class="p">(</span><span class="n">Real</span><span class="p">)</span><span class="n">M</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">phi_pow</span> <span class="o">=</span> <span class="n">powers_of_unit_complex</span><span class="p">(</span><span class="n">arg_phi</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span> <span class="n">x_hat</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="n">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">phi_pow_m</span> <span class="o">=</span> <span class="n">phi_pow</span><span class="p">[</span><span class="n">m</span><span class="p">];</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">x</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="n">x_pow_M</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span>
+                   <span class="n">x_hat</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">,</span>
+                   <span class="p">[</span><span class="n">one</span><span class="p">,</span> <span class="n">phi_pow_m</span><span class="p">](</span><span class="k">auto</span> <span class="n">x_</span><span class="p">,</span> <span class="k">auto</span> <span class="n">x_pow_M_</span><span class="p">)</span> <span class="p">{</span>
+                     <span class="k">return</span> <span class="p">(</span><span class="n">one</span> <span class="o">-</span> <span class="n">x_pow_M_</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">one</span> <span class="o">-</span> <span class="n">x_</span> <span class="o">*</span> <span class="n">phi_pow_m</span><span class="p">);</span>
+                   <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">x_hat</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We are now ready for the tutorial itself. The <code class="docutils literal notranslate"><span class="pre">tutorial</span></code> function takes
+<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">M</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code> as input. The size of the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> arrays
+is specified as a template parameter. We first compute the powers of <code class="docutils literal notranslate"><span class="pre">x</span></code> and
+<code class="docutils literal notranslate"><span class="pre">y</span></code> and the corresponding 1d DFTs, in order to later compute the expected 2d
+DFT.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">DIM</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">tutorial</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">DIM</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">M</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">DIM</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">,</span>
+              <span class="kt">size_t</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">constexpr</span> <span class="k">auto</span> <span class="n">one</span> <span class="o">=</span> <span class="n">Real</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+  <span class="k">using</span> <span class="n">Complex</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="n">Real</span><span class="o">&gt;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">x_pow</span> <span class="o">=</span> <span class="n">powers_of</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">y_pow</span> <span class="o">=</span> <span class="n">powers_of</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">x_hat</span> <span class="o">=</span> <span class="n">dft_of_powers_of</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">M</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">y_hat</span> <span class="o">=</span> <span class="n">dft_of_powers_of</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Then, we define the various arrays (<strong>step 1</strong>): <code class="docutils literal notranslate"><span class="pre">in</span></code> stores the input data,
+<code class="docutils literal notranslate"><span class="pre">exp</span></code> is the <em>expected</em> data [computed through
+Eq. <a class="reference internal" href="#equation-eq20210418065727">(1)</a>] and <code class="docutils literal notranslate"><span class="pre">act</span></code> is the <em>actual</em> DFT (computed
+with FFTW). These are 3d arrays of shape <code class="docutils literal notranslate"><span class="pre">(M,</span> <span class="pre">N,</span> <span class="pre">2)</span></code>: <code class="docutils literal notranslate"><span class="pre">in[m,</span> <span class="pre">n,</span> <span class="pre">k]</span></code> holds
+the value of <span class="math notranslate nohighlight">\(x_k^my_k^n\)</span>, while <code class="docutils literal notranslate"><span class="pre">exp[m,</span> <span class="pre">n,</span> <span class="pre">k]</span></code> and <code class="docutils literal notranslate"><span class="pre">act[m,</span> <span class="pre">n,</span> <span class="pre">k]</span></code>
+hold the expected and actual values of <span class="math notranslate nohighlight">\(\hat{x}_{mk}\hat{y}_{nk}\)</span>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span> <span class="n">shape</span><span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">DIM</span><span class="p">};</span>
+  <span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">reduce</span><span class="p">(</span><span class="n">shape</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">shape</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="kt">size_t</span><span class="p">{</span><span class="mi">1</span><span class="p">},</span> <span class="n">std</span><span class="o">::</span><span class="n">multiplies</span><span class="p">());</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Complex</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="n">exp</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="n">act</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>We then create a <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp11PlanFactoryE" title="fftwpp::PlanFactory"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::PlanFactory</span></code></a> instance (<strong>step 2</strong>) and set
+the planner flags (<strong>step 3</strong>).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">fftwpp</span><span class="o">::</span><span class="n">PlanFactory</span><span class="p">().</span><span class="n">set_estimate</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The factory is used to create an instance of <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a> (<strong>step
+4</strong>). Note that the first parameter, <code class="docutils literal notranslate"><span class="pre">2</span></code> in the present case, means that the
+DFT will be computed along the first 2 axes only. In other words, <code class="docutils literal notranslate"><span class="pre">act[...,</span>
+<span class="pre">k]</span></code> holds the 2d DFT of <code class="docutils literal notranslate"><span class="pre">in[...,</span> <span class="pre">k]</span></code> for <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">1</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">create_plan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">act</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="mi">-1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now that the <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a> has been created, the values of the input
+array can be set (<strong>step 5</strong>). We take advantage of the same loop to also
+compute the expected values of the DFT.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="n">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">x_pow</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">x_pow</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">x_hat1</span> <span class="o">=</span> <span class="n">x_hat</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">x_hat2</span> <span class="o">=</span> <span class="n">x_hat</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">y_pow</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+      <span class="k">auto</span> <span class="n">y_hat1</span> <span class="o">=</span> <span class="n">y_hat</span><span class="p">.</span><span class="n">cbegin</span><span class="p">()</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">;</span>
+      <span class="kt">size_t</span> <span class="n">index</span> <span class="o">=</span> <span class="n">DIM</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">N</span> <span class="o">+</span> <span class="n">n</span><span class="p">);</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">index</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">multiplies</span><span class="p">());</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">x_hat1</span><span class="p">,</span> <span class="n">x_hat2</span><span class="p">,</span> <span class="n">y_hat1</span><span class="p">,</span> <span class="n">exp</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">index</span><span class="p">,</span>
+                     <span class="n">std</span><span class="o">::</span><span class="n">multiplies</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a> is now executed to compute the transform (<strong>step
+6</strong>).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="n">plan</span><span class="p">.</span><span class="n">execute</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Finally, the expected and actual outputs are printed out</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;expected = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">exp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, actual = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">act</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+              <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">tutorial()</span></code> function is then called in the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function as follows</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">dim</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">{</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">-0.9</span><span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">Real</span><span class="p">,</span> <span class="n">dim</span><span class="o">&gt;</span> <span class="n">y</span><span class="p">{</span><span class="mf">-1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">};</span>
+
+  <span class="kt">size_t</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+  <span class="n">tutorial</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To sum up, create a <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Factory</span></code> and set the planner flags</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">fftwpp</span><span class="o">::</span><span class="n">PlanFactory</span><span class="p">().</span><span class="n">set_estimate</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Then create the <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="n">create_plan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">act</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="mi">-1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally set the data and execute the <a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">fftwpp::Plan</span></code></a></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="n">plan</span><span class="p">.</span><span class="n">execute</span><span class="p">();</span>
+</pre></div>
+</div>
+<section id="compiling-and-running-the-program">
+<span id="id1"></span><h3>Compiling and running the program<a class="headerlink" href="#compiling-and-running-the-program" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">sphinx/cpp_tutorial</span></code> subdirectory. Then issue the following
+commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir build
+$ cd build
+$ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
+$ cmake --build . --config Release
+</pre></div>
+</div>
+<p>An executable called <code class="docutils literal notranslate"><span class="pre">tutorial</span></code> should be present in the <code class="docutils literal notranslate"><span class="pre">build/Release</span></code>
+subdirectory. Running this executable results in the following output</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The following plan was created plan: (dft-rank&gt;=2/1
+  (dft-vrank&gt;=1-x7/1
+    (dft-direct-8-x2 &quot;n1_8&quot;))
+  (dft-direct-7-x16 &quot;n1_7&quot;))
+
+expected = (-2.15181,0), actual = (-2.15181,0)
+expected = (12.8371,0), actual = (12.8371,0)
+expected = (-2.1334,-0.93339), actual = (-2.1334,-0.93339)
+..........................................................
+expected = (-0.514645,-0.269777), actual = (-0.514645,-0.269777)
+expected = (-1.86644,-2.72753), actual = (-1.86644,-2.72753)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="python-tutorial">
+<span id="sec20210418120954"></span><h2>Python tutorial<a class="headerlink" href="#python-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>The files for this example can be downloaded: <a class="reference download internal" download="" href="_downloads/233e6bef8249b1671fdc78d2f53b1f02/tutorial.py"><code class="xref download docutils literal notranslate"><span class="pre">Python</span>
+<span class="pre">source</span></code></a>.</p>
+<p>As expected, the Python code is more compact. We first import the required
+modules and define the parameters of the tutorial.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">pyfftwpp</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">])[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<p>We then compute the powers of <span class="math notranslate nohighlight">\(\phi\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span>, <span class="math notranslate nohighlight">\(x\)</span> and
+<span class="math notranslate nohighlight">\(y\)</span>, as well as <span class="math notranslate nohighlight">\(\hat{x}\)</span> and <span class="math notranslate nohighlight">\(\hat{y}\)</span>, and finally the
+expected data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">M</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="n">φ_pow_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">M</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">ψ_pow_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">N</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="n">x_pow_m</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="n">m</span>
+    <span class="n">y_pow_n</span> <span class="o">=</span> <span class="n">y</span> <span class="o">**</span> <span class="n">n</span>
+
+    <span class="n">x_hat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">**</span> <span class="n">M</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">φ_pow_m</span><span class="p">)</span>
+    <span class="n">y_hat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span> <span class="o">**</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span> <span class="o">*</span> <span class="n">ψ_pow_n</span><span class="p">)</span>
+
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">x_hat</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">y_hat</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<p>The other arrays, (input data and its actual discrete Fourier transform) have
+the same shape as <code class="docutils literal notranslate"><span class="pre">exp</span></code> (expected discrete Fourier transform). They are
+created accordingly (<strong>step 1</strong>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">in_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+    <span class="n">act</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp::PlanFactory</span></code> instance (<strong>step 2</strong>) and set
+the planner flags (<strong>step 3</strong>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">factory</span> <span class="o">=</span> <span class="n">pyfftwpp</span><span class="o">.</span><span class="n">PlanFactory</span><span class="p">()</span><span class="o">.</span><span class="n">set_estimate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The factory is used to create an instance of <a class="reference internal" href="py_api.html#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp.Plan</span></code></a> (<strong>step
+4</strong>). Note that the first parameter, <code class="docutils literal notranslate"><span class="pre">2</span></code> in the present case, means that the
+DFT will be computed along the first 2 axes only. In other words, <code class="docutils literal notranslate"><span class="pre">act[...,</span>
+<span class="pre">k]</span></code> holds the 2d DFT of <code class="docutils literal notranslate"><span class="pre">in_[...,</span> <span class="pre">k]</span></code> for <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">1</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_plan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">in_</span><span class="p">,</span> <span class="n">act</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now that the <a class="reference internal" href="py_api.html#pyfftwpp.Plan" title="pyfftwpp.Plan"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp.Plan</span></code></a> has been created, the values of the input
+array can be set (<strong>step 5</strong>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">in_</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_pow_m</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">y_pow_n</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp::Plan</span></code> is now executed to compute the transform (<strong>step
+6</strong>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">plan</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, the expected and actual outputs are printed out</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">for</span> <span class="n">exp_</span><span class="p">,</span> <span class="n">act_</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">([</span><span class="n">exp</span><span class="p">,</span> <span class="n">act</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;expected = </span><span class="si">{</span><span class="n">exp_</span><span class="si">}</span><span class="s2">, actual = </span><span class="si">{</span><span class="n">act_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Upon execution, the above script produces the following output</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The following plan was created:
+(dft-rank&gt;=2/1
+  (dft-vrank&gt;=1-x7/1
+    (dft-direct-8-x2 &quot;n1_8&quot;))
+  (dft-direct-7-x16 &quot;n1_7&quot;))
+expected = (-2.151811557126403+0j), actual = (-2.151811557126404+0j)
+expected = (12.837129427724797+0j), actual = (12.837129427724797+0j)
+expected = (-2.1334009536144922-0.9333897024884867j), actual = (-2.1334009536144922-0.933389702488487j)
+.......................................................................................................
+expected = (-0.5146446886147904-0.2697769241798792j), actual = (-0.5146446886147907-0.26977692417987936j)
+expected = (-1.8664372836457583-2.7275262160500926j), actual = (-1.8664372836457572-2.7275262160500935j)
+</pre></div>
+</div>
+<p>To sum up, create a <code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp::Factory</span></code> and set the planner flags</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>    <span class="n">factory</span> <span class="o">=</span> <span class="n">pyfftwpp</span><span class="o">.</span><span class="n">PlanFactory</span><span class="p">()</span><span class="o">.</span><span class="n">set_estimate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then create the <code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp::Plan</span></code></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>    <span class="n">plan</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_plan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">in_</span><span class="p">,</span> <span class="n">act</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, set the data and execute the <code class="xref py py-class docutils literal notranslate"><span class="pre">pyfftwpp::Plan</span></code></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>    <span class="n">plan</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -57,6 +400,18 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#c-tutorial">C++ tutorial</a><ul>
+<li><a class="reference internal" href="#compiling-and-running-the-program">Compiling and running the program</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-tutorial">Python tutorial</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="installation.html"
                         title="previous chapter">Installation</a></p>

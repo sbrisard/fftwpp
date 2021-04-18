@@ -34,13 +34,14 @@
     <member refid="classfftwpp_1_1_plan_factory_1a872deb12fd6a512107d05aadbdfbbcbb" kind="function"><name>unset_unaligned</name></member>
   </compound>
   <compound refid="namespacefftwpp" kind="namespace"><name>fftwpp</name>
+    <member refid="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292" kind="function"><name>operator&lt;&lt;</name></member>
     <member refid="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6" kind="function"><name>init_threads</name></member>
     <member refid="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3" kind="function"><name>plan_with_nthreads</name></member>
   </compound>
   <compound refid="fftwpp_8hpp" kind="file"><name>fftwpp.hpp</name>
   </compound>
-  <compound refid="dir_2eb30ea5eb0218f288f9e85c1c37953a" kind="dir"><name>C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp</name>
+  <compound refid="dir_2eb30ea5eb0218f288f9e85c1c37953a" kind="dir"><name>C:/Users/sbrisard/Git/fftwpp/include/fftwpp</name>
   </compound>
-  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>C:/Users/sbrisard/Git/programmes/fftwpp/include</name>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>C:/Users/sbrisard/Git/fftwpp/include</name>
   </compound>
 </doxygenindex>

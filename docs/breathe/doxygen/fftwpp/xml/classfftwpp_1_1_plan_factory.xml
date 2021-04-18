@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="88" column="12" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="88" bodyend="-1"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="96" column="12" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="96" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="private-func">
@@ -36,7 +36,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="91" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="91" bodyend="94"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="99" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="99" bodyend="102"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a69cbd91b5bb11dea610d30364f8378ee" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -54,7 +54,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="97" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="97" bodyend="100"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="105" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="105" bodyend="108"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="public-func">
@@ -93,7 +93,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="121" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="121" bodyend="138"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="129" column="8" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="129" bodyend="146"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1abfc4425a5f2a77305381cb2066b699c9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan" kindref="compound">Plan</ref></type>
@@ -129,7 +129,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="150" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="150" bodyend="165"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="158" column="8" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="158" bodyend="173"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a93736389af57a72a5403288f14a8f622" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan" kindref="compound">Plan</ref></type>
@@ -165,7 +165,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="177" column="8" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="177" bodyend="193"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="185" column="8" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="185" bodyend="201"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a9d2ed06c2094bb610aa8ca4255c37c02" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>unsigned</type>
@@ -180,7 +180,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="200" column="12" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="200" bodyend="200"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="208" column="12" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="208" bodyend="208"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1af27a4117226e967b6521722517d4f782" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -194,7 +194,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="203" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="203" bodyend="203"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="211" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="211" bodyend="211"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a8c2190d70f21c73871bcbf07eb87f905" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -208,7 +208,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="206" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="206" bodyend="206"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="214" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="214" bodyend="214"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a0dd5b93c6f6d84c5ad3a9ac09065fea3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -222,7 +222,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="209" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="209" bodyend="209"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="217" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="217" bodyend="217"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a528cdb77b6e406e2f4e6c2d0776c9b4a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -236,7 +236,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="212" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="212" bodyend="212"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="220" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="220" bodyend="220"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1adf4642b8edf38eef4fdc682b6bce0afb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -250,7 +250,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="215" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="215" bodyend="215"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="223" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="223" bodyend="223"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1ae07f6c609a16eba9216559d213b7ee76" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -264,7 +264,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="218" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="218" bodyend="218"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="226" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="226" bodyend="226"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a3088631cb09b2ea07b372d7d949173ca" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -278,7 +278,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="221" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="221" bodyend="221"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="229" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="229" bodyend="229"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a4e70ca06d67c96e21836e545cb8e5058" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -292,7 +292,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="224" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="224" bodyend="224"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="232" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="232" bodyend="232"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a50264c3b8166291d40c16717810df726" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -306,7 +306,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="227" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="227" bodyend="227"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="235" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="235" bodyend="235"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a36ad0d3c1cad972d0662f40bfaed3f11" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -320,7 +320,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="230" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="230" bodyend="230"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="238" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="238" bodyend="238"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1ac0a903e9c028ba7e30c8d95cb75476c5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -334,7 +334,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="233" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="233" bodyend="233"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="241" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="241" bodyend="241"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a84a56a6aabcacff0f66c25dc7d89f67a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -348,7 +348,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="236" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="236" bodyend="236"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="244" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="244" bodyend="244"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1adddab119ee547a5f19edf15397be1b14" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -362,7 +362,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="239" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="239" bodyend="239"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="247" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="247" bodyend="247"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1aba3b1e10df1a063b2da075934fc2ab4a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -376,7 +376,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="242" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="242" bodyend="244"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="250" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="250" bodyend="252"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1ac5725be4e1ca2faaa60150a994235fe7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -390,7 +390,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="247" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="247" bodyend="247"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="255" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="255" bodyend="255"/>
       </memberdef>
       <memberdef kind="function" id="classfftwpp_1_1_plan_factory_1a872deb12fd6a512107d05aadbdfbbcbb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type><ref refid="classfftwpp_1_1_plan_factory" kindref="compound">PlanFactory</ref> &amp;</type>
@@ -404,7 +404,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="250" column="15" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="250" bodyend="250"/>
+        <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="258" column="15" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="258" bodyend="258"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -418,7 +418,7 @@
 </programlisting></para>
 <para>Note that if no planner flags are set/unset, <ref refid="classfftwpp_1_1_plan" kindref="compound">Plan</ref> instances will be created with <computeroutput>flags</computeroutput> set to <computeroutput>0</computeroutput>. </para>
     </detaileddescription>
-    <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="86" column="1" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="86" bodyend="251"/>
+    <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" line="94" column="1" bodyfile="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="94" bodyend="259"/>
     <listofallmembers>
       <member refid="classfftwpp_1_1_plan_factory_1a4a3b9ace05494212bbd8a52746ef062e" prot="public" virt="non-virtual"><scope>fftwpp::PlanFactory</scope><name>create_plan</name></member>
       <member refid="classfftwpp_1_1_plan_factory_1abfc4425a5f2a77305381cb2066b699c9" prot="public" virt="non-virtual"><scope>fftwpp::PlanFactory</scope><name>create_plan</name></member>

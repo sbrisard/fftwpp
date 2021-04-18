@@ -14,6 +14,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API documentation of the Python bindings" href="py_api.html" />
@@ -53,7 +54,12 @@
 <dd><p>C++ bindings to the <a class="reference external" href="http://fftw.org/">FFTW</a> library.</p>
 <p><code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> strives to remain as close as possible to the original C library, while being more idiomatic. The user should refer to the documentations of the FFTW library for a more in-depth description. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N6fftwpplsERNSt7ostreamERK4Plan">
+<span id="_CPPv3N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="_CPPv2N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="fftwpp::lshift-operator__osR.PlanCR"></span><span class="target" id="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292"></span>std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpplsERNSt7ostreamERK4Plan" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
 <dl class="cpp function">
 <dt id="_CPPv4N6fftwpp12init_threadsEv">
 <span id="_CPPv3N6fftwpp12init_threadsEv"></span><span id="_CPPv2N6fftwpp12init_threadsEv"></span><span id="fftwpp::init_threads"></span><span class="target" id="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6"></span>int <code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp12init_threadsEv" title="Permalink to this definition">¶</a><br /></dt>
@@ -76,7 +82,7 @@
 <p>This class implements the RAII paradigm: the underlying <code class="docutils literal notranslate"><span class="pre">fftw_plan</span></code> is released when the wrapper object falls out of scope.</p>
 <p>The constructor of this class should in general not be called directly. Rather, use a <a class="reference internal" href="#classfftwpp_1_1_plan_factory"><span class="std std-ref">PlanFactory</span></a>. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N6fftwpp4Plan4PlanEK9fftw_plan">
 <span id="_CPPv3N6fftwpp4Plan4PlanEK9fftw_plan"></span><span id="_CPPv2N6fftwpp4Plan4PlanEK9fftw_plan"></span><span id="fftwpp::Plan::Plan__fftw_planC"></span><span class="target" id="classfftwpp_1_1_plan_1ad53e1968aace75749f103d86cdbee1e7"></span><em class="property">inline</em> <code class="sig-name descname">Plan</code><span class="sig-paren">(</span>fftw_plan <em class="property">const</em> <em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp4Plan4PlanEK9fftw_plan" title="Permalink to this definition">¶</a><br /></dt>
@@ -110,7 +116,7 @@
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
 <dl class="cpp var">
 <dt id="_CPPv4N6fftwpp4Plan1pE">
 <span id="_CPPv3N6fftwpp4Plan1pE"></span><span id="_CPPv2N6fftwpp4Plan1pE"></span><span id="fftwpp::Plan::p__std::shared_ptr:fftw_plan_s:"></span><span class="target" id="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d"></span>std::shared_ptr&lt;<em class="property">struct</em> fftw_plan_s&gt; <code class="sig-name descname">p</code><a class="headerlink" href="#_CPPv4N6fftwpp4Plan1pE" title="Permalink to this definition">¶</a><br /></dt>
@@ -132,7 +138,7 @@
 </p>
 <p>Note that if no planner flags are set/unset, <a class="reference internal" href="#classfftwpp_1_1_plan"><span class="std std-ref">Plan</span></a> instances will be created with <code class="docutils literal notranslate"><span class="pre">flags</span></code> set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N6fftwpp11PlanFactory11create_planE6size_tRKNSt6vectorI6size_tEEPNSt7complexIdEEPNSt7complexIdEEi">
 <span id="_CPPv3N6fftwpp11PlanFactory11create_planE6size_tRKNSt6vectorI6size_tEEPNSt7complexIdEEPNSt7complexIdEEi"></span><span id="_CPPv2N6fftwpp11PlanFactory11create_planE6size_tRKNSt6vectorI6size_tEEPNSt7complexIdEEPNSt7complexIdEEi"></span><span id="fftwpp::PlanFactory::create_plan__s.std::vector:s:CR.std::complex:double:P.std::complex:double:P.i"></span><span class="target" id="classfftwpp_1_1_plan_factory_1a4a3b9ace05494212bbd8a52746ef062e"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan">Plan</a> <code class="sig-name descname">create_plan</code><span class="sig-paren">(</span>size_t <em>rank</em>, std::vector&lt;size_t&gt; <em class="property">const</em> &amp;<em>shape</em>, std::complex&lt;double&gt; *<em>in</em>, std::complex&lt;double&gt; *<em>out</em>, int <em>sign</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp11PlanFactory11create_planE6size_tRKNSt6vectorI6size_tEEPNSt7complexIdEEPNSt7complexIdEEi" title="Permalink to this definition">¶</a><br /></dt>
@@ -263,7 +269,7 @@
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N6fftwpp11PlanFactory8set_flagEj">
 <span id="_CPPv3N6fftwpp11PlanFactory8set_flagEj"></span><span id="_CPPv2N6fftwpp11PlanFactory8set_flagEj"></span><span id="fftwpp::PlanFactory::set_flag__unsigned"></span><span class="target" id="classfftwpp_1_1_plan_factory_1adf64b0481979cdc6e02a89987903e5cb"></span><em class="property">inline</em> <a class="reference internal" href="#_CPPv4N6fftwpp11PlanFactoryE" title="fftwpp::PlanFactory">PlanFactory</a> &amp;<code class="sig-name descname">set_flag</code><span class="sig-paren">(</span>unsigned <em>flag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp11PlanFactory8set_flagEj" title="Permalink to this definition">¶</a><br /></dt>
@@ -278,7 +284,7 @@
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Private Members</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
 <dl class="cpp var">
 <dt id="_CPPv4N6fftwpp11PlanFactory5flagsE">
 <span id="_CPPv3N6fftwpp11PlanFactory5flagsE"></span><span id="_CPPv2N6fftwpp11PlanFactory5flagsE"></span><span id="fftwpp::PlanFactory::flags__unsigned"></span><span class="target" id="classfftwpp_1_1_plan_factory_1a36c188719b31631e0237af04cdf0aa1f"></span>unsigned <code class="sig-name descname">flags</code> = 0<a class="headerlink" href="#_CPPv4N6fftwpp11PlanFactory5flagsE" title="Permalink to this definition">¶</a><br /></dt>

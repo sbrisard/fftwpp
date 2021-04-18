@@ -14,6 +14,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" />
@@ -49,14 +50,14 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <section id="installing-the-c-library">
 <h2>Installing the C++ library<a class="headerlink" href="#installing-the-c-library" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> depends on <a class="reference external" href="http://fftw.org/">FFTW</a>.</p>
+<p>fftwpp depends on <a class="reference external" href="http://fftw.org/">FFTW</a>.</p>
 <p>This is a <a class="reference external" href="https://cmake.org/">CMake</a> based project. The installation procedure is
 standard. However, <a class="reference external" href="http://fftw.org/">FFTW</a> is not detected automatically by <a class="reference external" href="https://cmake.org/">CMake</a> and
 you might need to specify its location manually (follow the <a class="reference external" href="https://cmake.org/">CMake</a>
 instructions if needed).</p>
 <p>First, clone the repository. Then, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the root directory of
-the <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> project. Let <code class="docutils literal notranslate"><span class="pre">fftwpp_INSTALL_PREFIX</span></code> be the path to
-the directory where <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> should be installed:</p>
+the fftwpp project. Let <code class="docutils literal notranslate"><span class="pre">fftwpp_INSTALL_PREFIX</span></code> be the path to the
+directory where fftwpp should be installed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/sbrisard/fftwpp
 $ cd fftwpp
 $ mkdir build
@@ -71,44 +72,18 @@ $ cmake --install . --config Release
 <p>The <code class="docutils literal notranslate"><span class="pre">--config</span></code> option might not be available, depending on
 the selected generator.</p>
 </div>
-<p>At this point, <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> should be installed. To run the tests, you
-need to build the python bindings (see <a class="reference internal" href="#sec20210410191726"><span class="std std-ref">below</span></a>).</p>
-</section>
-<section id="compiling-your-first-fftwpp-program">
-<h2>Compiling your first <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> program<a class="headerlink" href="#compiling-your-first-fftwpp-program" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">example</span></code> subdirectory. The provided example program
-should be compiled and linked against <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir build
-$ cd build
-$ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
-$ cmake --build . --config Release
-</pre></div>
-</div>
-<p>An executable called <code class="docutils literal notranslate"><span class="pre">example_fftwpp</span></code> should be present in the
-<code class="docutils literal notranslate"><span class="pre">build/Release</span></code> subdirectory.</p>
-</section>
-<section id="building-the-documentation">
-<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
-<p>The documentation of <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> requires <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>. The C++ API docs are
-built with <a class="reference external" href="https://www.doxygen.nl/">Doxygen</a> and the <a class="reference external" href="https://breathe.readthedocs.io/">Breathe</a> extension to <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>.</p>
-<p>To build the HTML version of the docs in the <code class="docutils literal notranslate"><span class="pre">public</span></code> subdirectory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
-$ sphinx-build -b html . ../public
-</pre></div>
-</div>
-<p>To build the LaTeX version of the docs:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
-$ make latex
-</pre></div>
-</div>
+<p>At this point, fftwpp should be installed. To check your installation,
+you could try to <a class="reference internal" href="tutorial.html#id1"><span class="std std-ref">compile a program</span></a>.</p>
+<p>To run the tests or build the documentation properly, you need to
+first build the python bindings (see <a class="reference internal" href="#id1"><span class="std std-ref">below</span></a>).</p>
 </section>
 <section id="installing-the-python-bindings">
-<span id="sec20210410191726"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
-<p>To install the <code class="docutils literal notranslate"><span class="pre">pyfftwpp</span></code> module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code>
+<span id="id1"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
+<p>To install the pyfftwpp module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code>
 subdirectory and edit or create the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code>. You need to specify
 the location of</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">pyfftwpp</span></code> headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftwpp]</span></code>,</p></li>
+<li><p>the pyfftwpp headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftwpp]</span></code>,</p></li>
 <li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>,</p></li>
 <li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> binaries, see <code class="docutils literal notranslate"><span class="pre">library_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>.</p></li>
 </ul>
@@ -133,6 +108,21 @@ library_dir = path/to/FFTW/binaries
 </pre></div>
 </div>
 </section>
+<section id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The documentation of fftwpp requires <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>. The C++ API docs are
+built with <a class="reference external" href="https://www.doxygen.nl/">Doxygen</a> and the <a class="reference external" href="https://breathe.readthedocs.io/">Breathe</a> extension to <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>.</p>
+<p>To build the HTML version of the docs in the <code class="docutils literal notranslate"><span class="pre">public</span></code> subdirectory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
+$ sphinx-build -b html . ../public
+</pre></div>
+</div>
+<p>To build the LaTeX version of the docs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd docs
+$ make latex
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -146,9 +136,8 @@ library_dir = path/to/FFTW/binaries
   <ul>
 <li><a class="reference internal" href="#">Installation</a><ul>
 <li><a class="reference internal" href="#installing-the-c-library">Installing the C++ library</a></li>
-<li><a class="reference internal" href="#compiling-your-first-fftwpp-program">Compiling your first <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> program</a></li>
-<li><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
 <li><a class="reference internal" href="#installing-the-python-bindings">Installing the Python bindings</a></li>
+<li><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
 </ul>
 </li>
 </ul>
