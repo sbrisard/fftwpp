@@ -86,10 +86,8 @@ void tutorial(std::array<Real, DIM> x, size_t M, std::array<Real, DIM> y,
   // begin20210418075847
   auto plan = factory.create_plan(2, shape, in.data(), act.data(), -1);
   // end20210418075847
-  // begin20210418080020
   std::cout << "The following plan was created plan: " << plan << std::endl
             << std::endl;
-  // end20210418080020
 
   // begin20210418080158
   for (size_t m = 0; m < M; m++) {
@@ -110,11 +108,12 @@ void tutorial(std::array<Real, DIM> x, size_t M, std::array<Real, DIM> y,
   // begin20210418080316
   plan.execute();
   // end20210418080316
+  //begin20210418202159
   for (size_t i = 0; i < size; i++) {
     std::cout << "expected = " << exp[i] << ", actual = " << act[i]
               << std::endl;
   }
-  // end20210418080316a
+  // end20210418202159
 }
 
 // begin20210418080545
