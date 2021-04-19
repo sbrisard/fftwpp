@@ -9,6 +9,7 @@ fftwpp — Version 0.1
 
    installation
    tutorial
+   benchmarks/benchmarks
    cpp_api
    py_api
 
