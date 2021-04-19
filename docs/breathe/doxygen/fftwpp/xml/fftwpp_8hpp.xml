@@ -17,8 +17,20 @@
       <node id="7">
         <label>string</label>
       </node>
+      <node id="9">
+        <label>fftw3.h</label>
+      </node>
+      <node id="8">
+        <label>vector</label>
+      </node>
+      <node id="4">
+        <label>cstdlib</label>
+      </node>
+      <node id="5">
+        <label>iostream</label>
+      </node>
       <node id="1">
-        <label>C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp</label>
+        <label>C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp</label>
         <link refid="fftwpp_8hpp"/>
         <childnode refid="2" relation="include">
         </childnode>
@@ -36,18 +48,6 @@
         </childnode>
         <childnode refid="9" relation="include">
         </childnode>
-      </node>
-      <node id="9">
-        <label>fftw3.h</label>
-      </node>
-      <node id="8">
-        <label>vector</label>
-      </node>
-      <node id="4">
-        <label>cstdlib</label>
-      </node>
-      <node id="5">
-        <label>iostream</label>
       </node>
       <node id="3">
         <label>complex</label>
@@ -226,6 +226,6 @@
 <codeline lineno="271"><highlight class="normal"></highlight></codeline>
 <codeline lineno="272"><highlight class="normal">}<sp/><sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>fftwpp</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="C:/Users/sbrisard/Git/fftwpp/include/fftwpp/fftwpp.hpp"/>
+    <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp"/>
   </compounddef>
 </doxygen>
