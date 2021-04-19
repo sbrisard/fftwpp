@@ -258,6 +258,8 @@ class PlanFactory {
   PlanFactory &unset_unaligned() { return unset_flag(FFTW_UNALIGNED); }
 };
 
+#ifdef _OPENMP
+
 /**
  * Call `fftw_init_threads()`.
  *
@@ -268,5 +270,7 @@ int init_threads() { return fftw_init_threads(); }
 
 /** Set the number of threads to be used by all subsequently created plans. */
 void plan_with_nthreads(int nthreads) { fftw_plan_with_nthreads(nthreads); }
+
+#endif
 
 }  // namespace fftwpp
