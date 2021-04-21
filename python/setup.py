@@ -11,10 +11,12 @@ from setuptools.command.build_ext import build_ext
 
 def read_metadata():
     metadata = {}
-    filename = pathlib.Path.cwd()/ ".." / "include"/ "fftwpp"/"fftwpp.hpp"
-    with open(filename , "r", encoding="utf8") as f:
+    filename = pathlib.Path.cwd() / ".." / "include" / "fftwpp" / "fftwpp.hpp"
+    with open(filename, "r", encoding="utf8") as f:
         lines = f.readlines()
-    prog = re.compile(r"constexpr\s*std::string_view\s*([a-z]*)\s*\{\s*\"([^\"]*)\"\s*}\s*;")
+    prog = re.compile(
+        r"constexpr\s*std::string_view\s*([a-z]*)\s*\{\s*\"([^\"]*)\"\s*}\s*;"
+    )
     for line in lines:
         result = prog.match(line)
         if result is not None:
@@ -24,12 +26,17 @@ def read_metadata():
 
 class build_ext_cpp17(build_ext):
     fftw_libraries = {"msvc": ["fftw3"], "unix": ["fftw3", "fftw3_omp"]}
-    extra_compile_args = {"msvc": ["/std:c++17", "/openmp"], "unix": ["-std=c++17", "-fopenmp"]}
+    extra_compile_args = {
+        "msvc": ["/std:c++17", "/openmp"],
+        "unix": ["-std=c++17", "-fopenmp"],
+    }
 
     def build_extensions(self):
         for extension in self.extensions:
             extension.libraries += self.fftw_libraries[self.compiler.compiler_type]
-            extension.extra_compile_args += self.extra_compile_args[self.compiler.compiler_type]
+            extension.extra_compile_args += self.extra_compile_args[
+                self.compiler.compiler_type
+            ]
         build_ext.build_extensions(self)
 
 
@@ -61,7 +68,7 @@ if __name__ == "__main__":
         #     ("__FFTWPP_VERSION__", r"\"" + metadata["version"] + r"\""),
         #     ("__FFTWPP_AUTHOR__", r"\"" + metadata["author"] + r"\""),
         # ],
-        language="c++"
+        language="c++",
     )
 
     setuptools.setup(
