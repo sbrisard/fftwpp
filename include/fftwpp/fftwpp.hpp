@@ -19,6 +19,17 @@
 
 namespace fftwpp {
 
+namespace metadata {
+constexpr std::string_view author{"S. Brisard"};
+constexpr std::string_view description{"C++ interface to the FFTW library"};
+constexpr std::string_view email{"sebastien.brisard@univ-eiffel.fr"};
+constexpr std::string_view license{"BSD 3-Clause License"};
+constexpr std::string_view name{"fftwpp"};
+constexpr std::string_view url{"https://github.com/sbrisard/fftwpp"};
+constexpr std::string_view version{"0.1"};
+constexpr std::string_view year{"2021"};
+}  // namespace metadata
+
 /**
  * Wrapper class around `fftw_plan`.
  *
