@@ -8,11 +8,22 @@ def get_metadata(key):
         return f.read()
 
 
-project = "fftwpp"
-copyright = get_metadata("year") + ", " + get_metadata("author")
-author = get_metadata("author")
-release = get_metadata("version")
+try:
+    import pyfftwpp
 
+    project = pyfftwpp.metadata["name"]
+    author = pyfftwpp.metadata["author"]
+    copyright = pyfftwpp.metadata["year"] + ", " + pyfftwpp.metadata["author"]
+    release = pyfftwpp.metadata["version"]
+except ImportError:
+    from sphinx.util import logging
+
+    logger = logging.getLogger(__name__)
+    logger.warn("Could not import python module; some metadata is missing")
+    project = "**MISSING PROJECT NAME**"
+    copyright = "**MISSING COPYRIGHT**"
+    author = "**MISSING AUTHOR**"
+    release = "**MISSING VERSION**"
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.todo", "breathe"]
 
