@@ -72,6 +72,10 @@ To run the tests with Pytest_::
 Building the documentation
 ==========================
 
+.. note:: For the documentation to build properly, the python module
+          must be installed, as it is imported to retrieve the project
+          metadata.
+
 The documentation of fftwpp requires Sphinx_. The C++ API docs are
 built with Doxygen_ and the Breathe_ extension to Sphinx_.
 
