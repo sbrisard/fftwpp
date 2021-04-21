@@ -71,8 +71,16 @@ PYBIND11_MODULE(pyfftwpp, m) {
   m.doc() =
 #include "docstrings/pyfftwpp.txt"
       ;
-//  m.attr("__author__") = pybind11::cast(__FFTWPP_AUTHOR__);
-//  m.attr("__version__") = pybind11::cast(__FFTWPP_VERSION__);
+  pybind11::dict metadata;
+  metadata["author"] = pybind11::cast(fftwpp::metadata::author);
+  metadata["description"] = pybind11::cast(fftwpp::metadata::description);
+  metadata["email"] = pybind11::cast(fftwpp::metadata::email);
+  metadata["license"] = pybind11::cast(fftwpp::metadata::license);
+  metadata["name"] = pybind11::cast(fftwpp::metadata::name);
+  metadata["url"] = pybind11::cast(fftwpp::metadata::url);
+  metadata["version"] = pybind11::cast(fftwpp::metadata::version);
+  metadata["year"] = pybind11::cast(fftwpp::metadata::year);
+  m.attr("metadata") = metadata;
 
   using PlanFactory = fftwpp::PlanFactory;
 
@@ -165,7 +173,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
           pybind11::arg("sign") = -1)
       .def_property_readonly("flags", &PlanFactory::get_flags,
 #include "docstrings/PlanFactory/flags.txt"
-                             );
+      );
 
   using Plan = fftwpp::Plan;
   pybind11::class_<Plan>(m, "Plan",
@@ -185,5 +193,6 @@ PYBIND11_MODULE(pyfftwpp, m) {
   );
   m.def("plan_with_nthreads", &fftwpp::plan_with_nthreads,
         "Set the number of threads to be used by all subsequently created "
-        "plans.", pybind11::arg("nthreads"));
+        "plans.",
+        pybind11::arg("nthreads"));
 }
