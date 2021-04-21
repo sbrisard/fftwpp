@@ -74,7 +74,7 @@ PYBIND11_MODULE(pyfftwpp, m) {
   pybind11::dict metadata;
   metadata["author"] = pybind11::cast(fftwpp::metadata::author);
   metadata["description"] = pybind11::cast(fftwpp::metadata::description);
-  metadata["email"] = pybind11::cast(fftwpp::metadata::email);
+  metadata["author_email"] = pybind11::cast(fftwpp::metadata::author_email);
   metadata["license"] = pybind11::cast(fftwpp::metadata::license);
   metadata["name"] = pybind11::cast(fftwpp::metadata::name);
   metadata["url"] = pybind11::cast(fftwpp::metadata::url);

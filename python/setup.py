@@ -1,5 +1,7 @@
 import configparser
 import os.path
+import pathlib
+import re
 
 import pybind11
 
@@ -7,9 +9,17 @@ import setuptools
 from setuptools.command.build_ext import build_ext
 
 
-def get_metadata(key):
-    with open(os.path.join("..", "metadata", key + ".txt"), "r", encoding="utf8") as f:
-        return f.read().strip()
+def read_metadata():
+    metadata = {}
+    filename = pathlib.Path.cwd()/ ".." / "include"/ "fftwpp"/"fftwpp.hpp"
+    with open(filename , "r", encoding="utf8") as f:
+        lines = f.readlines()
+    prog = re.compile(r"constexpr\s*std::string_view\s*([a-z]*)\s*\{\s*\"([^\"]*)\"\s*}\s*;")
+    for line in lines:
+        result = prog.match(line)
+        if result is not None:
+            metadata[result.group(1)] = result.group(2)
+    return metadata
 
 
 class build_ext_cpp17(build_ext):
@@ -24,17 +34,12 @@ class build_ext_cpp17(build_ext):
 
 
 if __name__ == "__main__":
-    metadata = {
-        "name": "pyfftwpp",
-        "version": get_metadata("version"),
-        "author": get_metadata("author"),
-        "author_email": "email",
-        "description": get_metadata("description"),
-        "url": get_metadata("repository"),
-    }
+    metadata = read_metadata()
 
     with open(os.path.join("..", "README.md"), "r") as f:
         metadata["long_description"] = f.read()
+
+    print(metadata)
 
     config = configparser.ConfigParser()
     config.read("setup.cfg")
