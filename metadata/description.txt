@@ -1,1 +1,0 @@
-C++ interface to the FFTW library
