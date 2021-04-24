@@ -25,8 +25,8 @@ and inform the compiler of its location.
 
 .. note:: fftwpp depends on FFTW_. You must pass the relevant options to the
           compiler. Typically, these would be ``-I`` and ``-L`` options, as well
-          as ``-lfftw3``. The C++ tutorials provides a :ref:`CMake example
-          <20210415083504>`.
+          as ``-lfftw3``. The C++ tutorials provides a
+	  :ref:`CMake example <sec20210415083504>`.
 
 .. note:: Optional compilation with OpenMP is automatically detected by
           fftwpp. If you *do* compile with the ``-fopenmp`` option (or
@@ -35,9 +35,9 @@ and inform the compiler of its location.
           linker.
 
 To run the tests or build the documentation properly, you need to first build
-the python bindings (see :ref:`below <20210415083658>`).
+the python bindings (see :ref:`below <sec20210415083658>`).
 
-.. _20210415083658:
+.. _sec20210415083658:
 
 Installing the Python bindings
 ==============================

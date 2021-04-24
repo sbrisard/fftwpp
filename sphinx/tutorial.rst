@@ -206,7 +206,7 @@ Finally set the data and execute the :cpp:class:`fftwpp::Plan`
    :end-before: end20210418080316
 
 
-.. _20210415083504:
+.. _sec20210415083504:
 
 Compiling and running the program
 ---------------------------------
