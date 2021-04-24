@@ -72,10 +72,6 @@ if __name__ == "__main__":
         include_dirs=include_dirs,
         library_dirs=library_dirs,
         sources=["pyfftwpp.cpp"],
-        # define_macros=[
-        #     ("__FFTWPP_VERSION__", r"\"" + metadata["version"] + r"\""),
-        #     ("__FFTWPP_AUTHOR__", r"\"" + metadata["author"] + r"\""),
-        # ],
         language="c++",
     )
 
