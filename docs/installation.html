@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" />
-    <link rel="prev" title="fftwpp — Version 0.1" href="index.html" /> 
+    <link rel="prev" title="fftwpp" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -32,7 +32,7 @@
           <a href="tutorial.html" title="Tutorial"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="fftwpp — Version 0.1"
+          <a href="index.html" title="fftwpp"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
@@ -73,13 +73,16 @@ as <code class="docutils literal notranslate"><span class="pre">-lfftw3</span></
 fftwpp. If you <em>do</em> compile with the <code class="docutils literal notranslate"><span class="pre">-fopenmp</span></code> option (or
 equivalent), then you <em>must</em> link against the OpenMP FFTW
 library. This is typically done by passing the <code class="docutils literal notranslate"><span class="pre">-lfftw3_omp</span></code> to the
-linker.</p>
+linker. This automatically exposes the functions
+<a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp12init_threadsEv" title="fftwpp::init_threads"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">fftwpp::init_threads()</span></code></a> and
+<a class="reference internal" href="cpp_api.html#_CPPv4N6fftwpp18plan_with_nthreadsEi" title="fftwpp::plan_with_nthreads"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">fftwpp::plan_with_nthreads()</span></code></a>.</p>
 </div>
 <p>To run the tests or build the documentation properly, you need to first build
 the python bindings (see <a class="reference internal" href="#sec20210415083658"><span class="std std-ref">below</span></a>).</p>
 </section>
 <section id="installing-the-python-bindings">
 <span id="sec20210415083658"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
+<p>The Python bindings are built with <a class="reference external" href="https://pybind11.readthedocs.io/">pybind11</a>, which must be installed.</p>
 <p>To install the pyfftwpp module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code> subdirectory and run
 the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> script as follows.</p>
 <p>First, build the extension:</p>
@@ -160,7 +163,7 @@ $ make latex
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">fftwpp — Version 0.1</a></p>
+                        title="previous chapter">fftwpp</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="tutorial.html"
                         title="next chapter">Tutorial</a></p>
@@ -198,7 +201,7 @@ $ make latex
           <a href="tutorial.html" title="Tutorial"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="fftwpp — Version 0.1"
+          <a href="index.html" title="fftwpp"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 

@@ -32,7 +32,9 @@ and inform the compiler of its location.
           fftwpp. If you *do* compile with the ``-fopenmp`` option (or
           equivalent), then you *must* link against the OpenMP FFTW
           library. This is typically done by passing the ``-lfftw3_omp`` to the
-          linker.
+          linker. This automatically exposes the functions
+          :cpp:func:`fftwpp::init_threads` and
+          :cpp:func:`fftwpp::plan_with_nthreads`.
 
 To run the tests or build the documentation properly, you need to first build
 the python bindings (see :ref:`below <sec20210415083658>`).
@@ -41,6 +43,8 @@ the python bindings (see :ref:`below <sec20210415083658>`).
 
 Installing the Python bindings
 ==============================
+
+The Python bindings are built with pybind11_, which must be installed.
 
 To install the pyfftwpp module, ``cd`` into the ``python`` subdirectory and run
 the ``setup.py`` script as follows.
@@ -102,5 +106,6 @@ To build the LaTeX version of the docs::
 .. _CMake: https://cmake.org/
 .. _Doxygen: https://www.doxygen.nl/
 .. _FFTW: http://fftw.org/
+.. _pybind11: https://pybind11.readthedocs.io/
 .. _Pytest: https://docs.pytest.org/
 .. _Sphinx: https://www.sphinx-doc.org/

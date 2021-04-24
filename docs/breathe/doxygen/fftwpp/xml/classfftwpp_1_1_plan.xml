@@ -4,9 +4,9 @@
     <compoundname>fftwpp::Plan</compoundname>
     <includes refid="fftwpp_8hpp" local="no">fftwpp.hpp</includes>
       <sectiondef kind="private-attrib">
-      <memberdef kind="variable" id="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d" prot="private" static="no" mutable="no">
-        <type>std::shared_ptr&lt; struct fftw_plan_s &gt;</type>
-        <definition>std::shared_ptr&lt;struct fftw_plan_s&gt; fftwpp::Plan::p</definition>
+      <memberdef kind="variable" id="classfftwpp_1_1_plan_1acdb30a903b516f8570005a027418623b" prot="private" static="no" mutable="no">
+        <type>std::shared_ptr&lt; std::remove_pointer_t&lt; fftw_plan &gt; &gt;</type>
+        <definition>std::shared_ptr&lt;std::remove_pointer_t&lt;fftw_plan&gt; &gt; fftwpp::Plan::p</definition>
         <argsstring></argsstring>
         <name>p</name>
         <briefdescription>
@@ -108,7 +108,7 @@
       <member refid="classfftwpp_1_1_plan_1a4a8b3956511c2824e3915cc0ea044715" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>cost</name></member>
       <member refid="classfftwpp_1_1_plan_1a659d1f910a0516d30f371845c62260d0" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>execute</name></member>
       <member refid="classfftwpp_1_1_plan_1a3b3a21a1194c7c60fafc9bc33e9fdc6c" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>flops</name></member>
-      <member refid="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d" prot="private" virt="non-virtual"><scope>fftwpp::Plan</scope><name>p</name></member>
+      <member refid="classfftwpp_1_1_plan_1acdb30a903b516f8570005a027418623b" prot="private" virt="non-virtual"><scope>fftwpp::Plan</scope><name>p</name></member>
       <member refid="classfftwpp_1_1_plan_1ad53e1968aace75749f103d86cdbee1e7" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>Plan</name></member>
       <member refid="classfftwpp_1_1_plan_1a991c29592c2b510a4b0209370b75470d" prot="public" virt="non-virtual"><scope>fftwpp::Plan</scope><name>repr</name></member>
     </listofallmembers>

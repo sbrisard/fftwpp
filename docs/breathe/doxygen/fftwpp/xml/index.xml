@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.1" xml:lang="en-US">
   <compound refid="classfftwpp_1_1_plan" kind="class"><name>fftwpp::Plan</name>
-    <member refid="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d" kind="variable"><name>p</name></member>
+    <member refid="classfftwpp_1_1_plan_1acdb30a903b516f8570005a027418623b" kind="variable"><name>p</name></member>
     <member refid="classfftwpp_1_1_plan_1ad53e1968aace75749f103d86cdbee1e7" kind="function"><name>Plan</name></member>
     <member refid="classfftwpp_1_1_plan_1a659d1f910a0516d30f371845c62260d0" kind="function"><name>execute</name></member>
     <member refid="classfftwpp_1_1_plan_1a4a8b3956511c2824e3915cc0ea044715" kind="function"><name>cost</name></member>
@@ -35,6 +35,8 @@
   </compound>
   <compound refid="namespacefftwpp" kind="namespace"><name>fftwpp</name>
     <member refid="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292" kind="function"><name>operator&lt;&lt;</name></member>
+    <member refid="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6" kind="function"><name>init_threads</name></member>
+    <member refid="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3" kind="function"><name>plan_with_nthreads</name></member>
   </compound>
   <compound refid="namespacefftwpp_1_1metadata" kind="namespace"><name>fftwpp::metadata</name>
     <member refid="fftwpp_8hpp_1a689c4b2abe0b733439b4e714dc6b64b1" kind="variable"><name>author</name></member>

@@ -58,6 +58,21 @@
 <span id="_CPPv3N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="_CPPv2N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="fftwpp::lshift-operator__osR.PlanCR"></span><span class="target" id="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292"></span>std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpplsERNSt7ostreamERK4Plan" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
+<dl class="cpp function">
+<dt id="_CPPv4N6fftwpp12init_threadsEv">
+<span id="_CPPv3N6fftwpp12init_threadsEv"></span><span id="_CPPv2N6fftwpp12init_threadsEv"></span><span id="fftwpp::init_threads"></span><span class="target" id="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6"></span>int <code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp12init_threadsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_init_threads()</span></code>.</p>
+<p>This function should be called before calling <em>any</em> <code class="docutils literal notranslate"><span class="pre">FFTW</span></code> or <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> functions.</p>
+<p><em>This function is exposed only when compiling with OpenMP.</em> </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N6fftwpp18plan_with_nthreadsEi">
+<span id="_CPPv3N6fftwpp18plan_with_nthreadsEi"></span><span id="_CPPv2N6fftwpp18plan_with_nthreadsEi"></span><span id="fftwpp::plan_with_nthreads__i"></span><span class="target" id="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3"></span>void <code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span>int <em>nthreads</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp18plan_with_nthreadsEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the number of threads to be used by all subsequently created plans.</p>
+<p><em>This function is exposed only when compiling with OpenMP.</em> </p>
+</dd></dl>
+
 </div>
 <dl class="cpp class">
 <dt id="_CPPv4N6fftwpp4PlanE">
@@ -104,7 +119,7 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
 <dl class="cpp var">
 <dt id="_CPPv4N6fftwpp4Plan1pE">
-<span id="_CPPv3N6fftwpp4Plan1pE"></span><span id="_CPPv2N6fftwpp4Plan1pE"></span><span id="fftwpp::Plan::p__std::shared_ptr:fftw_plan_s:"></span><span class="target" id="classfftwpp_1_1_plan_1a6db4816207da02a13ef939e35b77eb6d"></span>std::shared_ptr&lt;<em class="property">struct</em> fftw_plan_s&gt; <code class="sig-name descname">p</code><a class="headerlink" href="#_CPPv4N6fftwpp4Plan1pE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6fftwpp4Plan1pE"></span><span id="_CPPv2N6fftwpp4Plan1pE"></span><span id="fftwpp::Plan::p__std::shared_ptr:std::remove_pointer_t:fftw_plan::"></span><span class="target" id="classfftwpp_1_1_plan_1acdb30a903b516f8570005a027418623b"></span>std::shared_ptr&lt;std::remove_pointer_t&lt;fftw_plan&gt;&gt; <code class="sig-name descname">p</code><a class="headerlink" href="#_CPPv4N6fftwpp4Plan1pE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
