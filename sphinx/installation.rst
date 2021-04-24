@@ -29,7 +29,7 @@ and inform the compiler of its location.
           <20210415083504>`.
 
 .. note:: Optional compilation with OpenMP is automatically detected by
-          `fftwpp`. If you *do* compile with the ``-fopenmp`` option (or
+          fftwpp. If you *do* compile with the ``-fopenmp`` option (or
           equivalent), then you *must* link against the OpenMP FFTW
           library. This is typically done by passing the ``-lfftw3_omp`` to the
           linker.
