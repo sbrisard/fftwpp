@@ -55,8 +55,6 @@ if __name__ == "__main__":
     with open(os.path.join("..", "README.md"), "r") as f:
         metadata["long_description"] = f.read()
 
-    print(metadata)
-
     config = configparser.ConfigParser()
     config.read("setup.cfg")
 
