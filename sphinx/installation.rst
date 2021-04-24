@@ -44,6 +44,8 @@ the python bindings (see :ref:`below <sec20210415083658>`).
 Installing the Python bindings
 ==============================
 
+The Python bindings are built with pybind11_, which must be installed.
+
 To install the pyfftwpp module, ``cd`` into the ``python`` subdirectory and run
 the ``setup.py`` script as follows.
 
@@ -104,5 +106,6 @@ To build the LaTeX version of the docs::
 .. _CMake: https://cmake.org/
 .. _Doxygen: https://www.doxygen.nl/
 .. _FFTW: http://fftw.org/
+.. _pybind11: https://pybind11.readthedocs.io/
 .. _Pytest: https://docs.pytest.org/
 .. _Sphinx: https://www.sphinx-doc.org/
