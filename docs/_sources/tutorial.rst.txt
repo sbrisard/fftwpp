@@ -216,7 +216,7 @@ commands::
 
   $ mkdir build
   $ cd build
-  $ cmake -Dfftwpp_DIR=fftwpp_INSTALL_PREFIX/lib/cmake/fftwpp ..
+  $ cmake ..
   $ cmake --build . --config Release
 
 An executable called ``tutorial`` should be present in the ``build/Release``

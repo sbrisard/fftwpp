@@ -5,5 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
 
-find_package(fftwpp REQUIRED)
-target_link_libraries(${PROJECT_NAME} fftwpp)
+find_library(MATH_LIBRARY m)
+if (MATH_LIBRARY)
+    target_link_libraries(${PROJECT_NAME} INTERFACE ${MATH_LIBRARY})
+endif()
+
+find_path(FFTW3_INCLUDE_DIR fftw3.h)
+find_library(FFTW3_LIBRARY NAMES fftw3 libfftw3 libfftw3-3)
+target_include_directories(${PROJECT_NAME} PRIVATE ${FFTW3_INCLUDE_DIR} "../../include")
+target_link_libraries(${PROJECT_NAME} PRIVATE ${FFTW3_LIBRARY})

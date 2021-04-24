@@ -2,38 +2,40 @@
 Installation
 ************
 
+First of all, clone the repository
+
+.. code-block:: none
+
+  $ git clone https://github.com/sbrisard/fftwpp
+
 
 Installing the C++ library
 ==========================
 
-fftwpp depends on FFTW_.
+fftwpp is a header-only library: there is no installation procedure *per se* and
+you can drop the header wherever you like (as long as it is located in a
+``fftwpp`` subdirectory). To use fftwpp in a C++ project, you must include the
+header
 
-This is a CMake_ based project. The installation procedure is
-standard. However, FFTW_ is not detected automatically by CMake_ and
-you might need to specify its location manually (follow the CMake_
-instructions if needed).
+.. code-block:: cpp
 
-First, clone the repository. Then, ``cd`` into the root directory of
-the fftwpp project. Let ``fftwpp_INSTALL_PREFIX`` be the path to the
-directory where fftwpp should be installed::
+   #include <fftwpp/fftwpp.hpp>
 
-  $ git clone https://github.com/sbrisard/fftwpp
-  $ cd fftwpp
-  $ mkdir build
-  $ cd build
-  $ cmake -DCMAKE_INSTALL_PREFIX=fftwpp_INSTALL_PREFIX ..
-  $ cmake --build . --config Release
-  $ cmake --install . --config Release
+and inform the compiler of its location.
 
-.. note:: The ``--config`` option might not be available, depending on
-   the selected generator.
+.. note:: fftwpp depends on FFTW_. You must pass the relevant options to the
+          compiler. Typically, these would be ``-I`` and ``-L`` options, as well
+          as ``-lfftw3``. The C++ tutorials provides a :ref:`CMake example
+          <20210415083504>`.
 
-At this point, fftwpp should be installed. To check your installation,
-you could try to :ref:`compile a program <20210415083504>`.
+.. note:: Optional compilation with OpenMP is automatically detected by
+          `fftwpp`. If you *do* compile with the ``-fopenmp`` option (or
+          equivalent), then you *must* link against the OpenMP FFTW
+          library. This is typically done by passing the ``-lfftw3_omp`` to the
+          linker.
 
-To run the tests or build the documentation properly, you need to
-first build the python bindings (see :ref:`below
-<20210415083658>`).
+To run the tests or build the documentation properly, you need to first build
+the python bindings (see :ref:`below <20210415083658>`).
 
 .. _20210415083658:
 
