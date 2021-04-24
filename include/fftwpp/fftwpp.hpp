@@ -76,7 +76,7 @@ class Plan {
   }
 
  private:
-  std::shared_ptr<struct fftw_plan_s> p;
+  std::shared_ptr<std::remove_pointer_t<fftw_plan>> p;
 };
 
 std::ostream &operator<<(std::ostream &os, const Plan &plan) {
