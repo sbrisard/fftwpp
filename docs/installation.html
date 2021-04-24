@@ -4,10 +4,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Installation &#8212; fftwpp 0.1
- documentation</title>
+    <title>Installation &#8212; fftwpp 0.1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -35,8 +34,7 @@
         <li class="right" >
           <a href="index.html" title="fftwpp — Version 0.1"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
- documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
       </ul>
     </div>  
@@ -48,54 +46,66 @@
             
   <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>First of all, clone the repository</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/sbrisard/fftwpp
+</pre></div>
+</div>
 <section id="installing-the-c-library">
 <h2>Installing the C++ library<a class="headerlink" href="#installing-the-c-library" title="Permalink to this headline">¶</a></h2>
-<p>fftwpp depends on <a class="reference external" href="http://fftw.org/">FFTW</a>.</p>
-<p>This is a <a class="reference external" href="https://cmake.org/">CMake</a> based project. The installation procedure is
-standard. However, <a class="reference external" href="http://fftw.org/">FFTW</a> is not detected automatically by <a class="reference external" href="https://cmake.org/">CMake</a> and
-you might need to specify its location manually (follow the <a class="reference external" href="https://cmake.org/">CMake</a>
-instructions if needed).</p>
-<p>First, clone the repository. Then, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the root directory of
-the fftwpp project. Let <code class="docutils literal notranslate"><span class="pre">fftwpp_INSTALL_PREFIX</span></code> be the path to the
-directory where fftwpp should be installed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/sbrisard/fftwpp
-$ cd fftwpp
-$ mkdir build
-$ cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=fftwpp_INSTALL_PREFIX ..
-$ cmake --build . --config Release
-$ cmake --install . --config Release
+<p>fftwpp is a header-only library: there is no installation procedure <em>per se</em> and
+you can drop the header wherever you like (as long as it is located in a
+<code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> subdirectory). To use fftwpp in a C++ project, you must include the
+header</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;fftwpp/fftwpp.hpp&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>and inform the compiler of its location.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>fftwpp depends on <a class="reference external" href="http://fftw.org/">FFTW</a>. You must pass the relevant options to the
+compiler. Typically, these would be <code class="docutils literal notranslate"><span class="pre">-I</span></code> and <code class="docutils literal notranslate"><span class="pre">-L</span></code> options, as well
+as <code class="docutils literal notranslate"><span class="pre">-lfftw3</span></code>. The C++ tutorials provides a
+<a class="reference internal" href="tutorial.html#sec20210415083504"><span class="std std-ref">CMake example</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optional compilation with OpenMP is automatically detected by
+fftwpp. If you <em>do</em> compile with the <code class="docutils literal notranslate"><span class="pre">-fopenmp</span></code> option (or
+equivalent), then you <em>must</em> link against the OpenMP FFTW
+library. This is typically done by passing the <code class="docutils literal notranslate"><span class="pre">-lfftw3_omp</span></code> to the
+linker.</p>
+</div>
+<p>To run the tests or build the documentation properly, you need to first build
+the python bindings (see <a class="reference internal" href="#sec20210415083658"><span class="std std-ref">below</span></a>).</p>
+</section>
+<section id="installing-the-python-bindings">
+<span id="sec20210415083658"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
+<p>To install the pyfftwpp module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code> subdirectory and run
+the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> script as follows.</p>
+<p>First, build the extension:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py build_ext -lfftw3
+</pre></div>
+</div>
+<p>or, if you want to use the OpenMP version of FFTW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py build_ext -lfftw3 --with-openmp
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">--config</span></code> option might not be available, depending on
-the selected generator.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--libraries/-l</span></code> option is necessary to inform the linker of the
+name of the FFTW library.</p>
 </div>
-<p>At this point, fftwpp should be installed. To check your installation,
-you could try to <a class="reference internal" href="tutorial.html#id1"><span class="std std-ref">compile a program</span></a>.</p>
-<p>To run the tests or build the documentation properly, you need to
-first build the python bindings (see <a class="reference internal" href="#id1"><span class="std std-ref">below</span></a>).</p>
-</section>
-<section id="installing-the-python-bindings">
-<span id="id1"></span><h2>Installing the Python bindings<a class="headerlink" href="#installing-the-python-bindings" title="Permalink to this headline">¶</a></h2>
-<p>To install the pyfftwpp module, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="docutils literal notranslate"><span class="pre">python</span></code>
-subdirectory and edit or create the <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code>. You need to specify
-the location of</p>
-<ul class="simple">
-<li><p>the pyfftwpp headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftwpp]</span></code>,</p></li>
-<li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> headers, see <code class="docutils literal notranslate"><span class="pre">include_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>,</p></li>
-<li><p>the <a class="reference external" href="http://fftw.org/">FFTW</a> binaries, see <code class="docutils literal notranslate"><span class="pre">library_dir</span></code> in section <code class="docutils literal notranslate"><span class="pre">[fftw]</span></code>.</p></li>
-</ul>
-<p>The resulting file should look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[pyfftwpp]
-include_dir = ${CMAKE_INSTALL_PREFIX}/include
-[fftw]
-include_dir = path/to/FFTW/headers
-library_dir = path/to/FFTW/binaries
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You might need to inform the compiler of the location of the FFTW
+header (<code class="docutils literal notranslate"><span class="pre">--include-dirs/-I</span></code> option) and binaries
+(<code class="docutils literal notranslate"><span class="pre">--library-dirs/L</span></code> option).</p>
+</div>
+<p>On my computer (Windows 10 platform with Miniconda3), the build command reads:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py build_ext -IC:\Users\sbrisard\miniconda3\Library\include -LC:\Users\sbrisard\miniconda3\Library\lib -lfftw3
 </pre></div>
 </div>
-<p>Then, issue the following command:</p>
+<p>When the extension is built, installation is down as usual:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install --user
 </pre></div>
 </div>
@@ -110,6 +120,12 @@ library_dir = path/to/FFTW/binaries
 </section>
 <section id="building-the-documentation">
 <h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the documentation to build properly, the python module
+must be installed, as it is imported to retrieve the project
+metadata.</p>
+</div>
 <p>The documentation of fftwpp requires <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>. The C++ API docs are
 built with <a class="reference external" href="https://www.doxygen.nl/">Doxygen</a> and the <a class="reference external" href="https://breathe.readthedocs.io/">Breathe</a> extension to <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a>.</p>
 <p>To build the HTML version of the docs in the <code class="docutils literal notranslate"><span class="pre">public</span></code> subdirectory:</p>
@@ -184,15 +200,12 @@ $ make latex
         <li class="right" >
           <a href="index.html" title="fftwpp — Version 0.1"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
- documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021
-, S. Brisard
-.
+        &#169; Copyright 2021, S. Brisard.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>

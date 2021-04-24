@@ -4,10 +4,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>API documentation of the C++ library &#8212; fftwpp 0.1
- documentation</title>
+    <title>API documentation of the C++ library &#8212; fftwpp 0.1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -35,8 +34,7 @@
         <li class="right" >
           <a href="benchmarks/benchmarks.html" title="Benchmarks"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
- documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">API documentation of the C++ library</a></li> 
       </ul>
     </div>  
@@ -59,19 +57,6 @@
 <dt id="_CPPv4N6fftwpplsERNSt7ostreamERK4Plan">
 <span id="_CPPv3N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="_CPPv2N6fftwpplsERNSt7ostreamERK4Plan"></span><span id="fftwpp::lshift-operator__osR.PlanCR"></span><span class="target" id="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292"></span>std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N6fftwpp4PlanE" title="fftwpp::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpplsERNSt7ostreamERK4Plan" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N6fftwpp12init_threadsEv">
-<span id="_CPPv3N6fftwpp12init_threadsEv"></span><span id="_CPPv2N6fftwpp12init_threadsEv"></span><span id="fftwpp::init_threads"></span><span class="target" id="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6"></span>int <code class="sig-name descname">init_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp12init_threadsEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Call <code class="docutils literal notranslate"><span class="pre">fftw_init_threads()</span></code>.</p>
-<p>This function should be called before calling <em>any</em> <code class="docutils literal notranslate"><span class="pre">FFTW</span></code> or <code class="docutils literal notranslate"><span class="pre">fftwpp</span></code> functions. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N6fftwpp18plan_with_nthreadsEi">
-<span id="_CPPv3N6fftwpp18plan_with_nthreadsEi"></span><span id="_CPPv2N6fftwpp18plan_with_nthreadsEi"></span><span id="fftwpp::plan_with_nthreads__i"></span><span class="target" id="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3"></span>void <code class="sig-name descname">plan_with_nthreads</code><span class="sig-paren">(</span>int <em>nthreads</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6fftwpp18plan_with_nthreadsEi" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Set the number of threads to be used by all subsequently created plans. </p>
-</dd></dl>
 
 </div>
 <dl class="cpp class">
@@ -293,6 +278,54 @@
 </div>
 </dd></dl>
 
+<dl class="cpp type">
+<dt id="_CPPv4N6fftwpp8metadataE">
+<span id="_CPPv3N6fftwpp8metadataE"></span><span id="_CPPv2N6fftwpp8metadataE"></span><span id="fftwpp::metadata"></span><span class="target" id="namespacefftwpp_1_1metadata"></span><em class="property">namespace </em><code class="sig-name descname">metadata</code><a class="headerlink" href="#_CPPv4N6fftwpp8metadataE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata6authorE">
+<span id="_CPPv3N6fftwpp8metadata6authorE"></span><span id="_CPPv2N6fftwpp8metadata6authorE"></span><span id="fftwpp::metadata::author__std::string_view"></span><span class="target" id="fftwpp_8hpp_1a689c4b2abe0b733439b4e714dc6b64b1"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">author</code> = {&quot;S. Brisard&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata6authorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata11descriptionE">
+<span id="_CPPv3N6fftwpp8metadata11descriptionE"></span><span id="_CPPv2N6fftwpp8metadata11descriptionE"></span><span id="fftwpp::metadata::description__std::string_view"></span><span class="target" id="fftwpp_8hpp_1a4bb05e0e9bb651dce8b39d9d0aaf3eec"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">description</code> = {&quot;C++ interface to the FFTW library&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata11descriptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata12author_emailE">
+<span id="_CPPv3N6fftwpp8metadata12author_emailE"></span><span id="_CPPv2N6fftwpp8metadata12author_emailE"></span><span id="fftwpp::metadata::author_email__std::string_view"></span><span class="target" id="fftwpp_8hpp_1a3975cd2759d15a980ec379d15322dcc4"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">author_email</code> = {&quot;sebastien.brisard&#64;univ-eiffel.fr&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata12author_emailE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata7licenseE">
+<span id="_CPPv3N6fftwpp8metadata7licenseE"></span><span id="_CPPv2N6fftwpp8metadata7licenseE"></span><span id="fftwpp::metadata::license__std::string_view"></span><span class="target" id="fftwpp_8hpp_1afd72e6cc0dd9586c6eb9a91ac383c401"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">license</code> = {&quot;BSD 3-Clause License&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata7licenseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata4nameE">
+<span id="_CPPv3N6fftwpp8metadata4nameE"></span><span id="_CPPv2N6fftwpp8metadata4nameE"></span><span id="fftwpp::metadata::name__std::string_view"></span><span class="target" id="fftwpp_8hpp_1ab6fb8860c7df45fef885c41fe43cbb04"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">name</code> = {&quot;fftwpp&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata4nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata3urlE">
+<span id="_CPPv3N6fftwpp8metadata3urlE"></span><span id="_CPPv2N6fftwpp8metadata3urlE"></span><span id="fftwpp::metadata::url__std::string_view"></span><span class="target" id="fftwpp_8hpp_1a3f6e4b11534fd808b1d0dec313cacef3"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">url</code> = {&quot;https://github.com/sbrisard/fftwpp&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata3urlE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata7versionE">
+<span id="_CPPv3N6fftwpp8metadata7versionE"></span><span id="_CPPv2N6fftwpp8metadata7versionE"></span><span id="fftwpp::metadata::version__std::string_view"></span><span class="target" id="fftwpp_8hpp_1aead10495e490f923a974f370fba4fd89"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">version</code> = {&quot;0.1&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata7versionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N6fftwpp8metadata4yearE">
+<span id="_CPPv3N6fftwpp8metadata4yearE"></span><span id="_CPPv2N6fftwpp8metadata4yearE"></span><span id="fftwpp::metadata::year__std::string_view"></span><span class="target" id="fftwpp_8hpp_1ae7c58b3d3f0556487c253b32e26310d3"></span><em class="property">constexpr</em> std::string_view <code class="sig-name descname">year</code> = {&quot;2021&quot;}<a class="headerlink" href="#_CPPv4N6fftwpp8metadata4yearE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -346,15 +379,12 @@
         <li class="right" >
           <a href="benchmarks/benchmarks.html" title="Benchmarks"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1
- documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">fftwpp 0.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">API documentation of the C++ library</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021
-, S. Brisard
-.
+        &#169; Copyright 2021, S. Brisard.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>

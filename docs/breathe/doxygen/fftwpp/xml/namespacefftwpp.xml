@@ -4,6 +4,7 @@
     <compoundname>fftwpp</compoundname>
     <innerclass refid="classfftwpp_1_1_plan" prot="public">fftwpp::Plan</innerclass>
     <innerclass refid="classfftwpp_1_1_plan_factory" prot="public">fftwpp::PlanFactory</innerclass>
+    <innernamespace refid="namespacefftwpp_1_1metadata">fftwpp::metadata</innernamespace>
       <sectiondef kind="func">
       <memberdef kind="function" id="namespacefftwpp_1af5e609f2011fe169fecae29fa0897292" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>std::ostream &amp;</type>
@@ -24,40 +25,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="71" column="1" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="71" bodyend="73"/>
-      </memberdef>
-      <memberdef kind="function" id="namespacefftwpp_1a0f17f71507cb996cf8922eed003765c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int fftwpp::init_threads</definition>
-        <argsstring>()</argsstring>
-        <name>init_threads</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para>Call <computeroutput>fftw_init_threads()</computeroutput>.</para>
-<para>This function should be called before calling <emphasis>any</emphasis> <computeroutput>FFTW</computeroutput> or <computeroutput>fftwpp</computeroutput> functions. </para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="267" column="5" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="267" bodyend="267"/>
-      </memberdef>
-      <memberdef kind="function" id="namespacefftwpp_1ad5add8a1ad46c50f831c591bb8a898f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void fftwpp::plan_with_nthreads</definition>
-        <argsstring>(int nthreads)</argsstring>
-        <name>plan_with_nthreads</name>
-        <param>
-          <type>int</type>
-          <declname>nthreads</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para>Set the number of threads to be used by all subsequently created plans. </para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="270" column="6" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="270" bodyend="270"/>
+        <location file="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" line="82" column="1" bodyfile="C:/Users/sbrisard/Git/programmes/fftwpp/include/fftwpp/fftwpp.hpp" bodystart="82" bodyend="84"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
