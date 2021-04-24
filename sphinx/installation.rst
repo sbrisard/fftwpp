@@ -32,7 +32,9 @@ and inform the compiler of its location.
           fftwpp. If you *do* compile with the ``-fopenmp`` option (or
           equivalent), then you *must* link against the OpenMP FFTW
           library. This is typically done by passing the ``-lfftw3_omp`` to the
-          linker.
+          linker. This automatically exposes the functions
+          :cpp:func:`fftwpp::init_threads` and
+          :cpp:func:`fftwpp::plan_with_nthreads`.
 
 To run the tests or build the documentation properly, you need to first build
 the python bindings (see :ref:`below <sec20210415083658>`).

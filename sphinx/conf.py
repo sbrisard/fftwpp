@@ -41,7 +41,9 @@ breathe_projects_source = {
     )
 }
 
-breathe_doxygen_config_options = {"GENERATE_TODOLIST": "YES"}
+breathe_doxygen_config_options = {"GENERATE_TODOLIST": "YES",
+                                  "ENABLE_PREPROCESSING": "YES",
+                                  "PREDEFINED": "_OPENMP"}
 
 html_theme = "sphinxdoc"
 html_static_path = ["_static"]
