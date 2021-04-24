@@ -24,17 +24,22 @@ def read_metadata():
     return metadata
 
 
-class build_ext_cpp17(build_ext):
-    fftw_libraries = {"msvc": ["fftw3"], "unix": ["fftw3", "fftw3_omp"]}
-    extra_compile_args = {
-        "msvc": ["/std:c++17", "/openmp"],
-        "unix": ["-std=c++17", "-fopenmp"],
-    }
+class my_build_ext(build_ext):
 
     def build_extensions(self):
+        fftw_libraries = {"msvc": ["fftw3"], "unix": ["fftw3"]}
+        extra_compile_args = {
+            "msvc": ["/std:c++17"],
+            "unix": ["-std=c++17"],
+        }
+        if self.with_openmp:
+            fftw_libraries["unix"].append("fftw3_omp")
+            extra_compile_args["unix"].append("-fopenmp")
+            extra_compile_args["msvc"].append("/openmp")
+
         for extension in self.extensions:
-            extension.libraries += self.fftw_libraries[self.compiler.compiler_type]
-            extension.extra_compile_args += self.extra_compile_args[
+            extension.libraries += fftw_libraries[self.compiler.compiler_type]
+            extension.extra_compile_args += extra_compile_args[
                 self.compiler.compiler_type
             ]
         build_ext.build_extensions(self)
@@ -59,6 +64,9 @@ if __name__ == "__main__":
         include_dirs.append(config["fftw"].get("include_dir", ""))
         library_dirs.append(config["fftw"].get("library_dir", ""))
 
+    # TODO Defining a class variable dynamically is poor practice
+    my_build_ext.with_openmp = config["fftw"].getboolean("with_openmp")
+
     pyfftwpp = setuptools.Extension(
         "pyfftwpp",
         include_dirs=include_dirs,
@@ -75,6 +83,6 @@ if __name__ == "__main__":
         long_description_content_type="text/markdown",
         packages=setuptools.find_packages(),
         ext_modules=[pyfftwpp],
-        cmdclass={"build_ext": build_ext_cpp17},
+        cmdclass={"build_ext": my_build_ext},
         **metadata
     )
