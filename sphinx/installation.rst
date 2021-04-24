@@ -40,23 +40,29 @@ first build the python bindings (see :ref:`below
 Installing the Python bindings
 ==============================
 
-To install the pyfftwpp module, ``cd`` into the ``python``
-subdirectory and edit or create the ``setup.cfg``. You need to specify
-the location of
+To install the pyfftwpp module, ``cd`` into the ``python`` subdirectory and run
+the ``setup.py`` script as follows.
 
-- the pyfftwpp headers, see ``include_dir`` in section ``[fftwpp]``,
-- the FFTW_ headers, see ``include_dir`` in section ``[fftw]``,
-- the FFTW_ binaries, see ``library_dir`` in section ``[fftw]``.
+First, build the extension::
 
-The resulting file should look like::
+  $ python setup.py build_ext -lfftw3
 
-  [pyfftwpp]
-  include_dir = ${CMAKE_INSTALL_PREFIX}/include
-  [fftw]
-  include_dir = path/to/FFTW/headers
-  library_dir = path/to/FFTW/binaries
+or, if you want to use the OpenMP version of FFTW::
 
-Then, issue the following command::
+  $ python setup.py build_ext -lfftw3 --with-openmp
+
+.. note:: The ``--libraries/-l`` option is necessary to inform the linker of the
+          name of the FFTW library.
+
+.. note:: You might need to inform the compiler of the location of the FFTW
+          header (``--include-dirs/-I`` option) and binaries
+          (``--library-dirs/L`` option).
+
+On my computer (Windows 10 platform with Miniconda3), the build command reads::
+
+  $ python setup.py build_ext -IC:\Users\sbrisard\miniconda3\Library\include -LC:\Users\sbrisard\miniconda3\Library\lib -lfftw3
+
+When the extension is built, installation is down as usual::
 
   $ python setup.py install --user
 
