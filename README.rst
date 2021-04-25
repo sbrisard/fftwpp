@@ -19,6 +19,34 @@ Features
 - Python bindings with pybind11_
 
 
+Example
+=======
+
+Here is a shortened, C++ example.
+
+.. code:: cpp
+
+   #include <fftwpp/fftwpp.hpp>
+
+   // Create input and output arrays
+   auto factory = fftwpp::PlanFactory().set_estimate();
+   auto plan = factory.create_plan(rank, shape, in.data(), out.data(), -1);
+   // Fill the input array
+   plan.execute()
+
+And the Python equivalent
+
+.. code:: python
+
+   import pyfftwpp
+
+   # Create input and output arrays
+   factory = pyfftwpp.PlanFactory().set_estimate()
+   plan = factory.create_plan(rank, input, output, -1)
+   # Fill the input array
+   plan.execute()
+
+
 News
 ====
 
