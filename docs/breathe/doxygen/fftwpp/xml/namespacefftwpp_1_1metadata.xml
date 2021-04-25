@@ -92,7 +92,7 @@
         <definition>constexpr std::string_view fftwpp::metadata::version</definition>
         <argsstring></argsstring>
         <name>version</name>
-        <initializer>{&quot;0.1&quot;}</initializer>
+        <initializer>{&quot;1.0&quot;}</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>

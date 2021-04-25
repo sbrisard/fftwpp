@@ -87,7 +87,7 @@
 <codeline lineno="26"><highlight class="normal">constexpr<sp/>std::string_view<sp/>license{</highlight><highlight class="stringliteral">&quot;BSD<sp/>3-Clause<sp/>License&quot;</highlight><highlight class="normal">};</highlight></codeline>
 <codeline lineno="27"><highlight class="normal">constexpr<sp/>std::string_view<sp/>name{</highlight><highlight class="stringliteral">&quot;fftwpp&quot;</highlight><highlight class="normal">};</highlight></codeline>
 <codeline lineno="28"><highlight class="normal">constexpr<sp/>std::string_view<sp/>url{</highlight><highlight class="stringliteral">&quot;https://github.com/sbrisard/fftwpp&quot;</highlight><highlight class="normal">};</highlight></codeline>
-<codeline lineno="29"><highlight class="normal">constexpr<sp/>std::string_view<sp/>version{</highlight><highlight class="stringliteral">&quot;0.1&quot;</highlight><highlight class="normal">};</highlight></codeline>
+<codeline lineno="29"><highlight class="normal">constexpr<sp/>std::string_view<sp/>version{</highlight><highlight class="stringliteral">&quot;1.0&quot;</highlight><highlight class="normal">};</highlight></codeline>
 <codeline lineno="30"><highlight class="normal">constexpr<sp/>std::string_view<sp/>year{</highlight><highlight class="stringliteral">&quot;2021&quot;</highlight><highlight class="normal">};</highlight></codeline>
 <codeline lineno="31"><highlight class="normal">}<sp/><sp/></highlight><highlight class="comment">//<sp/>namespace<sp/>metadata</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="32"><highlight class="normal"></highlight></codeline>
