@@ -53,5 +53,14 @@ News
 - 25 apr. 2021 — Version 1.0 is released (including C-to-C, R-to-C, C-to-R and
   OpenMP).
 
+
+Roadmap
+=======
+
+- Add support for MPI
+- Provide idiomatic support for ``fftw_malloc/fftw_free`` (or any aligned memory
+  allocation)
+
+
 .. _FFTW: http://fftw.org/
 .. _pybind11: https://pybind11.readthedocs.io/
