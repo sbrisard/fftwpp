@@ -52,11 +52,8 @@ class my_build_ext(build_ext):
 if __name__ == "__main__":
     metadata = read_metadata()
 
-    with open(os.path.join("..", "README.md"), "r") as f:
+    with open(os.path.join("..", "README.rst"), "r") as f:
         metadata["long_description"] = f.read()
-
-    config = configparser.ConfigParser()
-    config.read("setup.cfg")
 
     include_dirs = [
         pybind11.get_include(),
